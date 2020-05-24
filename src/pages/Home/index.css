@@ -1,4 +1,4 @@
-.trigger {
+/* .trigger {
     font-size: 18px;
     line-height: 64px;
     padding: 8px 16px;
@@ -8,11 +8,11 @@
 
 .trigger:hover {
     color: #aad6b3;
-}
+} */
 
 .logo {
     height: 64px;
-    background: #aad6b3;
+    /* background: #aad6b3; */
     background: url(../../assets/logo-big.png) no-repeat;
     background-position: center center;
     background-size: cover;
@@ -25,7 +25,7 @@
 .left {
     padding: 8px;
     width: 520px;
-    background-color: salmon;
+    /* background-color: salmon; */
 }
 
 .right {
@@ -33,22 +33,31 @@
     padding: 8px;
     width: 620px;
     min-height: 200px;
-    background-color: #9c7beb;
+    /* background-color: #9c7beb; */
 }
 
 .intro {
     position: relative;
     width: 500px;
-    height: 300px;
-    background-color: #aad6b3;
+    height: 280px;
+    /* background-color: #aad6b3; */
 }
 
 .timeinfo {
     position: relative;
     /* padding-top: 180px; */
-    margin-top: 8px;
-    padding: 16px;
+    margin-top: 5px;
+    padding: 8px;
     width: 500px;
     height: 200px;
-    background-color: royalblue;
+    /* background-color: royalblue; */
+}
+
+.carousel {
+    height: 400px;
+    /* background-color: #aad6b3; */
+}
+
+.img {
+    height: 400px;
 }
