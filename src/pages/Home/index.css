@@ -1,0 +1,54 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #aad6b3;
+}
+
+.logo {
+    height: 64px;
+    background: #aad6b3;
+    background: url(../../assets/logo-big.png) no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.home {
+    display: flex;
+}
+
+.left {
+    padding: 8px;
+    width: 520px;
+    background-color: salmon;
+}
+
+.right {
+    margin-left: 16px;
+    padding: 8px;
+    width: 620px;
+    min-height: 200px;
+    background-color: #9c7beb;
+}
+
+.intro {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    background-color: #aad6b3;
+}
+
+.timeinfo {
+    position: relative;
+    /* padding-top: 180px; */
+    margin-top: 8px;
+    padding: 16px;
+    width: 500px;
+    height: 200px;
+    background-color: royalblue;
+}
