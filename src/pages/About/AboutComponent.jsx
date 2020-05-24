@@ -112,7 +112,7 @@ class AboutComponent extends React.Component {
                     <div className={styles.logo} />
                     <Menu
                         theme="light"
-                        defaultSelectedKeys={['excerpt']}
+                        defaultSelectedKeys={['about']}
                         openKeys={this.state.openKeys}
                         onOpenChange={this.onOpenChange}
                         mode="inline"
