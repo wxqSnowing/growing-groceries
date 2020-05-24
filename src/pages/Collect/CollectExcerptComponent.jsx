@@ -96,7 +96,7 @@ class CollectExcerptComponent extends React.Component {
         return (
             <Layout theme='light'>
                 <Sider
-                    trigger={<div style={{ backgroundColor: '#fff', color: '#a9e0f3' }}>{this.state.collapsed && <div>展开</div>}{!this.state.collapsed && <div>收起</div>}</div>}
+                    trigger={<div style={{ backgroundColor: '#fff', color: '#a9e0f3' }}>{this.state.collapsed && <Icon type="left" />}{!this.state.collapsed && <Icon type="right" />}</div>}
                     collapsible
                     collapsed={this.state.collapsed}
                     onCollapse={this.onCollapse}
@@ -186,7 +186,7 @@ class CollectExcerptComponent extends React.Component {
                        <br></br>
                         {this.state.data.group}
                     </Content>
-                    <Footer style={{ textAlign: 'center', fontSize: 5 }}>Snow Blog ©2020 Created by Shirly</Footer>
+                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed?80:200)}}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>
         );
