@@ -1,18 +1,18 @@
 
-import React from 'react';
 import 'antd/dist/antd.css';
-import styles from './index.css'
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
-import BreadcrumbItem from 'antd/lib/breadcrumb/BreadcrumbItem';
-
+import styles from './index.css';
+import { Layout, Menu, Icon, Breadcrumb, Row, Col } from 'antd';
+import React from 'react';
 import { connect } from 'dva';
-import { Link } from 'umi';
 import cookie from 'react-cookies'
+import { Link } from 'umi';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
+
 class CollectExcerptComponent extends React.Component {
+
     rootSubmenuKeys = ['collect', 'bit'];
 
     constructor(props) {
@@ -20,6 +20,7 @@ class CollectExcerptComponent extends React.Component {
         this.state = {
             collapsed: false,
             data: {},
+            offsetWidth: "200px",
             openKeys: ['collect'],
             menuData: {
                 home: '/home',
@@ -37,11 +38,14 @@ class CollectExcerptComponent extends React.Component {
         let collapsedStatus = cookie.load("collapsedStatus");
         if (typeof (collapsedStatus) !== 'undefined') {
             let flag = true;
+            let offset = "80px";
             if (collapsedStatus === 'false') {
                 flag = false;
+                offset = "200px"
             }
             this.setState({
-                collapsed: flag
+                collapsed: flag,
+                offsetWidth: offset,
             })
         }
 
@@ -57,26 +61,25 @@ class CollectExcerptComponent extends React.Component {
         }
     }
 
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        }, () => {
-            cookie.save("collapsedStatus", this.state.collapsed, { path: "/" })
+    onCollapse = collapsed => {
+        console.log(collapsed);
+        this.setState({ collapsed }, () => {
+            cookie.save("collapsedStatus", this.state.collapsed, { path: "/" });
+            if (this.state.collapsed) {
+                this.setState({ offsetWidth: '80px' })
+            } else {
+                this.setState({ offsetWidth: '200px' })
+            }
         });
-
     };
 
     onMenuClick = (event) => {
-        console.log('onMenuClick');
-
         const { key } = event;
         let pathName = this.state.menuData[key]
         this.props.history.push(pathName)
     };
 
     onOpenChange = (openKeys) => {
-        console.log('onOpenChange', openKeys);
-
         const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
         if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             this.setState({ openKeys });
@@ -91,8 +94,21 @@ class CollectExcerptComponent extends React.Component {
     render() {
 
         return (
-            <Layout>
-                <Sider trigger={null} collapsible collapsed={this.state.collapsed} style={{ background: '#fff' }}>
+            <Layout theme='light'>
+                <Sider
+                    trigger={<div style={{ backgroundColor: '#fff', color: '#a9e0f3' }}>{this.state.collapsed && <div>展开</div>}{!this.state.collapsed && <div>收起</div>}</div>}
+                    collapsible
+                    collapsed={this.state.collapsed}
+                    onCollapse={this.onCollapse}
+                    style={{
+                        theme: 'light',
+                        overflow: 'auto',
+                        height: '100vh',
+                        position: 'fixed',
+                        left: 0,
+                        background: '#fff'
+                    }}
+                >
                     <div className={styles.logo} />
                     <Menu
                         theme="light"
@@ -140,30 +156,34 @@ class CollectExcerptComponent extends React.Component {
                     </Menu>
 
                 </Sider>
-                <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                            className={styles.trigger}
-                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.toggle}
-                        />
+                <Layout style={{ marginLeft: this.state.offsetWidth }}>
+                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%', backgroundColor: '#fff' }}>
+                        <Row
+                            gutter={8}
+                            style={{ marginLeft: (1100 - (this.state.collapsed ? 80 : 200)) + 'px' }}
+                            type="flex"
+                        >
+                            <Col><span>消息</span></Col>
+                            <Col><span>历史</span></Col>
+                            <Col><span>我的</span></Col>
+                        </Row>
                     </Header>
-
-                    <Breadcrumb style={{ margin: '16px 16px' }}>
-                        <BreadcrumbItem>收集盒</BreadcrumbItem>
-                        <BreadcrumbItem><Link to='/collect/excerpt'>摘录</Link></BreadcrumbItem>
-                    </Breadcrumb>
 
                     <Content
                         style={{
-                            margin: '8px 16px',
+                            marginTop: 64,
                             padding: 16,
-                            background: '#fff',
-                            minHeight: 500,
+                            background: 'pink',
+                            minHeight: 560,
                         }}
                     >
-                        此处为摘录信息
+                        <Breadcrumb>
+                            <Breadcrumb.Item>收集盒</Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to='/collect/excerpt'>摘录</Link></Breadcrumb.Item>
+                        </Breadcrumb>
                         <br></br>
+                       此处为笔记信息
+                       <br></br>
                         {this.state.data.group}
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5 }}>Snow Blog ©2020 Created by Shirly</Footer>
