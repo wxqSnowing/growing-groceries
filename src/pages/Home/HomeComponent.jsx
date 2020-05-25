@@ -5,7 +5,7 @@ import { Layout, Menu, Icon, Timeline, Carousel, Row, Col, List, Card } from 'an
 import React from 'react';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
-import { Link } from 'umi';
+// import { Link } from 'umi';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -36,7 +36,9 @@ class HomeComponent extends React.Component {
             timelineInfoData: [],
             contentsInfoData: {},
             summaryInfoData: [],
-            title: ''
+            title: '',
+
+            workData: {},
         };
     }
 
@@ -93,6 +95,19 @@ class HomeComponent extends React.Component {
                 summaryInfoData: this.props.summaryInfoData,
             }, () => {
                 console.log(this.state.summaryInfoData);
+            })
+        });
+
+        this.props.dispatch({
+            type: 'workModel/getWorkDetail',
+            payload: {
+                id: 1,
+            }
+        }).then(() => {
+            this.setState({
+                workData: this.props.workData,
+            }, () => {
+                console.log(this.state.workData);
             })
         });
     }
@@ -326,11 +341,14 @@ class HomeComponent extends React.Component {
     }
 }
 
-export default connect(({ homeModel }) => ({
+export default connect(({ homeModel, workModel }) => ({
 
     userInfoData: homeModel.userInfoData,
     timelineInfoData: homeModel.timelineInfoData,
     contentsInfoData: homeModel.contentsInfoData,
     summaryInfoData: homeModel.summaryInfoData,
+
+    workData: workModel.workData
+,
 
 }))(HomeComponent);
