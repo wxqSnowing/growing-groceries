@@ -6,8 +6,9 @@ const workModel = {
         workData: {}
     },
     effects: {
-        * getWorkDetail(_, { call, put }) {
-            const response = yield call(getWorkDetail);
+        * getWorkDetail({ payload }, { call, put }) {
+            let id = payload.id;
+            const response = yield call(getWorkDetail, id);
             yield put({
                 type: 'getWorkDetailData',
                 payload: response,
