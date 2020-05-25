@@ -1,7 +1,7 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Menu, Icon, Timeline, Carousel, Row, Col } from 'antd';
+import { Layout, Menu, Icon, Timeline, Carousel, Row, Col, List, Card } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
@@ -30,7 +30,13 @@ class HomeComponent extends React.Component {
                 video: '/bit/video',
                 album: '/bit/album',
                 about: '/about'
-            }
+            },
+
+            userInfoData: {},
+            timelineInfoData: [],
+            contentsInfoData: {},
+            summaryInfoData: [],
+            title: ''
         };
     }
 
@@ -49,16 +55,46 @@ class HomeComponent extends React.Component {
             })
         }
 
-        const { dispatch } = this.props;
-        if (dispatch) {
-            dispatch({
-                type: 'user/fetchCurrent',
-            }).then(() => {
-                this.setState({
-                    data: this.props.currentUser
-                })
-            });
-        }
+        this.props.dispatch({
+            type: 'homeModel/currentUserInfo',
+        }).then(() => {
+            this.setState({
+                userInfoData: this.props.userInfoData
+            }, () => {
+                console.log(this.state.userInfoData);
+            })
+        });
+
+        this.props.dispatch({
+            type: 'homeModel/getTimelineInfo',
+        }).then(() => {
+            this.setState({
+                timelineInfoData: this.props.timelineInfoData
+            }, () => {
+                console.log(this.state.timelineInfoData);
+            })
+        });
+
+        this.props.dispatch({
+            type: 'homeModel/contentsInfo',
+        }).then(() => {
+            this.setState({
+                contentsInfoData: this.props.contentsInfoData,
+                title: this.props.contentsInfoData.collect.notes[0].title,
+            }, () => {
+                console.log(this.state.contentsInfoData);
+            })
+        });
+
+        this.props.dispatch({
+            type: 'homeModel/getSummaryInfo',
+        }).then(() => {
+            this.setState({
+                summaryInfoData: this.props.summaryInfoData,
+            }, () => {
+                console.log(this.state.summaryInfoData);
+            })
+        });
     }
 
     onCollapse = collapsed => {
@@ -109,7 +145,7 @@ class HomeComponent extends React.Component {
                         background: '#fff'
                     }}
                 >
-                    <div className={styles.logo} />
+                    <div className={styles.logo}>生活杂货铺</div>
                     <Menu
                         theme="light"
                         defaultSelectedKeys={['home']}
@@ -158,15 +194,15 @@ class HomeComponent extends React.Component {
                 </Sider>
                 <Layout style={{ marginLeft: this.state.offsetWidth }}>
                     <Header style={{ position: 'fixed', zIndex: 1, width: '100%', backgroundColor: '#fff' }}>
-                    <Row 
-                        gutter={8}
-                        style={{marginLeft: (1100-(this.state.collapsed?80:200))+'px'}}
-                        type="flex"
-                    >
-                        <Col><span>消息</span></Col>
-                        <Col><span>历史</span></Col>
-                        <Col><span>我的</span></Col>
-                    </Row>
+                        <Row
+                            gutter={8}
+                            style={{ marginLeft: (1100 - (this.state.collapsed ? 80 : 200)) + 'px' }}
+                            type="flex"
+                        >
+                            <Col><span>消息</span></Col>
+                            <Col><span>历史</span></Col>
+                            <Col><span>我的</span></Col>
+                        </Row>
                     </Header>
 
                     <Content
@@ -178,26 +214,26 @@ class HomeComponent extends React.Component {
                     >
                         <Carousel autoplay className={styles.carousel}>
                             <div>
-                                <img src={require('../../assets/imgs/1.jpeg')} alt="图片测试" className={styles.img} />
+                                <img src={require('../../assets/imgs/1.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
                             </div>
                             <div>
-                                <img src={require('../../assets/imgs/2.jpeg')} alt="图片测试" className={styles.img} />
+                                <img src={require('../../assets/imgs/2.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
                             </div>
                             <div>
-                                <img src={require('../../assets/imgs/3.jpeg')} alt="图片测试" className={styles.img} />
+                                <img src={require('../../assets/imgs/3.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
                             </div>
                             <div>
-                                <img src={require('../../assets/imgs/4.jpeg')} alt="图片测试" className={styles.img} />
+                                <img src={require('../../assets/imgs/4.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
                             </div>
                             <div>
-                                <img src={require('../../assets/imgs/5.jpeg')} alt="图片测试" className={styles.img} />
+                                <img src={require('../../assets/imgs/5.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
                             </div>
                         </Carousel>
 
                         <div className={styles.home}>
                             <div className={styles.left}>
                                 <div className={styles.intro}>
-                                    <div style={{ display: "flex", backgroundColor: '#a9e0f3'}}>
+                                    <div style={{ display: "flex", backgroundColor: '#a9e0f3' }}>
                                         <Row
                                             gutter={8}
                                             style={{
@@ -209,13 +245,13 @@ class HomeComponent extends React.Component {
                                             <Col span={12}>
                                                 <img src={require('../../assets/head.jpeg')} alt="图片测试" style={{ width: 200, height: 220 }} />
                                             </Col>
-                                            <Col span={12} style={{marginTop: 230}}> 
-                                               
+                                            <Col span={12} style={{ marginTop: 230 }}>
+
                                             </Col>
-                                            <Col span={8}> 
-                                                <b >Shirley</b>
+                                            <Col span={8}>
+                                                <b >{this.state.userInfoData.username}</b>
                                             </Col>
-                                           
+
                                         </Row>
                                         <Row gutter={12}
                                             style={{
@@ -224,24 +260,24 @@ class HomeComponent extends React.Component {
                                             }}
                                             type="flex"
                                         >
-                                            <Col span={24}> 
-                                                专业：软件工程
-                                            </Col>
-                                            <Col span={24}> 
-                                                星座：摩羯座
-                                            </Col>
-                                           
                                             <Col span={24}>
-                                                爱好：听音乐，和朋友逛街
+                                                专业：{this.state.userInfoData.major}
                                             </Col>
                                             <Col span={24}>
-                                                签名：以梦为马，不负韶华
+                                                星座：{this.state.userInfoData.constellatory}
+                                            </Col>
+
+                                            <Col span={24}>
+                                                爱好：{this.state.userInfoData.hobby}
+                                            </Col>
+                                            <Col span={24}>
+                                                签名：{this.state.userInfoData.autograph}
                                             </Col>
                                             <Col span={23}>
-                                                地址：北京
+                                                地址：{this.state.userInfoData.address}
                                             </Col>
                                             <Col span={24}>
-                                                邮箱：707409166@qq.com
+                                                邮箱：{this.state.userInfoData.email}
                                             </Col>
                                         </Row>
 
@@ -252,17 +288,30 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className={styles.timeinfo}>
                                     <Timeline>
-                                        <Timeline.Item color="#aad6b3">更新了个人信息 2020-05-24</Timeline.Item>
-                                        <Timeline.Item color="#aad6b3">发布了一篇随记录 2020-05-24</Timeline.Item>
-                                        <Timeline.Item color="#aad6b3">发布了视频  2020-05-24</Timeline.Item>
-                                        <Timeline.Item color="#aad6b3">发布了第一篇原创 2020-05-24</Timeline.Item>
-                                        <Timeline.Item color="#aad6b3">加入时间 2020-05-23</Timeline.Item>
+                                        {Array.isArray(this.state.timelineInfoData) && this.state.timelineInfoData.map(({ record, time }) => (
+                                            <Timeline.Item color="#aad6b3" key={time}>{record + ' ' + time}</Timeline.Item>
+                                        ))}
                                     </Timeline>
                                 </div>
                             </div>
                             <div className={styles.right}>
-
-                                {this.state.data.group}
+                                <List
+                                    grid={{
+                                        gutter: 16,
+                                        // xs: 1,
+                                        // sm: 2,
+                                        // md: 4,
+                                        lg: 5,
+                                        // xl: 6,
+                                        // xxl: 3,
+                                    }}
+                                    dataSource={this.state.summaryInfoData}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <Card title={item.name} style={{backgroundColor: '#a9e0f3'}}>{item.total}篇</Card>
+                                        </List.Item>
+                                    )}
+                                />
                             </div>
 
                         </div>
@@ -270,13 +319,18 @@ class HomeComponent extends React.Component {
 
 
                     </Content>
-                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed?80:200)}}>Snow Blog ©2020 Created by Shirly</Footer>
+                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>
         );
     }
 }
 
-export default connect(({ user }) => ({
-    currentUser: user.currentUser,
+export default connect(({ homeModel }) => ({
+
+    userInfoData: homeModel.userInfoData,
+    timelineInfoData: homeModel.timelineInfoData,
+    contentsInfoData: homeModel.contentsInfoData,
+    summaryInfoData: homeModel.summaryInfoData,
+
 }))(HomeComponent);
