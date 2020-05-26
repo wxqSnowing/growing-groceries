@@ -5,7 +5,7 @@ import { Layout, Menu, Icon, Timeline, Carousel, Row, Col, List, Card } from 'an
 import React from 'react';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
-// import { Link } from 'umi';
+import { Link } from 'umi';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -211,9 +211,10 @@ class HomeComponent extends React.Component {
                     <Header style={{ position: 'fixed', zIndex: 1, width: '100%', backgroundColor: '#fff' }}>
                         <Row
                             gutter={8}
-                            style={{ marginLeft: (1100 - (this.state.collapsed ? 80 : 200)) + 'px' }}
+                            style={{ marginLeft: (1050 - (this.state.collapsed ? 80 : 200)) + 'px' }}
                             type="flex"
                         >
+                            <Col><Link to='/create'>去创作</Link></Col>
                             <Col><span>消息</span></Col>
                             <Col><span>历史</span></Col>
                             <Col><span>我的</span></Col>

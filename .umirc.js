@@ -16,6 +16,8 @@ export default {
             { path: '/bit/video', component: '../pages/Bit/VideoComponent' },
 
             { path: '/about', component: '../pages/About/AboutComponent' },
+
+            { path: '/create', component: '../pages/Create/AddComponent' },
         ]
     }, ],
     plugins: [
