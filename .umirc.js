@@ -18,6 +18,7 @@ export default {
             { path: '/about', component: '../pages/About/AboutComponent' },
 
             { path: '/create', component: '../pages/Create/AddComponent' },
+            { path: '/mine', component: '../pages/Mine/MineComponent' },
         ]
     }, ],
     plugins: [

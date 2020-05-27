@@ -1,14 +1,68 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Menu, Icon, Timeline, Carousel, Row, Col, List, Card, Button, Badge } from 'antd';
+import { Layout, Menu, Card, Timeline, Carousel, Row, Col, List, Button, Badge, Input } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
 import { Link } from 'umi';
 
+const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
 
+const menuList = [
+    {
+        key: 'excerpt',
+        value: '摘录',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'original',
+        value: '原创',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'notes',
+        value: '随记',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'album',
+        value: '相册',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'video',
+        value: '视频',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'music',
+        value: '音乐',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'draw',
+        value: '绘画',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'program',
+        value: '编程',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'game',
+        value: '游戏',
+        pathName: '/collect/excerpt'
+    },
+    {
+        key: 'top',
+        value: 'ΛTop'
+    },
+];
+
+const imageNames = ['1', '2', '3', '4', '5'];
 
 class HomeComponent extends React.Component {
 
@@ -17,45 +71,16 @@ class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapsed: false,
-            data: {},
-            offsetWidth: "200px",
-            openKeys: [''],
-            menuData: {
-                home: '/home',
-                excerpt: '/collect/excerpt',
-                original: '/collect/original',
-                notes: '/collect/notes',
-                video: '/bit/video',
-                album: '/bit/album',
-                about: '/about'
-            },
-
             userInfoData: {},
             timelineInfoData: [],
             contentsInfoData: {},
             summaryInfoData: [],
             title: '',
-
             workData: {},
         };
     }
 
-    componentDidMount() {
-        let collapsedStatus = cookie.load("collapsedStatus");
-        if (typeof (collapsedStatus) !== 'undefined') {
-            let flag = true;
-            let offset = "80px";
-            if (collapsedStatus === 'false') {
-                flag = false;
-                offset = "200px"
-            }
-            this.setState({
-                collapsed: flag,
-                offsetWidth: offset,
-            })
-        }
-
+    init() {
         this.props.dispatch({
             type: 'homeModel/currentUserInfo',
         }).then(() => {
@@ -111,10 +136,24 @@ class HomeComponent extends React.Component {
         });
     }
 
+    componentDidMount() {
+        this.init()
+    }
+
+
     onMenuClick = (event) => {
         const { key } = event;
-        let pathName = this.state.menuData[key]
-        this.props.history.push(pathName)
+        if (key === 'top') {
+            console.log('回到最顶端');
+        }
+        else {
+            for (let i in menuList) {
+                if (menuList[i].key === key) {
+                    let pathName = menuList[i].pathName;
+                    this.props.history.push(pathName)
+                }
+            }
+        }
     };
 
 
@@ -124,170 +163,67 @@ class HomeComponent extends React.Component {
             <Layout theme='light'>
                 <Sider
                     width={65}
-                    style={{
-                        theme: 'light',
-                        height: '62vh',
-                        position: 'fixed',
-                        left: 0,
-                        background: '#fff',
-                        marginTop: 150,
-                        zIndex: 1,
-                        marginLeft: 10,
-                        borderRadius: 5,
-                        border: 1,
-                        borderColor: 'gray'
-                    }}
+                    className={styles.sider}
                 >
-
                     <Menu
                         theme="light"
-                        defaultSelectedKeys={['home']}
-                        openKeys={this.state.openKeys}
-                        onOpenChange={this.onOpenChange}
                         mode="inline"
-                        onClick={this.onMenuClick}
-                        style={{borderRadius: 5}}
+                        defaultSelectedKeys={['home']}
+                        className={styles.menu}
                         inlineIndent={16}
+                        onClick={this.onMenuClick}
                     >
-                        <Menu.Item key="excerpt" style={{fontSize: 1, textAlign: 'center'}}>摘录</Menu.Item>
-                        <Menu.Item key="original" style={{fontSize: 1, textAlign: 'center'}}>原创</Menu.Item>
-                        <Menu.Item key="notes" style={{fontSize: 1, textAlign: 'center'}}>随记</Menu.Item>
-                        <Menu.Item key="album" style={{fontSize: 1, textAlign: 'center'}}>相册</Menu.Item>
-                        <Menu.Item key="video" style={{fontSize: 1, textAlign: 'center'}}>视频</Menu.Item>
-                        <Menu.Item key="music" style={{fontSize: 1, textAlign: 'center'}}>音乐</Menu.Item>
-                        <Menu.Item key="draw" style={{fontSize: 1, textAlign: 'center'}}>绘画</Menu.Item>
-                        <Menu.Item key="program" style={{fontSize: 1, textAlign: 'center'}}>编程</Menu.Item>
-                        <Menu.Item key="game" style={{fontSize: 1, textAlign: 'center'}}>游戏</Menu.Item>
-                        
+                        {menuList.map(({ key, value }) =>
+                            (<Menu.Item key={key} className={styles.item}>{value}</Menu.Item>)
+                        )}
                     </Menu>
-                
                 </Sider>
+
                 <Layout>
                     <Header className={styles.header}>
                         <Row
-                            gutter={10}
-                            style={{ marginLeft: 1050 }}
+                            gutter={16}
+                            style={{ marginLeft: '30%' }}
                             type="flex"
-                            
                         >
-                            <Col><span><Badge count={5} style={{marginTop: -8}}>消息</Badge></span></Col>
+                            <Col style={{ margin: 'auto' }}>
+                                <Search
+                                    placeholder="你是人间最美四月天"
+                                    onSearch={() => ({})}
+                                    style={{ width: 220, outline: 'none' }}
+                                />
+                            </Col>
+                            <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
                             <Col><span>历史</span></Col>
-                            <Col><span>我的</span></Col>
-                            <Col><Button style={{backgroundColor: '#a9e0f3', color: '#fff', border: 'none'}}>去创作</Button></Col>
+                            <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col>
+                            <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
                         </Row>
                     </Header>
 
-                    <Content
-                        style={{
-                            background: '#fff',
-                            minHeight: 530,
-                            marginTop: 100,
-                            marginLeft: 90,
-                            width: 1100,
-                        }}
-                    >
+                    <Content className={styles.content}>
                         <Carousel autoplay className={styles.carousel}>
-                            <div>
-                                <img src={require('../../assets/imgs/1.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
-                            </div>
-                            <div>
-                                <img src={require('../../assets/imgs/2.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
-                            </div>
-                            <div>
-                                <img src={require('../../assets/imgs/3.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
-                            </div>
-                            <div>
-                                <img src={require('../../assets/imgs/4.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
-                            </div>
-                            <div>
-                                <img src={require('../../assets/imgs/5.jpeg')} alt="图片测试" style={{ width: (1280 - (this.state.collapsed ? 0 : 64)), height: 400 }} />
-                            </div>
+                            {imageNames.map((item) => (
+                                <div key={item}>
+                                    <img src={require(`../../assets/imgs/${item}.jpeg`)} alt="图片测试" className={styles.img} />
+                                </div>
+                            ))}
                         </Carousel>
 
-                        <div className={styles.home}>
-                            <div className={styles.left}>
-                                <div className={styles.intro}>
-                                    <div style={{ display: "flex", backgroundColor: '#a9e0f3' }}>
-                                        <Row
-                                            gutter={8}
-                                            style={{
-                                                margin: '8px 0',
-                                            }}
-                                            type="flex"
-                                            align="middle"
-                                        >
-                                            <Col span={12}>
-                                                <img src={require('../../assets/head.jpeg')} alt="图片测试" style={{ width: 200, height: 220 }} />
-                                            </Col>
-                                            <Col span={12} style={{ marginTop: 230 }}>
-
-                                            </Col>
-                                            <Col span={8}>
-                                                <b >{this.state.userInfoData.username}</b>
-                                            </Col>
-
-                                        </Row>
-                                        <Row gutter={12}
-                                            style={{
-                                                marginLeft: 30,
-                                                marginTop: 8,
-                                            }}
-                                            type="flex"
-                                        >
-                                            <Col span={24}>
-                                                专业：{this.state.userInfoData.major}
-                                            </Col>
-                                            <Col span={24}>
-                                                星座：{this.state.userInfoData.constellatory}
-                                            </Col>
-
-                                            <Col span={24}>
-                                                爱好：{this.state.userInfoData.hobby}
-                                            </Col>
-                                            <Col span={24}>
-                                                签名：{this.state.userInfoData.autograph}
-                                            </Col>
-                                            <Col span={23}>
-                                                地址：{this.state.userInfoData.address}
-                                            </Col>
-                                            <Col span={24}>
-                                                邮箱：{this.state.userInfoData.email}
-                                            </Col>
-                                        </Row>
-
-                                    </div>
-
-
-
-                                </div>
-                                <div className={styles.timeinfo}>
-                                    <Timeline>
-                                        {Array.isArray(this.state.timelineInfoData) && this.state.timelineInfoData.map(({ record, time }) => (
-                                            <Timeline.Item color="#aad6b3" key={time}>{record + ' ' + time}</Timeline.Item>
-                                        ))}
-                                    </Timeline>
-                                </div>
-                            </div>
-                            <div className={styles.right}>
-                                <List
-                                    grid={{
-                                        gutter: 16,
-                                        // xs: 1,
-                                        // sm: 2,
-                                        // md: 4,
-                                        lg: 5,
-                                        // xl: 6,
-                                        // xxl: 3,
-                                    }}
-                                    dataSource={this.state.summaryInfoData}
-                                    renderItem={item => (
-                                        <List.Item>
-                                            <Card title={item.name} style={{backgroundColor: '#a9e0f3'}}>{item.total}篇</Card>
-                                        </List.Item>
-                                    )}
-                                />
-                            </div>
-
+                        <div style={{ display: 'flex' }}>
+                            <Card
+                                title={'test'}
+                                id={'test'}
+                                style={{ width: '100%' }}
+                            >
+                                123
+                        </Card>
+                        {/* <Card
+                                title={'test'}
+                                id={'test'}
+                                style={{ width: '45%', marginLeft: '10%' }}
+                            >
+                                456
+                        </Card> */}
                         </div>
 
 
@@ -308,6 +244,6 @@ export default connect(({ homeModel, workModel }) => ({
     summaryInfoData: homeModel.summaryInfoData,
 
     workData: workModel.workData
-,
+    ,
 
 }))(HomeComponent);
