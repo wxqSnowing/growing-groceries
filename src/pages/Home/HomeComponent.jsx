@@ -170,7 +170,7 @@ class HomeComponent extends React.Component {
                         mode="inline"
                         defaultSelectedKeys={['home']}
                         className={styles.menu}
-                        inlineIndent={16}
+                        inlineIndent={0}
                         onClick={this.onMenuClick}
                     >
                         {menuList.map(({ key, value }) =>
@@ -209,14 +209,19 @@ class HomeComponent extends React.Component {
                             ))}
                         </Carousel>
 
-                        <div style={{ display: 'flex' }}>
-                            <Card
-                                title={'test'}
-                                id={'test'}
-                                style={{ width: '100%' }}
-                            >
-                                123
-                        </Card>
+                        <div style={{ display: 'flex' , marginTop: 10, marginLeft: 10}}>
+                            <div className={styles.card}>
+                                <Card
+                                    title={'test'}
+                                    id={'test'}
+                                    bordered={false}
+                                    style={{ width: 700, height:500 }}
+                                >
+                                    123
+                            </Card>
+                            </div>
+                            
+                            
                         {/* <Card
                                 title={'test'}
                                 id={'test'}
@@ -226,7 +231,9 @@ class HomeComponent extends React.Component {
                         </Card> */}
                         </div>
 
-
+                        <br></br>
+                        <br></br>
+                        <br></br>
 
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>

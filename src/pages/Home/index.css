@@ -6,10 +6,11 @@
     z-index: 1;
     background-color: lightblue;
     padding: 0 10px;
+    /* box-shadow: 2px 2px 5px lightpink; */
 }
 
 .sider {
-    height: 62vh;
+    height: 68vh;
     position: fixed;
     left: 0;
     background: '#fff';
@@ -18,21 +19,32 @@
     margin-left: 10px;
     border-radius: 10px;
     /* border: 0.5px solid lightgray; */
+    /* box-shadow: 2px 2px 5px lightpink; */
 }
 
 .sider .menu {
     border-radius: 10px;
+    z-index: 2;
+    /* margin: 0px 0px;
+    padding: 0px 0px; */
 }
 
 .menu .item {
-    font-size: 1px;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    font-size: 3px;
     text-align: center;
+    z-index: 0;
+    border-radius: 10px;
 }
 
 .menu .item:hover {
+    /* margin: 0px 0px; */
+    padding-left: -1px;
     font-size: 5px;
     text-align: left;
     color: white;
+    border-radius: 10px;
     background-color: lightblue;
 }
 
@@ -106,4 +118,8 @@
 .link:hover {
     color: pink;
     font-size: 20px;
+}
+
+.card {
+    box-shadow: 2px 2px 5px #a9e0f3
 }

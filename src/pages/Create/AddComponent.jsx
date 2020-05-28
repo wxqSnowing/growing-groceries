@@ -39,6 +39,8 @@ class AddComponent extends React.Component {
             title: '',
 
             workData: {},
+            result: '123',
+            postRes: {},
         };
     }
 
@@ -56,7 +58,31 @@ class AddComponent extends React.Component {
                 offsetWidth: offset,
             })
         }
-       
+        this.props.dispatch({
+            type: 'testModel/aTest',
+            payload: {
+                name: 'wxq'
+            }
+        }).then(() => {
+            this.setState({
+                result: this.props.result
+            }, () => {
+                console.log(this.state.result);
+            })
+        });
+
+        this.props.dispatch({
+            type: 'testModel/add',
+            payload: {
+                name: 'wxq'
+            }
+        }).then(() => {
+            this.setState({
+                postRes: this.props.postRes
+            }, () => {
+                console.log(this.state.postRes);
+            })
+        });
     }
 
     onCollapse = collapsed => {
@@ -175,6 +201,10 @@ class AddComponent extends React.Component {
                         }}
                     >
                        去创作
+                       <br></br>
+                       {this.state.result.message}
+                       <br></br>
+                       {this.state.postRes.message}
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
@@ -183,14 +213,14 @@ class AddComponent extends React.Component {
     }
 }
 
-export default connect(({ homeModel, workModel }) => ({
+export default connect(({ homeModel, testModel }) => ({
 
     userInfoData: homeModel.userInfoData,
     timelineInfoData: homeModel.timelineInfoData,
     contentsInfoData: homeModel.contentsInfoData,
     summaryInfoData: homeModel.summaryInfoData,
 
-    workData: workModel.workData
-,
+    result: testModel.result,
+    postRes: testModel.postRes,
 
 }))(AddComponent);
