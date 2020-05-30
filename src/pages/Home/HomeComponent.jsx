@@ -77,67 +77,22 @@ class HomeComponent extends React.Component {
             summaryInfoData: [],
             title: '',
             workData: {},
+
+            //数据初始化
+            searchString: '四月',
+            searchResult: [],
+            messageData: [],
+            historyData: [],
+            imagesData: [],
         };
     }
 
     init() {
-        this.props.dispatch({
-            type: 'homeModel/currentUserInfo',
-        }).then(() => {
-            this.setState({
-                userInfoData: this.props.userInfoData
-            }, () => {
-                console.log(this.state.userInfoData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'homeModel/getTimelineInfo',
-        }).then(() => {
-            this.setState({
-                timelineInfoData: this.props.timelineInfoData
-            }, () => {
-                console.log(this.state.timelineInfoData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'homeModel/contentsInfo',
-        }).then(() => {
-            this.setState({
-                contentsInfoData: this.props.contentsInfoData,
-                title: this.props.contentsInfoData.collect.notes[0].title,
-            }, () => {
-                console.log(this.state.contentsInfoData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'homeModel/getSummaryInfo',
-        }).then(() => {
-            this.setState({
-                summaryInfoData: this.props.summaryInfoData,
-            }, () => {
-                console.log(this.state.summaryInfoData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'workModel/getWorkDetail',
-            payload: {
-                id: 1,
-            }
-        }).then(() => {
-            this.setState({
-                workData: this.props.workData,
-            }, () => {
-                console.log(this.state.workData);
-            })
-        });
+       
     }
 
     componentDidMount() {
-        this.init()
+        this.init();
     }
 
 
@@ -155,6 +110,19 @@ class HomeComponent extends React.Component {
             }
         }
     };
+
+    search = () => {
+        this.props.dispatch({
+            type: 'homeModel/search',
+            payload: {
+                queryKey: this.state.searchString
+            }
+        }).then(()=>{
+            this.setState({
+                searchResult: this.props.searchResult,
+            })
+        })
+    }
 
 
     render() {
@@ -182,15 +150,21 @@ class HomeComponent extends React.Component {
                 <Layout>
                     <Header className={styles.header}>
                         <Row
-                            gutter={16}
+                            gutter={24}
                             style={{ marginLeft: '30%' }}
                             type="flex"
                         >
                             <Col style={{ margin: 'auto' }}>
                                 <Search
-                                    placeholder="你是人间最美四月天"
-                                    onSearch={() => ({})}
                                     style={{ width: 220, outline: 'none' }}
+                                    placeholder="你是人间最美四月天"
+                                    onSearch={this.search}
+                                    onPressEnter={this.search}
+                                    onChange={(e)=>{
+                                        this.setState({searchString: e.target.value}, ()=>{
+                                            this.search()
+                                        })
+                                    }}
                                 />
                             </Col>
                             <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
@@ -220,15 +194,6 @@ class HomeComponent extends React.Component {
                                     123
                             </Card>
                             </div>
-                            
-                            
-                        {/* <Card
-                                title={'test'}
-                                id={'test'}
-                                style={{ width: '45%', marginLeft: '10%' }}
-                            >
-                                456
-                        </Card> */}
                         </div>
 
                         <br></br>
@@ -243,14 +208,6 @@ class HomeComponent extends React.Component {
     }
 }
 
-export default connect(({ homeModel, workModel }) => ({
-
-    userInfoData: homeModel.userInfoData,
-    timelineInfoData: homeModel.timelineInfoData,
-    contentsInfoData: homeModel.contentsInfoData,
-    summaryInfoData: homeModel.summaryInfoData,
-
-    workData: workModel.workData
-    ,
-
+export default connect(({ homeModel}) => ({
+    searchResult: homeModel.searchResult,
 }))(HomeComponent);
