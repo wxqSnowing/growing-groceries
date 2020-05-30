@@ -174,7 +174,7 @@ class HomeComponent extends React.Component {
                                 />
                                 {this.state.searchResult.length > 0 && <Menu className={styles.search_menu}> 
                                     {this.state.searchResult.map((item)=>(<Menu.Item 
-                                            key={parseInt(item.worid)} 
+                                            key={parseInt(item.workid)} 
                                             className={styles.search_menu_item}
                                             onClick={this.searchItemClick}
                                         >
