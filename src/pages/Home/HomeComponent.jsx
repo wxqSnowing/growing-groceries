@@ -126,8 +126,11 @@ class HomeComponent extends React.Component {
         })
     }
 
-    searchItemClick = ({ item, key, keyPath, domEvent }) => {
-        console.log('iiiii',key);
+    searchItemClick = ({key}) => {
+        console.log('选择的workid是',key);
+        this.setState({
+            searchResult: []
+        })
     }
 
 
