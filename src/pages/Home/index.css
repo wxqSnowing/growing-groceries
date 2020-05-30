@@ -123,3 +123,24 @@
 .card {
     box-shadow: 2px 2px 5px #a9e0f3
 }
+
+.search_menu {
+    margin-top: -35px;
+    /* background-color: lightseagreen; */
+}
+
+.search_menu_item {
+    /* background-color: lightpink; */
+    padding: 0px 0px;
+    margin: 0px 0px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.search_menu_item:hover {
+    /* background-color: rebeccapurple; */
+    height: 30px;
+    line-height: 30px;
+    /* margin: 0px 0px; */
+    /* padding: 0px 0px; */
+}

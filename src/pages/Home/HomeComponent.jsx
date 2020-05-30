@@ -1,7 +1,7 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Menu, Card, Timeline, Carousel, Row, Col, List, Button, Badge, Input } from 'antd';
+import { Layout, Menu, Card, Dropdown, Carousel, Row, Col, List, Button, Badge, Input } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
@@ -84,11 +84,13 @@ class HomeComponent extends React.Component {
             messageData: [],
             historyData: [],
             imagesData: [],
+
+            seach_menu: null,
         };
     }
 
     init() {
-       
+
     }
 
     componentDidMount() {
@@ -117,11 +119,15 @@ class HomeComponent extends React.Component {
             payload: {
                 queryKey: this.state.searchString
             }
-        }).then(()=>{
+        }).then(() => {
             this.setState({
                 searchResult: this.props.searchResult,
             })
         })
+    }
+
+    searchItemClick = ({ item, key, keyPath, domEvent }) => {
+        console.log('iiiii',key);
     }
 
 
@@ -160,12 +166,23 @@ class HomeComponent extends React.Component {
                                     placeholder="你是人间最美四月天"
                                     onSearch={this.search}
                                     onPressEnter={this.search}
-                                    onChange={(e)=>{
-                                        this.setState({searchString: e.target.value}, ()=>{
+                                    onChange={(e) => {
+                                        this.setState({ searchString: e.target.value }, () => {
                                             this.search()
                                         })
                                     }}
                                 />
+                                {this.state.searchResult.length > 0 && <Menu className={styles.search_menu}> 
+                                    {this.state.searchResult.map((item)=>(<Menu.Item 
+                                            key={parseInt(item.worid)} 
+                                            className={styles.search_menu_item}
+                                            onClick={this.searchItemClick}
+                                        >
+                                        {item.description}
+                                    </Menu.Item>))}
+                                </Menu>
+                                }
+
                             </Col>
                             <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
                             <Col><span>历史</span></Col>
@@ -183,13 +200,13 @@ class HomeComponent extends React.Component {
                             ))}
                         </Carousel>
 
-                        <div style={{ display: 'flex' , marginTop: 10, marginLeft: 10}}>
+                        <div style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
                             <div className={styles.card}>
                                 <Card
                                     title={'test'}
                                     id={'test'}
                                     bordered={false}
-                                    style={{ width: 700, height:500 }}
+                                    style={{ width: 700, height: 500 }}
                                 >
                                     123
                             </Card>
@@ -208,6 +225,6 @@ class HomeComponent extends React.Component {
     }
 }
 
-export default connect(({ homeModel}) => ({
+export default connect(({ homeModel }) => ({
     searchResult: homeModel.searchResult,
 }))(HomeComponent);
