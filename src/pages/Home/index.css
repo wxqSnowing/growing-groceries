@@ -121,7 +121,7 @@
 }
 
 .card {
-    box-shadow: 2px 2px 5px #a9e0f3
+    box-shadow: 1px 1px 1px #a9e0f3;
 }
 
 .search_menu {
@@ -143,4 +143,15 @@
     line-height: 30px;
     /* margin: 0px 0px; */
     /* padding: 0px 0px; */
+}
+
+.card_title {
+    line-height: 35px;
+    /* color: lightblue; */
+}
+
+.card_gird {
+    width: 25%;
+    height: 200px;
+    text-align: center;
 }

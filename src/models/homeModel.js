@@ -7,7 +7,9 @@ const homeModel = {
         messageData: [],
         historyData: [],
         imagesData: [],
-        searchResult: []
+        //start
+        searchResult: [],
+        siderInfoResult: [],
     },
 
     effects: {
@@ -19,10 +21,23 @@ const homeModel = {
             });
         },
 
+        * getSiderInfo({ payload }, { call, put }) {
+            const response = yield call(HomeAPI.getSiderInfo, payload);
+            yield put({
+                type: 'getSiderImageData',
+                payload: response,
+            });
+        },
+
+
     },
+
     reducers: {
         getSearchData(state, action) {
             return {...state, searchResult: action.payload.data || {} };
+        },
+        getSiderImageData(state, action) {
+            return {...state, siderInfoResult: action.payload.data || {} };
         },
     },
 };

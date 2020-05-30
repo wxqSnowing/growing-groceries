@@ -1,0 +1,11 @@
+:global .ant-input-affix-wrapper .ant-input:focus {
+    border: none;
+    border-bottom: 1px solid white !important;
+    box-shadow: none;
+}
+
+:global .ant-card-grid {
+    padding: 0px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 0px 0px white;
+}

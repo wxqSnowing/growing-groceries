@@ -1,68 +1,79 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Menu, Card, Dropdown, Carousel, Row, Col, List, Button, Badge, Input } from 'antd';
+import global from './global.css';
+import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs } from 'antd';
+import ExcerptIcon from './Icon/ExcerptIcon';
+import OriginalIcon from './Icon/OriginalIcon';
+import NotesIcon from './Icon/NotesIcon';
+import AlbumIcon from './Icon/AlbumIcon';
+import VideoIcon from './Icon/VideoIcon';
+import MusicIcon from './Icon/MusicIcon';
+import DrawIcon from './Icon/DrawIcon';
+import ProgramIcon from './Icon/ProgramIcon';
+import GameIcon from './Icon/GameIcon';
+
 import React from 'react';
 import { connect } from 'dva';
-import cookie from 'react-cookies'
+// import cookie from 'react-cookies'
 import { Link } from 'umi';
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
+const { TabPane } = Tabs;
 
 const menuList = [
     {
         key: 'excerpt',
         value: '摘录',
-        pathName: '/collect/excerpt'
+        pathName: 'excerpt'
     },
     {
         key: 'original',
         value: '原创',
-        pathName: '/collect/excerpt'
+        pathName: 'original'
     },
     {
         key: 'notes',
         value: '随记',
-        pathName: '/collect/excerpt'
+        pathName: 'notes'
     },
     {
         key: 'album',
         value: '相册',
-        pathName: '/collect/excerpt'
+        pathName: 'album'
     },
     {
         key: 'video',
         value: '视频',
-        pathName: '/collect/excerpt'
+        pathName: 'video'
     },
     {
         key: 'music',
         value: '音乐',
-        pathName: '/collect/excerpt'
+        pathName: 'music'
     },
     {
         key: 'draw',
         value: '绘画',
-        pathName: '/collect/excerpt'
+        pathName: 'draw'
     },
     {
         key: 'program',
         value: '编程',
-        pathName: '/collect/excerpt'
+        pathName: 'program'
     },
     {
         key: 'game',
         value: '游戏',
-        pathName: '/collect/excerpt'
+        pathName: 'game'
     },
     {
         key: 'top',
-        value: 'ΛTop'
+        value: 'ΛTop',
+        pathName: 'excerpt'
     },
 ];
-
-const imageNames = ['1', '2', '3', '4', '5'];
 
 class HomeComponent extends React.Component {
 
@@ -81,37 +92,29 @@ class HomeComponent extends React.Component {
             //数据初始化
             searchString: '四月',
             searchResult: [],
-            messageData: [],
-            historyData: [],
             imagesData: [],
 
-            seach_menu: null,
+            messageData: [],
+            historyData: [],
+
         };
     }
 
     init() {
+        //获取siderImage信息
+        this.props.dispatch({
+            type: 'homeModel/getSiderInfo',
+        }).then(() => {
+            this.setState({
+                imagesData: this.props.siderInfoResult,
+            })
+        })
 
     }
 
     componentDidMount() {
         this.init();
     }
-
-
-    onMenuClick = (event) => {
-        const { key } = event;
-        if (key === 'top') {
-            console.log('回到最顶端');
-        }
-        else {
-            for (let i in menuList) {
-                if (menuList[i].key === key) {
-                    let pathName = menuList[i].pathName;
-                    this.props.history.push(pathName)
-                }
-            }
-        }
-    };
 
     search = () => {
         this.props.dispatch({
@@ -126,13 +129,12 @@ class HomeComponent extends React.Component {
         })
     }
 
-    searchItemClick = ({key}) => {
-        console.log('选择的workid是',key);
+    searchItemClick = ({ key }) => {
+        console.log('选择的workid是', key);
         this.setState({
             searchResult: []
         })
     }
-
 
     render() {
 
@@ -148,10 +150,9 @@ class HomeComponent extends React.Component {
                         defaultSelectedKeys={['home']}
                         className={styles.menu}
                         inlineIndent={0}
-                        onClick={this.onMenuClick}
                     >
-                        {menuList.map(({ key, value }) =>
-                            (<Menu.Item key={key} className={styles.item}>{value}</Menu.Item>)
+                        {menuList.map(({ key, value, pathName }) =>
+                            (<Menu.Item key={key} className={styles.item}><a href={`#${pathName}`}>{value}</a></Menu.Item>)
                         )}
                     </Menu>
                 </Sider>
@@ -166,7 +167,7 @@ class HomeComponent extends React.Component {
                             <Col style={{ margin: 'auto' }}>
                                 <Search
                                     style={{ width: 220, outline: 'none' }}
-                                    placeholder="你是人间最美四月天"
+                                    placeholder="四月"
                                     onSearch={this.search}
                                     onPressEnter={this.search}
                                     onChange={(e) => {
@@ -175,12 +176,12 @@ class HomeComponent extends React.Component {
                                         })
                                     }}
                                 />
-                                {this.state.searchResult.length > 0 && <Menu className={styles.search_menu}> 
-                                    {this.state.searchResult.map((item)=>(<Menu.Item 
-                                            key={parseInt(item.workid)} 
-                                            className={styles.search_menu_item}
-                                            onClick={this.searchItemClick}
-                                        >
+                                {this.state.searchResult.length > 0 && <Menu className={styles.search_menu}>
+                                    {this.state.searchResult.map((item) => (<Menu.Item
+                                        key={parseInt(item.workid)}
+                                        className={styles.search_menu_item}
+                                        onClick={this.searchItemClick}
+                                    >
                                         {item.description}
                                     </Menu.Item>))}
                                 </Menu>
@@ -196,29 +197,375 @@ class HomeComponent extends React.Component {
 
                     <Content className={styles.content}>
                         <Carousel autoplay className={styles.carousel}>
-                            {imageNames.map((item) => (
+                            {this.state.imagesData.map((item) => (
                                 <div key={item}>
-                                    <img src={require(`../../assets/imgs/${item}.jpeg`)} alt="图片测试" className={styles.img} />
+                                    <img className={styles.img} src={require(`../../assets/imgs/${item.id}.jpeg`)} alt={item.alt} title={item.title} />
                                 </div>
                             ))}
                         </Carousel>
 
-                        <div style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
+                        <div id='excerpt' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
                             <div className={styles.card}>
                                 <Card
-                                    title={'test'}
-                                    id={'test'}
+                                    title={<Row type="flex">
+                                        <Col><ExcerptIcon /></Col>
+                                        <Col className={styles.card_title}>摘录</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
                                     bordered={false}
-                                    style={{ width: 700, height: 500 }}
+                                    style={{ width: 800, height: 480 }}
                                 >
-                                    123
-                            </Card>
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
                             </div>
                         </div>
 
-                        <br></br>
-                        <br></br>
-                        <br></br>
+                        <div id='original' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><OriginalIcon /></Col>
+                                        <Col className={styles.card_title}>原创</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+                        <div id='notes' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><NotesIcon /></Col>
+                                        <Col className={styles.card_title}>随记</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+                        <div id='album' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><AlbumIcon /></Col>
+                                        <Col className={styles.card_title}>相册</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+                        <div id='video' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><VideoIcon /></Col>
+                                        <Col className={styles.card_title}>视频</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+
+                        <div id='music' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><MusicIcon /></Col>
+                                        <Col className={styles.card_title}>音乐</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+
+                        <div id='draw' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><DrawIcon /></Col>
+                                        <Col className={styles.card_title}>绘画</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+
+                        <div id='program' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><ProgramIcon /></Col>
+                                        <Col className={styles.card_title}>编程</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
+
+                        <div id='game' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+
+                            <div className={styles.card}>
+                                <Card
+                                    title={<Row type="flex">
+                                        <Col><GameIcon /></Col>
+                                        <Col className={styles.card_title}>游戏</Col>
+                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                    </Row>}
+                                    bordered={false}
+                                    style={{ width: 800, height: 480 }}
+                                >
+
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
+                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+
+                                </Card>
+                            </div>
+                            <div style={{ marginLeft: 20 }}>
+                                <Tabs defaultActiveKey="1">
+                                    <TabPane tab="排行" key="1">
+                                        Content of Tab Pane 1
+                                    </TabPane>
+                                    <TabPane tab="推荐" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="关注" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
+                                </Tabs>
+                            </div>
+                        </div>
+
 
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
@@ -230,4 +577,5 @@ class HomeComponent extends React.Component {
 
 export default connect(({ homeModel }) => ({
     searchResult: homeModel.searchResult,
+    siderInfoResult: homeModel.siderInfoResult,
 }))(HomeComponent);
