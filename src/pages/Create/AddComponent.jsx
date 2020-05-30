@@ -41,6 +41,7 @@ class AddComponent extends React.Component {
             workData: {},
             result: '123',
             postRes: {},
+            autograph: ''
         };
     }
 
@@ -61,28 +62,19 @@ class AddComponent extends React.Component {
         this.props.dispatch({
             type: 'testModel/aTest',
             payload: {
-                name: 'wxq'
+                uid: '1'
             }
         }).then(() => {
             this.setState({
                 result: this.props.result
             }, () => {
                 console.log(this.state.result);
+                this.setState({
+                    autograph: this.state.result.data.autograph
+                })
             })
         });
 
-        this.props.dispatch({
-            type: 'testModel/add',
-            payload: {
-                name: 'wxq'
-            }
-        }).then(() => {
-            this.setState({
-                postRes: this.props.postRes
-            }, () => {
-                console.log(this.state.postRes);
-            })
-        });
     }
 
     onCollapse = collapsed => {
@@ -202,9 +194,9 @@ class AddComponent extends React.Component {
                     >
                        去创作
                        <br></br>
-                       {this.state.result.message}
+                       {this.state.autograph}
                        <br></br>
-                       {this.state.postRes.message}
+                       {/* {this.state.postRes.message} */}
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
@@ -221,6 +213,6 @@ export default connect(({ homeModel, testModel }) => ({
     summaryInfoData: homeModel.summaryInfoData,
 
     result: testModel.result,
-    postRes: testModel.postRes,
+    // postRes: testModel.postRes,
 
 }))(AddComponent);

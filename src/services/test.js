@@ -1,7 +1,7 @@
 import request from 'umi-request';
 import { stringify } from 'qs'
 export async function aTest(params) {
-    return request(`/api/test?${stringify(params)}`);
+    return request(`/api/queryUser?${stringify(params)}`);
 }
 
 export async function add(params) {
