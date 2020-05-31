@@ -2,7 +2,7 @@
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import global from './global.css';
-import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs } from 'antd';
+import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar } from 'antd';
 import ExcerptIcon from './Icon/ExcerptIcon';
 import OriginalIcon from './Icon/OriginalIcon';
 import NotesIcon from './Icon/NotesIcon';
@@ -77,8 +77,6 @@ const menuList = [
 
 class HomeComponent extends React.Component {
 
-    rootSubmenuKeys = ['collect', 'bit'];
-
     constructor(props) {
         super(props);
         this.state = {
@@ -87,13 +85,14 @@ class HomeComponent extends React.Component {
             contentsInfoData: {},
             summaryInfoData: [],
             title: '',
-            workData: {},
 
-            //数据初始化
+            //数据初始化-----------------------------------
             searchString: '四月',
             searchResult: [],
             imagesData: [],
-
+            type: 'excerpt',
+            workData: [],
+            //---------------------------------------------
             messageData: [],
             historyData: [],
 
@@ -107,6 +106,18 @@ class HomeComponent extends React.Component {
         }).then(() => {
             this.setState({
                 imagesData: this.props.siderInfoResult,
+            })
+        })
+
+        //获取作品信息
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: this.state.type
+            }
+        }).then(() => {
+            this.setState({
+                workData: this.props.workData,
             })
         })
 
@@ -204,7 +215,7 @@ class HomeComponent extends React.Component {
                             ))}
                         </Carousel>
 
-                        <div id='excerpt' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='excerpt' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -217,34 +228,58 @@ class HomeComponent extends React.Component {
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
-
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-
+                                    {this.state.workData.length > 0 && this.state.workData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}>{item.title}</Card.Grid>
+                                    ))}
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
                                 <Tabs defaultActiveKey="1">
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                 </Tabs>
                             </div>
                         </div>
 
-                        <div id='original' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='original' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
                             <div className={styles.card}>
                                 <Card
                                     title={<Row type="flex">
@@ -283,7 +318,7 @@ class HomeComponent extends React.Component {
                             </div>
                         </div>
 
-                        <div id='notes' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='notes' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
                             <div className={styles.card}>
                                 <Card
                                     title={<Row type="flex">
@@ -322,7 +357,7 @@ class HomeComponent extends React.Component {
                             </div>
                         </div>
 
-                        <div id='album' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='album' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -362,7 +397,7 @@ class HomeComponent extends React.Component {
                             </div>
                         </div>
 
-                        <div id='video' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='video' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -403,7 +438,7 @@ class HomeComponent extends React.Component {
                         </div>
 
 
-                        <div id='music' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='music' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -444,7 +479,7 @@ class HomeComponent extends React.Component {
                         </div>
 
 
-                        <div id='draw' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='draw' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -485,7 +520,7 @@ class HomeComponent extends React.Component {
                         </div>
 
 
-                        <div id='program' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='program' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -526,7 +561,7 @@ class HomeComponent extends React.Component {
                         </div>
 
 
-                        <div id='game' style={{ display: 'flex', marginTop: 10, marginLeft: 10}}>
+                        <div id='game' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
 
                             <div className={styles.card}>
                                 <Card
@@ -578,4 +613,5 @@ class HomeComponent extends React.Component {
 export default connect(({ homeModel }) => ({
     searchResult: homeModel.searchResult,
     siderInfoResult: homeModel.siderInfoResult,
+    workData: homeModel.workData,
 }))(HomeComponent);

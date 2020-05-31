@@ -10,6 +10,7 @@ const homeModel = {
         //start
         searchResult: [],
         siderInfoResult: [],
+        workData: [],
     },
 
     effects: {
@@ -29,6 +30,13 @@ const homeModel = {
             });
         },
 
+        * getWorkInfo({ payload }, { call, put }) {
+            const response = yield call(HomeAPI.getWorkInfo, payload);
+            yield put({
+                type: 'getWorkData',
+                payload: response,
+            });
+        },
 
     },
 
@@ -36,8 +44,13 @@ const homeModel = {
         getSearchData(state, action) {
             return {...state, searchResult: action.payload.data || {} };
         },
+
         getSiderImageData(state, action) {
             return {...state, siderInfoResult: action.payload.data || {} };
+        },
+
+        getWorkData(state, action) {
+            return {...state, workData: action.payload.data || {} };
         },
     },
 };
