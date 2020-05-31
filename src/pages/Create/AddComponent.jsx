@@ -1,4 +1,3 @@
-
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar } from 'antd';
@@ -72,7 +71,7 @@ class AddComponent extends React.Component {
                     <Content style={{ width: '100%', marginTop: 5}}>
                         <MyEditComponent></MyEditComponent>
                     </Content>
-                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
+                    {/* <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer> */}
                 </Layout>
             </Layout>
         );

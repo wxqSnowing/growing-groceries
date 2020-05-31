@@ -1,7 +1,7 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import global from './global.css';
+import './global.css';
 import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar } from 'antd';
 import ExcerptIcon from './Icon/ExcerptIcon';
 import OriginalIcon from './Icon/OriginalIcon';

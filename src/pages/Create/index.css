@@ -5,3 +5,16 @@
     background-color: lightblue;
     padding: 0 10px;
 }
+
+.sub_btn {
+    background-color: lightblue;
+    border: 0px solid white;
+}
+
+.container {
+    margin-left: 20px;
+}
+
+.my_editor {
+    border: 1px solid lightblue;
+}
