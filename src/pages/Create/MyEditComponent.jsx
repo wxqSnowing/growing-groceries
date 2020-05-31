@@ -3,6 +3,7 @@ import React from 'react'
 import BraftEditor from 'braft-editor'
 import { Form, Input, Button, Row, Col} from 'antd'
 import styles from './index.css';
+import { connect } from 'dva';
 
 class MyEditComponent extends React.Component {
 
@@ -34,26 +35,47 @@ class MyEditComponent extends React.Component {
         event.preventDefault()
         this.props.form.validateFields((error, values) => {
             if (!error) {
-                const submitData = {
+                this.setState({
                     title: values.title,
                     type: values.type,
                     subtype: values.subtype,
                     tags: values.tags,
                     image: values.image,
-                    content: values.content.toRAW() // or values.content.toHTML()
-                }
-                console.log(submitData)
+                    content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
+                }, ()=>{
+                    this.props.dispatch({
+                        type: 'homeModel/publishWork',
+                        payload: {
+                            title: this.state.title,
+                            type: this.state.type,
+                            subtype: this.state.subtype,
+                            tags: this.state.tags,
+                            content: this.state.content,
+                            image: this.state.image,
+                            uid: this.state.uid,
+                        }
+                    }).then(() => {
+                        this.setState({
+                            publishResult: this.props.publishResult,
+                        },()=>{
+                            if(this.state.publishResult){
+                                setTimeout(()=>{
+                                    let w=window.open('about:blank');
+                                    w.location.href='/mine';
+                                }, 1000)
+                            }
+                        })
+                    })
+                })
             }
         })
-
     }
 
     render() {
 
-        const { getFieldDecorator } = this.props.form
+        const { getFieldDecorator } = this.props.form;
+        
         const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator', 'media']
-
-
         const itemLayout = {
             labelCol: { span: 1 },
             wrapperCol: { span: 22 },
@@ -152,6 +174,7 @@ class MyEditComponent extends React.Component {
                                 className={styles.my_editor}
                                 controls={controls}
                                 placeholder="请输入正文内容"
+                                contentStyle={{ height: 400 }}
                             />
                         )}
                     </Form.Item>
@@ -164,4 +187,7 @@ class MyEditComponent extends React.Component {
 
 }
 
-export default Form.create()(MyEditComponent)
+export default connect(({ homeModel }) => ({
+    workData: homeModel.workData,
+    publishResult: homeModel.publishResult,
+})) (Form.create()(MyEditComponent))

@@ -1,5 +1,5 @@
 import * as HomeAPI from '@/services/homeAPI';
-
+import { message } from 'antd';
 const homeModel = {
     namespace: 'homeModel',
     state: {
@@ -46,7 +46,6 @@ const homeModel = {
                 payload: response,
             });
         },
-
     },
 
     reducers: {
@@ -63,7 +62,10 @@ const homeModel = {
         },
 
         publishResultData(state, action) {
-            return {...state, publishResult: action.payload.message || {} };
+            if (action.payload.success) {
+                message.success(action.payload.message);
+            }
+            return {...state, publishResult: action.payload.success || {} };
         },
     },
 };

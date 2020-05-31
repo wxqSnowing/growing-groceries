@@ -27,23 +27,6 @@ class AddComponent extends React.Component {
     }
 
     init() {
-        this.props.dispatch({
-            type: 'homeModel/publishWork',
-            payload: {
-                // title=wxq&type=wxq&subtype=wxq&tags=wxq&content=wxq;wxq;wxq&image=1.jpeg&uid=1
-                title: this.state.title,
-                type: this.state.type,
-                subtype: this.state.subtype,
-                tags: this.state.tags,
-                content: this.state.content,
-                image: this.state.image,
-                uid: this.state.uid,
-            }
-        }).then(() => {
-            this.setState({
-                publishResult: this.props.publishResult,
-            })
-        })
     }
 
     componentDidMount() {
@@ -80,5 +63,4 @@ class AddComponent extends React.Component {
 
 export default connect(({ homeModel }) => ({
     workData: homeModel.workData,
-    publishResult: homeModel.publishResult,
 }))(AddComponent);
