@@ -1,5 +1,5 @@
 import * as HomeAPI from '@/services/homeAPI';
-import { message } from 'antd';
+
 const homeModel = {
     namespace: 'homeModel',
     state: {
@@ -11,7 +11,6 @@ const homeModel = {
         searchResult: [],
         siderInfoResult: [],
         workData: [],
-        publishResult: '',
     },
 
     effects: {
@@ -38,14 +37,6 @@ const homeModel = {
                 payload: response,
             });
         },
-
-        * publishWork({ payload }, { call, put }) {
-            const response = yield call(HomeAPI.publishWork, payload);
-            yield put({
-                type: 'publishResultData',
-                payload: response,
-            });
-        },
     },
 
     reducers: {
@@ -59,13 +50,6 @@ const homeModel = {
 
         getWorkData(state, action) {
             return {...state, workData: action.payload.data || {} };
-        },
-
-        publishResultData(state, action) {
-            if (action.payload.success) {
-                message.success(action.payload.message);
-            }
-            return {...state, publishResult: action.payload.success || {} };
         },
     },
 };
