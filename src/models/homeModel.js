@@ -11,6 +11,7 @@ const homeModel = {
         searchResult: [],
         siderInfoResult: [],
         workData: [],
+        publishResult: '',
     },
 
     effects: {
@@ -38,6 +39,14 @@ const homeModel = {
             });
         },
 
+        * publishWork({ payload }, { call, put }) {
+            const response = yield call(HomeAPI.publishWork, payload);
+            yield put({
+                type: 'publishResultData',
+                payload: response,
+            });
+        },
+
     },
 
     reducers: {
@@ -51,6 +60,10 @@ const homeModel = {
 
         getWorkData(state, action) {
             return {...state, workData: action.payload.data || {} };
+        },
+
+        publishResultData(state, action) {
+            return {...state, publishResult: action.payload.message || {} };
         },
     },
 };

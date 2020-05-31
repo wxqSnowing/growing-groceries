@@ -39,11 +39,8 @@
 }
 
 .menu .item:hover {
-    /* margin: 0px 0px; */
-    padding-left: -1px;
     font-size: 5px;
     text-align: left;
-    color: white;
     border-radius: 10px;
     background-color: lightblue;
 }
