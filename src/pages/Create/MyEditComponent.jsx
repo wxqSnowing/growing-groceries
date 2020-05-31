@@ -60,8 +60,9 @@ class MyEditComponent extends React.Component {
                         },()=>{
                             if(this.state.publishResult){
                                 setTimeout(()=>{
-                                    let w=window.open('about:blank');
-                                    w.location.href='/mine';
+                                    // let w=window.open('about:blank');
+                                    // w.location.href='/mine';
+                                    window.open("/mine", "_self");
                                 }, 1000)
                             }
                         })
