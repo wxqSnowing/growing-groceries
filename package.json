@@ -8,6 +8,7 @@
         "precommit": "lint-staged"
     },
     "dependencies": {
+        "ali-oss": "^6.8.0",
         "antd": "^3.19.5",
         "braft-editor": "^2.3.9",
         "dva": "^2.6.0-beta.6",

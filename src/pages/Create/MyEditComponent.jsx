@@ -4,7 +4,7 @@ import BraftEditor from 'braft-editor'
 import { Form, Input, Button, Row, Col, Select, Upload, message, Icon} from 'antd'
 import styles from './index.css';
 import { connect } from 'dva';
-import PicturesWall from './PicturesWall';
+import PicUploader from './PicUploader';
 
 const { Option } = Select;
 
@@ -106,7 +106,7 @@ class MyEditComponent extends React.Component {
                     type: values.type,
                     subtype: values.subtype.join('#'),
                     tags: values.tags.join('#'),
-                    image: values.image?"1.jpeg":"2.jpeg",
+                    image: values.image?values.image:"1.jpeg",
                     content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
                 }, ()=>{
                     this.props.dispatch({
@@ -260,7 +260,7 @@ class MyEditComponent extends React.Component {
                                     message: '请选择封面图',
                                 }],
                             })(
-                               <PicturesWall></PicturesWall>
+                                <PicUploader></PicUploader>
                             )}
                         </Form.Item>
                         </Col>
