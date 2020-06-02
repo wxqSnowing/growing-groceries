@@ -7,10 +7,10 @@ export async function publishWork(params) {
         data: params,
     });
 }
-//上传封面图
-export async function uploadWorkImage(params) {
-    return request('/api/add_work_image', {
-        method: 'POST',
-        data: params,
-    });
-}
+// //上传封面图
+// export async function uploadWorkImage(params) {
+//     return request('/api/add_work_image', {
+//         method: 'POST',
+//         data: params,
+//     });
+// }

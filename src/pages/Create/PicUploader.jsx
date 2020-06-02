@@ -1,6 +1,8 @@
 import OSS from 'ali-oss';
 import React from 'react';
-import { Upload, Icon, Spin } from 'antd';
+import { Upload, Icon, Spin,Button } from 'antd';
+import DelIcon from './Icon/DelIcon';
+import styles from './index.css';
 
 class PicUploader extends React.Component {
     constructor(props) {
@@ -8,9 +10,13 @@ class PicUploader extends React.Component {
         this.state = {
             show: false,
             changeShow: false,
+            fileName: '',
+            fileUrl: '',
         }
     }
-
+    delClick = ()=>{
+        this.setState({changeShow: false, show: false})
+    }
     render() {
         const uploadButton = (
             <div>
@@ -50,19 +56,19 @@ class PicUploader extends React.Component {
         };
 
         const beforeUpload = file => {
-            this.setState({ changeShow: false, show: true })
+            this.setState({ show: true })
             const floder = 'images';
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
                 UploadToOss(this, floder, file)
                     .then(data => {
-                        this.setState({ changeShow: false, show: true })
+                        this.setState({ show: true })
                         return data;
                     })
                     .then(data => {
-                        this.setState({ show: false, changeShow: true })
-                        console.log(data, 'data----------------')
+                        this.setState({ show: false, changeShow: true, fileName: file.name, fileUrl: data.res.requestUrls[0]});
+                        this.props.imageHandleChange(data.res.requestUrls[0]);
                     });
             };
             return false;
@@ -74,11 +80,9 @@ class PicUploader extends React.Component {
             listType: 'picture-card',
         };
         return (<div>
-            {this.state.show === true ? (
-                <Spin style={{ position: 'relative', left: '40px' }} />
-            ) : (
-                    <Upload {...uploadProps}>{uploadButton}</Upload>
-                )}
+            {(this.state.changeShow===false && this.state.show) && <Spin style={{ position: 'relative', left: '40px' }} />}
+            {(this.state.changeShow===false && this.state.show===false) && <Upload {...uploadProps}>{uploadButton}</Upload>}
+            {this.state.changeShow && (<div><a href={this.state.fileUrl}>{this.state.fileName}<Icon style={{marginLeft:20}} type="paper-clip" /></a><Button onClick={this.delClick} className={styles.del_icon}><DelIcon></DelIcon></Button></div>)}  
         </div>)
     }
 }

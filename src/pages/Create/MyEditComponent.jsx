@@ -106,7 +106,7 @@ class MyEditComponent extends React.Component {
                     type: values.type,
                     subtype: values.subtype.join('#'),
                     tags: values.tags.join('#'),
-                    image: values.image?values.image:"1.jpeg",
+                    image: this.state.image,
                     content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
                 }, ()=>{
                     this.props.dispatch({
@@ -163,6 +163,12 @@ class MyEditComponent extends React.Component {
         console.log(`标签信息更新后 ${value}`);
     }
 
+    imageHandleChange = (e) =>{
+        this.setState({image: e}, ()=>{
+            console.log(this.state.image)
+        })
+    }
+
     render() {
 
         const { getFieldDecorator } = this.props.form;
@@ -179,6 +185,11 @@ class MyEditComponent extends React.Component {
 
         const wItemLayout = {
             labelCol: { span: 5 },
+            wrapperCol: { span: 18 },
+        };
+
+        const uploadItemLayout = {
+            labelCol: { span: 3 },
             wrapperCol: { span: 18 },
         };
 
@@ -253,14 +264,14 @@ class MyEditComponent extends React.Component {
                     </Row>
                     <Row gutter={24} style={{width:'100%'}} type="flex">
                         <Col span={8} offset={-5}>
-                            <Form.Item label="封面" {...oItemLayout}>
+                            <Form.Item label="封面" {...uploadItemLayout} >
                             {getFieldDecorator('image', {
                                 rules: [{
-                                    required: true,
+                                    required: false,
                                     message: '请选择封面图',
                                 }],
                             })(
-                                <PicUploader></PicUploader>
+                                <PicUploader imageHandleChange={this.imageHandleChange.bind(this)}></PicUploader>
                             )}
                         </Form.Item>
                         </Col>

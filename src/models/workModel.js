@@ -27,13 +27,13 @@ const workModel = {
             });
         },
 
-        * uploadWorkImage({ payload }, { call, put }) {
-            const response = yield call(WorkAPI.uploadWorkImage, payload);
-            yield put({
-                type: 'uploadWorkImageData',
-                payload: response,
-            });
-        },
+        // * uploadWorkImage({ payload }, { call, put }) {
+        //     const response = yield call(WorkAPI.uploadWorkImage, payload);
+        //     yield put({
+        //         type: 'uploadWorkImageData',
+        //         payload: response,
+        //     });
+        // },
 
     },
     reducers: {
@@ -46,12 +46,12 @@ const workModel = {
             }
             return {...state, publishResult: action.payload.success || {} };
         },
-        uploadWorkImageData(state, action) {
-            if (action.payload.success) {
-                message.success(action.payload.message);
-            }
-            return {...state, uploadWorkImageResult: action.payload.url || {} };
-        },
+        // uploadWorkImageData(state, action) {
+        //     if (action.payload.success) {
+        //         message.success(action.payload.message);
+        //     }
+        //     return {...state, uploadWorkImageResult: action.payload.url || {} };
+        // },
     },
 };
 export default workModel;
