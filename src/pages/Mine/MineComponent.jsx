@@ -1,7 +1,7 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Timeline, Divider, Row, Col, Badge, Table, Button } from 'antd';
+import { Layout, Timeline, Divider, Row, Col, Table } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
