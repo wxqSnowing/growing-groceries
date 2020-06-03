@@ -92,6 +92,15 @@ class HomeComponent extends React.Component {
             imagesData: [],
             type: 'excerpt',
             workData: [],
+            excerptWorkData: [],
+            originalWorkData: [],
+            notesWorkData: [],
+            albumWorkData: [],
+            videoWorkData: [],
+            musicWorkData: [],
+            drawWorkData: [],
+            programWorkData: [],
+            gameWorkData: [],
             //---------------------------------------------
             messageData: [],
             historyData: [],
@@ -110,14 +119,103 @@ class HomeComponent extends React.Component {
         })
 
         //获取作品信息
+        //
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: this.state.type
+                type: 'excerpt'
             }
         }).then(() => {
             this.setState({
-                workData: this.props.workData,
+                excerptWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'original'
+            }
+        }).then(() => {
+            this.setState({
+                originalWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'notes'
+            }
+        }).then(() => {
+            this.setState({
+                notesWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'album'
+            }
+        }).then(() => {
+            this.setState({
+                albumWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'video'
+            }
+        }).then(() => {
+            this.setState({
+                videoWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'music'
+            }
+        }).then(() => {
+            this.setState({
+                musicWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'draw'
+            }
+        }).then(() => {
+            this.setState({
+                drawWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'program'
+            }
+        }).then(() => {
+            this.setState({
+                programWorkData: this.props.workData,
+            })
+        })
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: 'game'
+            }
+        }).then(() => {
+            this.setState({
+                gameWorkData: this.props.workData,
             })
         })
 
@@ -147,10 +245,67 @@ class HomeComponent extends React.Component {
         })
     }
 
+    changeContentClick = (e) => {
+        let newType = e.target.id.split('_')[0]
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfo',
+            payload: {
+                type: newType
+            }
+        }).then(() => {
+            if (newType === 'excerpt') {
+                this.setState({
+                    excerptWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'original') {
+                this.setState({
+                    originalWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'notes') {
+                this.setState({
+                    notesWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'album') {
+                this.setState({
+                    albumWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'video') {
+                this.setState({
+                    videoWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'music') {
+                this.setState({
+                    musicWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'draw') {
+                this.setState({
+                    drawWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'program') {
+                this.setState({
+                    programWorkData: this.props.workData,
+                })
+            }
+            if (newType === 'game') {
+                this.setState({
+                    gameWorkData: this.props.workData,
+                })
+            }
+
+        })
+    }
+
     render() {
 
         return (
-            <Layout theme='light'>
+            <Layout theme='light' style={{ minWidth: 1000 }}>
                 <Sider
                     width={65}
                     className={styles.sider}
@@ -200,7 +355,7 @@ class HomeComponent extends React.Component {
 
                             </Col>
                             <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
-                            <Col><span>历史</span></Col>
+                            {/* <Col><span>历史</span></Col> */}
                             <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col>
                             <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
                         </Row>
@@ -222,14 +377,14 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><ExcerptIcon /></Col>
                                         <Col className={styles.card_title}>摘录</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='excerpt_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
-                                    {this.state.workData.length > 0 && this.state.workData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird}>{item.title}</Card.Grid>
+                                    {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
                                     ))}
                                 </Card>
                             </div>
@@ -285,21 +440,15 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><OriginalIcon /></Col>
                                         <Col className={styles.card_title}>原创</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='original_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
-
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.originalWorkData.length > 0 && this.state.originalWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -324,21 +473,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><NotesIcon /></Col>
                                         <Col className={styles.card_title}>随记</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='notes_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.notesWorkData.length > 0 && this.state.notesWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -364,21 +508,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><AlbumIcon /></Col>
                                         <Col className={styles.card_title}>相册</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='album_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.albumWorkData.length > 0 && this.state.albumWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -404,21 +543,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><VideoIcon /></Col>
                                         <Col className={styles.card_title}>视频</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='video_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.videoWorkData.length > 0 && this.state.videoWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -445,21 +579,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><MusicIcon /></Col>
                                         <Col className={styles.card_title}>音乐</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='music_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.musicWorkData.length > 0 && this.state.musicWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -486,22 +615,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><DrawIcon /></Col>
                                         <Col className={styles.card_title}>绘画</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='draw_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-
+                                    {this.state.drawWorkData.length > 0 && this.state.drawWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
@@ -527,21 +650,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><ProgramIcon /></Col>
                                         <Col className={styles.card_title}>编程</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='program_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
+                                    {this.state.programWorkData.length > 0 && this.state.programWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
 
                                 </Card>
                             </div>
@@ -568,22 +686,16 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><GameIcon /></Col>
                                         <Col className={styles.card_title}>游戏</Col>
-                                        <Col offset={17}><Button>换一换</Button></Col>
+                                        <Col offset={17}><Button onClick={this.changeContentClick} id='game_change'>换一换</Button></Col>
                                         <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
                                 >
 
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content1</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content2</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content3</Card.Grid>
-                                    <Card.Grid className={styles.card_gird}>Content4</Card.Grid>
-
+                                    {this.state.gameWorkData.length > 0 && this.state.gameWorkData.map((item) => (
+                                        <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                    ))}
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
