@@ -1,0 +1,90 @@
+.header {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    z-index: 1;
+    background-color: lightblue;
+    padding: 0 10px;
+    /* box-shadow: 2px 2px 5px lightpink; */
+}
+
+.content {
+    margin-top: 100px;
+    background-color: white;
+}
+
+.logo {
+    height: 64px;
+    /* background: #aad6b3; */
+    background: url(../../assets/logo-big.png) no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.home {
+    display: flex;
+    margin-top: 10px;
+}
+
+.left {
+    padding: 8px;
+    width: 500px;
+    /* background-color: salmon; */
+}
+
+.right {
+    margin-left: 16px;
+    padding: 8px;
+    /* width: 620px; */
+    min-height: 200px;
+    /* background-color: #9c7beb; */
+}
+
+.intro {
+    position: relative;
+    width: 500px;
+    height: 280px;
+    /* background-color: #aad6b3; */
+}
+
+.timeinfo {
+    position: relative;
+    /* padding-top: 180px; */
+    margin-top: 5px;
+    padding: 8px;
+    width: 500px;
+    height: 200px;
+    /* background-color: royalblue; */
+}
+
+.carousel {
+    height: 400px;
+    /* background-color: #aad6b3; */
+}
+
+.img {
+    height: 400px;
+}
+
+.create_btn {
+    margin-left: 650px;
+    background: #a9e0f3;
+    color: #fff;
+    border: none;
+}
+
+.create_btn:hover {
+    margin-left: 650px;
+    background: pink;
+    color: white;
+    /* font-size: 20px; */
+}
+
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: pink;
+}

@@ -6,9 +6,11 @@ export default {
         component: '../layouts/index',
         routes: [
             { path: '/', component: '../pages/Home/HomeComponent' },
+
             { path: '/home', component: '../pages/Home/HomeComponent' },
             { path: '/create', component: '../pages/Create/AddComponent' },
             { path: '/mine', component: '../pages/Mine/MineComponent' },
+            { path: '/detail', component: '../pages/Detail/DetailComponent' },
         ]
     }, ],
     proxy: {

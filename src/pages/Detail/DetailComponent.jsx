@@ -1,7 +1,7 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Timeline, Divider, Row, Col, Table, Button } from 'antd';
+import { Layout, Timeline, Divider, Row, Col, Table } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
@@ -9,7 +9,7 @@ import formatUTC from '../utils/util'
 
 const { Header, Content, Footer } = Layout;
 
-class MineComponent extends React.Component {
+class DetailComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,28 +55,6 @@ class MineComponent extends React.Component {
                 console.log(this.state.timelineInfoData);
             })
         });
-
-        // this.props.dispatch({
-        //     type: 'mineModel/contentsInfo',
-        // }).then(() => {
-        //     this.setState({
-        //         contentsInfoData: this.props.contentsInfoData,
-        //         title: this.props.contentsInfoData.collect.notes[0].title,
-        //     }, () => {
-        //         console.log(this.state.contentsInfoData);
-        //     })
-        // });
-
-        // this.props.dispatch({
-        //     type: 'mineModel/getSummaryInfo',
-        // }).then(() => {
-        //     this.setState({
-        //         summaryInfoData: this.props.summaryInfoData,
-        //     }, () => {
-        //         console.log(this.state.summaryInfoData);
-        //     })
-        // });
-
     }
 
     componentDidMount() {
@@ -162,7 +140,7 @@ class MineComponent extends React.Component {
             },
             {
                 title: () => (<span style={{ color: 'lightblue' }}>创建时间</span>),
-                width: '10%',
+                width: '15%',
                 dataIndex: 'createtime',
                 key: 'createtime',
                 render: (text, record, index) => (
@@ -171,7 +149,7 @@ class MineComponent extends React.Component {
             },
             {
                 title: () => (<span style={{ color: 'lightblue' }}>更新时间</span>),
-                width: '10%',
+                width: '15%',
                 dataIndex: 'updatetime',
                 key: 'updatetime',
                 render: (text, record, index) => (
@@ -180,28 +158,16 @@ class MineComponent extends React.Component {
             },
             {
                 title: () => (<span style={{ color: 'lightblue' }}>操作</span>),
-                width: '40%',
+                width: '20%',
                 dataIndex: 'op',
                 key: 'op',
                 render: (text, record) => (
                     <span>
-                        <Button style={{ color: 'lightblue', border: '0 solid white' }} onClick={(e) => {
-                            e.preventDefault();
-                            this.props.history.push('/detail')
-                            console.log('--查看-----');
-                        }}>查看</Button>
+                        <span style={{ color: 'lightblue' }}>查看</span>
                         <Divider type="vertical" />
-                        <Button style={{ color: 'lightpink', border: '0 solid white' }} onClick={(e) => {
-                            e.preventDefault();
-                            // this.props.history.push('/edit')
-                            console.log('--编辑-----')
-                        }}>编辑</Button>
+                        <span style={{ color: 'pink' }}>编辑</span>
                         <Divider type="vertical" />
-                        <Button style={{ color: 'lightblue', border: '0 solid white' }} onClick={(e) => {
-                            e.preventDefault();
-                            alert('删除');
-                            console.log('--删除-----')
-                        }}>删除</Button>
+                        <span style={{ color: 'lightblue' }}>删除</span>
                     </span>
                 )
             },
@@ -224,10 +190,11 @@ class MineComponent extends React.Component {
                     </Header>
 
                     <Content className={styles.content}>
+                        ------------详情展示---------
                         <div className={styles.home}>
                             <div className={styles.left}>
                                 <div className={styles.intro}>
-                                    <div style={{ display: "flex", backgroundColor: '#a9e0f3' }}>
+                                    {/* <div style={{ display: "flex", backgroundColor: '#a9e0f3' }}>
                                         <Row
                                             gutter={8}
                                             style={{
@@ -276,37 +243,25 @@ class MineComponent extends React.Component {
 
                                     </div>
 
-
+ */}
 
                                 </div>
                                 <div className={styles.timeinfo}>
-                                    <Timeline>
+                                    {/* <Timeline>
                                         {Array.isArray(this.state.timelineInfoData) && this.state.timelineInfoData.map(({ record, time }) => (
                                             <Timeline.Item color="#aad6b3" key={time}>{record + ' ' + time}</Timeline.Item>
                                         ))}
-                                    </Timeline>
+                                    </Timeline> */}
                                 </div>
                             </div>
                             <div className={styles.right}>
-                                {/* <List
-                                    grid={{
-                                        gutter: 16,
-                                        lg: 5,
-                                    }}
-                                    dataSource={this.state.summaryInfoData}
-                                    renderItem={item => (
-                                        <List.Item>
-                                            <Card title={item.name} style={{backgroundColor: '#a9e0f3'}}>{item.total}篇</Card>
-                                        </List.Item>
-                                    )}
-                                /> */}
-                                <Table
+                                {/* <Table
                                     loading={this.state.data.length > 0 ? false : true}
                                     rowKey="workid"
                                     columns={columns}
                                     dataSource={this.state.data}
                                 >
-                                </Table>
+                                </Table> */}
                             </div>
 
                         </div>
@@ -326,4 +281,4 @@ export default connect(({ mineModel, userModel }) => ({
     mineWorkData: mineModel.mineWorkData,
     userInfoData: userModel.userInfoData,
 
-}))(MineComponent);
+}))(DetailComponent);
