@@ -43,10 +43,10 @@ class AddComponent extends React.Component {
                             gutter={24}
                             type="flex"
                         >
-                            <Col span={4} offset={3}><Link to={`/home`} className={styles.link}>首页</Link></Col>
-                            <Col offset={11}><span>头像</span></Col>
-                            <Col ><span>加入我们的第3天</span></Col>
-                            <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
+                            <Col span={4} offset={1}><Link to={`/home`} className={styles.link}>首页</Link></Col>
+                            {/* <Col offset={14}><span className={styles.link}>头像</span></Col> */}
+                            <Col offset={15}><span className={styles.link}>加入我们的第3天</span></Col>
+                            {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col>
                         </Row>
                     </Header>

@@ -203,7 +203,7 @@ class MyEditComponent extends React.Component {
                                 message: '请输入标题',
                             }],
                         })(
-                            <Input size="large" placeholder="请输入标题" />
+                            <Input size="large" placeholder="请填写文章标题" style={{border: '1px solid lightblue'}}/>
                         )}
                     </Form.Item>
                     <Row gutter={24} style={{width:'100%'}} type="flex">

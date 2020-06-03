@@ -387,9 +387,9 @@ class HomeComponent extends React.Component {
                                 }
 
                             </Col>
-                            <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col>
+                            {/* <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><span>历史</span></Col> */}
-                            <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col>
+                            <Col style={{ marginLeft: 200 }}><Link to={`/mine`} className={styles.link}>我的</Link></Col>
                             <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
                         </Row>
                     </Header>
@@ -410,8 +410,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><ExcerptIcon /></Col>
                                         <Col className={styles.card_title}>摘录</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='excerpt_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='excerpt_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -479,8 +479,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><OriginalIcon /></Col>
                                         <Col className={styles.card_title}>原创</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='original_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='original_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -549,8 +549,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><NotesIcon /></Col>
                                         <Col className={styles.card_title}>随记</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='notes_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='notes_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -621,8 +621,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><AlbumIcon /></Col>
                                         <Col className={styles.card_title}>相册</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='album_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='album_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -693,8 +693,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><VideoIcon /></Col>
                                         <Col className={styles.card_title}>视频</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='video_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='video_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -766,8 +766,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><MusicIcon /></Col>
                                         <Col className={styles.card_title}>音乐</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='music_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='music_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -839,8 +839,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><DrawIcon /></Col>
                                         <Col className={styles.card_title}>绘画</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='draw_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='draw_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -911,8 +911,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><ProgramIcon /></Col>
                                         <Col className={styles.card_title}>编程</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='program_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='program_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
@@ -984,8 +984,8 @@ class HomeComponent extends React.Component {
                                     title={<Row type="flex">
                                         <Col><GameIcon /></Col>
                                         <Col className={styles.card_title}>游戏</Col>
-                                        <Col offset={17}><Button onClick={this.changeContentClick} id='game_change'>换一换</Button></Col>
-                                        <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col>
+                                        <Col offset={19}><Button onClick={this.changeContentClick} id='game_change'>换一换</Button></Col>
+                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}

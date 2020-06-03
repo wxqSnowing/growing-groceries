@@ -7,6 +7,11 @@ export async function publishWork(params) {
         data: params,
     });
 }
+
+export async function getWorkDetail(id) {
+    return request(`/api/getWorkDetail?id=${id}`);
+}
+
 // //上传封面图
 // export async function uploadWorkImage(params) {
 //     return request('/api/add_work_image', {

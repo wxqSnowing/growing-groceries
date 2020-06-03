@@ -45,3 +45,11 @@
     border: 1px solid lightblue;
     background-color: lightblue;
 }
+
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: pink;
+}
