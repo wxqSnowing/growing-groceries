@@ -18,6 +18,8 @@ import { connect } from 'dva';
 // import cookie from 'react-cookies'
 import { Link } from 'umi';
 
+import formatUTC from '../utils/util'
+
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
 const { TabPane } = Tabs;
@@ -104,6 +106,13 @@ class HomeComponent extends React.Component {
             //---------------------------------------------
             messageData: [],
             historyData: [],
+            // --------------------------------------------
+            rankWorkData:[],
+            excerptRankData: [],
+            excerptRecommendWorkData: [],
+            recommendWorkData: [],
+            excerptFollowData: [],
+            // --------------------------------------------
 
         };
     }
@@ -216,6 +225,30 @@ class HomeComponent extends React.Component {
         }).then(() => {
             this.setState({
                 gameWorkData: this.props.workData,
+            })
+        })
+
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfoByRank',
+            payload: {
+                type: 'excerpt'
+            }
+        }).then(() => {
+            this.setState({
+                excerptRankData: this.props.rankWorkData,
+            })
+        })
+
+        //
+        this.props.dispatch({
+            type: 'homeModel/getWorkInfoByRecommend',
+            payload: {
+                type: 'excerpt'
+            }
+        }).then(() => {
+            this.setState({
+                excerptRecommendWorkData: this.props.rankWorkData,
             })
         })
 
@@ -382,6 +415,7 @@ class HomeComponent extends React.Component {
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
+                                    loading={this.state.excerptWorkData.length>0?false:true}
                                 >
                                     {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
                                         <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
@@ -389,16 +423,18 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                                <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            dataSource={this.state.workData}
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
                                                     <List.Item.Meta
                                                         title={item.title}
-                                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
                                                     />
                                                 </List.Item>
                                             )}
@@ -407,17 +443,20 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            dataSource={this.state.workData}
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
                                                     <List.Item.Meta
                                                         title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
                                                     />
                                                 </List.Item>
                                             )}
                                         />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
+                                    {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -429,7 +468,7 @@ class HomeComponent extends React.Component {
                                                 </List.Item>
                                             )}
                                         />
-                                    </TabPane>
+                                    </TabPane> */}
                                 </Tabs>
                             </div>
                         </div>
@@ -453,17 +492,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -487,17 +563,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -522,17 +635,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -557,17 +707,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -593,17 +780,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -628,17 +852,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -664,17 +925,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -699,17 +997,54 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1">
+                            <Tabs defaultActiveKey="1" style={{width: 270}}>
                                     <TabPane tab="排行" key="1">
-                                        Content of Tab Pane 1
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            dataSource={this.state.excerptRankData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
                                     <TabPane tab="推荐" key="2">
-                                        Content of Tab Pane 2
+                                        <List
+                                            itemLayout="horizontal"
+                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            dataSource={this.state.excerptRecommendWorkData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                        avatar={<Avatar src={item.image} />}
+                                                        description={formatUTC(item.createtime)}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
                                     </TabPane>
-                                    <TabPane tab="关注" key="3">
-                                        Content of Tab Pane 3
-                                    </TabPane>
+                                    {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
                                 </Tabs>
+                            
                             </div>
                         </div>
 
@@ -726,4 +1061,6 @@ export default connect(({ homeModel }) => ({
     searchResult: homeModel.searchResult,
     siderInfoResult: homeModel.siderInfoResult,
     workData: homeModel.workData,
+    rankWorkData: homeModel.rankWorkData,
+    recommendWorkData: homeModel.recommendWorkData,
 }))(HomeComponent);
