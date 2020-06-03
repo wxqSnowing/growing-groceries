@@ -107,7 +107,7 @@ class HomeComponent extends React.Component {
             messageData: [],
             historyData: [],
             // --------------------------------------------
-            rankWorkData:[],
+            rankWorkData: [],
             excerptRankData: [],
             excerptRecommendWorkData: [],
             recommendWorkData: [],
@@ -415,7 +415,7 @@ class HomeComponent extends React.Component {
                                     </Row>}
                                     bordered={false}
                                     style={{ width: 800, height: 480 }}
-                                    loading={this.state.excerptWorkData.length>0?false:true}
+                                    loading={this.state.excerptWorkData.length > 0 ? false : true}
                                 >
                                     {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
                                         <Card.Grid key={item.workid} className={styles.card_gird}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
@@ -423,11 +423,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -443,7 +443,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -492,11 +492,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -512,7 +512,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -539,7 +539,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -563,11 +563,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -583,7 +583,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -610,7 +610,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -635,11 +635,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -655,7 +655,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -682,7 +682,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -707,11 +707,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -727,7 +727,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -754,7 +754,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -780,11 +780,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -800,7 +800,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -827,7 +827,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -852,11 +852,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -872,7 +872,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -899,7 +899,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -925,11 +925,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -945,7 +945,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -972,7 +972,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 
@@ -997,11 +997,11 @@ class HomeComponent extends React.Component {
                                 </Card>
                             </div>
                             <div style={{ marginLeft: 20 }}>
-                            <Tabs defaultActiveKey="1" style={{width: 270}}>
+                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
                                     <TabPane tab="排行" key="1">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length>0?false:true}
+                                            loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -1017,7 +1017,7 @@ class HomeComponent extends React.Component {
                                     <TabPane tab="推荐" key="2">
                                         <List
                                             itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length>0?false:true}
+                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRecommendWorkData}
                                             renderItem={item => (
                                                 <List.Item>
@@ -1044,7 +1044,7 @@ class HomeComponent extends React.Component {
                                         />
                                     </TabPane> */}
                                 </Tabs>
-                            
+
                             </div>
                         </div>
 

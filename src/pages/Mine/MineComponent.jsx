@@ -19,12 +19,12 @@ class MineComponent extends React.Component {
         };
     }
 
-    init(){
+    init() {
         this.props.dispatch({
             type: 'mineModel/getMineWork',
             payload: {
                 uid: '1'
-            } 
+            }
         }).then(() => {
             this.setState({
                 data: this.props.mineWorkData
@@ -80,24 +80,24 @@ class MineComponent extends React.Component {
     }
 
     componentDidMount() {
-       this.init()
+        this.init()
     }
 
 
     render() {
         const columns = [
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>文章标题</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>文章标题</span>),
                 dataIndex: 'title',
                 width: '10%',
                 key: 'title',
             },
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>分类</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>分类</span>),
                 dataIndex: 'type',
                 width: '10%',
                 key: 'type',
-                render:(text, record, index)=>{
+                render: (text, record, index) => {
                     let mapInfo = [
                         {
                             key: 'excerpt',
@@ -140,8 +140,8 @@ class MineComponent extends React.Component {
                             value: 'ΛTop',
                         },
                     ];
-                    for(let i in mapInfo){
-                        if(mapInfo[i].key===text){
+                    for (let i in mapInfo) {
+                        if (mapInfo[i].key === text) {
                             return (<span>{mapInfo[i].value}</span>)
                         }
                     }
@@ -149,47 +149,47 @@ class MineComponent extends React.Component {
                 }
             },
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>二级分类</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>二级分类</span>),
                 width: '10%',
                 dataIndex: 'subtype',
                 key: 'subtype',
             },
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>标签</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>标签</span>),
                 width: '10%',
                 dataIndex: 'tags',
                 key: 'tags',
             },
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>创建时间</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>创建时间</span>),
                 width: '15%',
                 dataIndex: 'createtime',
                 key: 'createtime',
-                render: (text, record, index)=>(
-                 <span>{formatUTC(text)}</span>
-                )
-            },
-            {
-                title: ()=>(<span style={{color: 'lightblue'}}>更新时间</span>),
-                width: '15%',
-                dataIndex: 'updatetime',
-                key: 'updatetime',
-                render: (text, record, index)=>(
+                render: (text, record, index) => (
                     <span>{formatUTC(text)}</span>
                 )
             },
             {
-                title: ()=>(<span style={{color: 'lightblue'}}>操作</span>),
+                title: () => (<span style={{ color: 'lightblue' }}>更新时间</span>),
+                width: '15%',
+                dataIndex: 'updatetime',
+                key: 'updatetime',
+                render: (text, record, index) => (
+                    <span>{formatUTC(text)}</span>
+                )
+            },
+            {
+                title: () => (<span style={{ color: 'lightblue' }}>操作</span>),
                 width: '20%',
                 dataIndex: 'op',
                 key: 'op',
-                render:(text, record)=>(
+                render: (text, record) => (
                     <span>
-                        <span style={{color: 'lightblue'}}>查看</span>
+                        <span style={{ color: 'lightblue' }}>查看</span>
                         <Divider type="vertical" />
-                        <span style={{color: 'pink'}}>编辑</span>
+                        <span style={{ color: 'pink' }}>编辑</span>
                         <Divider type="vertical" />
-                        <span style={{color: 'lightblue'}}>删除</span>
+                        <span style={{ color: 'lightblue' }}>删除</span>
                     </span>
                 )
             },
@@ -205,7 +205,7 @@ class MineComponent extends React.Component {
                         >
                             <Col span={4} offset={1}><Link to={`/home`} className={styles.link}>首页</Link></Col>
                             {/* <Col offset={14}><span style={{color: 'white'}}>头像</span></Col> */}
-                            <Col offset={15}><span style={{color: 'white'}}>加入生活杂货铺的第3天</span></Col>
+                            <Col offset={15}><span style={{ color: 'white' }}>加入生活杂货铺的第3天</span></Col>
                             {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col> */}
                         </Row>
@@ -289,7 +289,7 @@ class MineComponent extends React.Component {
                                     )}
                                 /> */}
                                 <Table
-                                    loading={this.state.data.length>0?false:true}
+                                    loading={this.state.data.length > 0 ? false : true}
                                     rowKey="workid"
                                     columns={columns}
                                     dataSource={this.state.data}
@@ -300,8 +300,8 @@ class MineComponent extends React.Component {
                         </div>
 
                     </Content>
-                    
-                    
+
+
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>

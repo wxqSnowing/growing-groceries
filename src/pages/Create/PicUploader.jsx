@@ -1,6 +1,6 @@
 import OSS from 'ali-oss';
 import React from 'react';
-import { Upload, Icon, Spin,Button } from 'antd';
+import { Upload, Icon, Spin, Button } from 'antd';
 import DelIcon from './Icon/DelIcon';
 import styles from './index.css';
 
@@ -14,8 +14,8 @@ class PicUploader extends React.Component {
             fileUrl: '',
         }
     }
-    delClick = ()=>{
-        this.setState({changeShow: false, show: false})
+    delClick = () => {
+        this.setState({ changeShow: false, show: false })
     }
     render() {
         const uploadButton = (
@@ -67,7 +67,7 @@ class PicUploader extends React.Component {
                         return data;
                     })
                     .then(data => {
-                        this.setState({ show: false, changeShow: true, fileName: file.name, fileUrl: data.res.requestUrls[0]});
+                        this.setState({ show: false, changeShow: true, fileName: file.name, fileUrl: data.res.requestUrls[0] });
                         this.props.imageHandleChange(data.res.requestUrls[0]);
                     });
             };
@@ -80,9 +80,9 @@ class PicUploader extends React.Component {
             listType: 'picture-card',
         };
         return (<div>
-            {(this.state.changeShow===false && this.state.show) && <Spin style={{ position: 'relative', left: '40px' }} />}
-            {(this.state.changeShow===false && this.state.show===false) && <Upload {...uploadProps}>{uploadButton}</Upload>}
-            {this.state.changeShow && (<div><a href={this.state.fileUrl}>{this.state.fileName}<Icon style={{marginLeft:20}} type="paper-clip" /></a><Button onClick={this.delClick} className={styles.del_icon}><DelIcon></DelIcon></Button></div>)}  
+            {(this.state.changeShow === false && this.state.show) && <Spin style={{ position: 'relative', left: '40px' }} />}
+            {(this.state.changeShow === false && this.state.show === false) && <Upload {...uploadProps}>{uploadButton}</Upload>}
+            {this.state.changeShow && (<div><a href={this.state.fileUrl}>{this.state.fileName}<Icon style={{ marginLeft: 20 }} type="paper-clip" /></a><Button onClick={this.delClick} className={styles.del_icon}><DelIcon></DelIcon></Button></div>)}
         </div>)
     }
 }
