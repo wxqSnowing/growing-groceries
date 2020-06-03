@@ -7,16 +7,6 @@ export default {
         routes: [
             { path: '/', component: '../pages/Home/HomeComponent' },
             { path: '/home', component: '../pages/Home/HomeComponent' },
-
-            { path: '/collect/excerpt', component: '../pages/Collect/CollectExcerptComponent' },
-            { path: '/collect/original', component: '../pages/Collect/CollectOriginalComponent' },
-            { path: '/collect/notes', component: '../pages/Collect/CollectNotesComponent' },
-
-            { path: '/bit/album', component: '../pages/Bit/AlbumComponent' },
-            { path: '/bit/video', component: '../pages/Bit/VideoComponent' },
-
-            { path: '/about', component: '../pages/About/AboutComponent' },
-
             { path: '/create', component: '../pages/Create/AddComponent' },
             { path: '/mine', component: '../pages/Mine/MineComponent' },
         ]
