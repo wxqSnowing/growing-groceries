@@ -8,9 +8,16 @@ export async function publishWork(params) {
     });
 }
 
-export async function getWorkDetail(id) {
-    return request(`/api/getWorkDetail?id=${id}`);
+//查看详情
+export async function getWorkDetail(params) {
+    return request(`/api/get_work_detail_by_id?workid=${params.workid}`);
 }
+
+
+//删除
+
+
+
 
 // //上传封面图
 // export async function uploadWorkImage(params) {

@@ -17,28 +17,25 @@ class DetailComponent extends React.Component {
             userInfoData: {},
             data: [],
             workid: '1',
+            workDetailData: {},
         };
     }
 
     init() {
-        this.setState({ workid: this.props.location.query.workid })
-
-        
-
-        this.props.dispatch({
-            type: 'userModel/queryCurrent',
-            payload: {
-                uid: '1'
-            }
-        }).then(() => {
-            this.setState({
-                userInfoData: this.props.userInfoData
-            }, () => {
-                console.log(this.state.userInfoData);
-            })
-        });
-
-
+        this.setState({ workid: this.props.location.query.workid }, ()=>{
+            this.props.dispatch({
+                type: 'workModel/getWorkDetail',
+                payload: {
+                    workid: this.state.workid
+                }
+            }).then(() => {
+                this.setState({
+                    workDetailData: this.props.workDetailData
+                }, () => {
+                    console.log(this.state.workDetailData[0].content);
+                })
+            });
+        })
     }
 
     componentDidMount() {
@@ -65,95 +62,24 @@ class DetailComponent extends React.Component {
                     </Header>
 
                     <Content className={styles.content}>
-                        ------------详情展示---------
+                        {this.state.workDetailData.length>0 &&<h2 dangerouslySetInnerHTML={{__html: this.state.workDetailData[0].title}} style={{textAlign: 'center'}}></h2>}
                         <div className={styles.home}>
-                            <div className={styles.left}>
-                                <div className={styles.intro}>
-                                    {/* <div style={{ display: "flex", backgroundColor: '#a9e0f3' }}>
-                                        <Row
-                                            gutter={8}
-                                            style={{
-                                                margin: '8px 0',
-                                            }}
-                                            type="flex"
-                                            align="middle"
-                                        >
-                                            <Col span={12}>
-                                                <img src={require('../../assets/head.jpeg')} alt="头像" style={{ width: 200, height: 220 }} />
-                                            </Col>
-                                            <Col span={12} style={{ marginTop: 230 }}>
-                                            </Col>
-                                            <Col span={8}>
-                                                <b >{this.state.userInfoData.username}</b>
-                                            </Col>
 
-                                        </Row>
-                                        <Row gutter={12}
-                                            style={{
-                                                marginLeft: 30,
-                                                marginTop: 8,
-                                            }}
-                                            type="flex"
-                                        >
-                                            <Col span={24}>
-                                                专业：{this.state.userInfoData.major}
-                                            </Col>
-                                            <Col span={24}>
-                                                星座：{this.state.userInfoData.constellatory}
-                                            </Col>
-
-                                            <Col span={24}>
-                                                爱好：{this.state.userInfoData.hobby}
-                                            </Col>
-                                            <Col span={24}>
-                                                签名：{this.state.userInfoData.autograph}
-                                            </Col>
-                                            <Col span={23}>
-                                                地址：{this.state.userInfoData.address}
-                                            </Col>
-                                            <Col span={24}>
-                                                邮箱：{this.state.userInfoData.email}
-                                            </Col>
-                                        </Row>
-
-                                    </div>
-
- */}
-
-                                </div>
-                                <div className={styles.timeinfo}>
-                                    {/* <Timeline>
-                                        {Array.isArray(this.state.timelineInfoData) && this.state.timelineInfoData.map(({ record, time }) => (
-                                            <Timeline.Item color="#aad6b3" key={time}>{record + ' ' + time}</Timeline.Item>
-                                        ))}
-                                    </Timeline> */}
-                                </div>
-                            </div>
-                            <div className={styles.right}>
-                                {/* <Table
-                                    loading={this.state.data.length > 0 ? false : true}
-                                    rowKey="workid"
-                                    columns={columns}
-                                    dataSource={this.state.data}
-                                >
-                                </Table> */}
-                            </div>
-
+                            {this.state.workDetailData.length>0 && <div dangerouslySetInnerHTML={{__html: this.state.workDetailData[0].content}}></div>}
                         </div>
 
                     </Content>
 
 
-                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
+                    {/* <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer> */}
                 </Layout>
             </Layout>
         );
     }
 }
 
-export default connect(({ mineModel, userModel }) => ({
-    timelineInfoData: mineModel.timelineInfoData,
-    mineWorkData: mineModel.mineWorkData,
+export default connect(({ workModel, userModel }) => ({
+    workDetailData: workModel.workDetailData,
     userInfoData: userModel.userInfoData,
 
 }))(DetailComponent);

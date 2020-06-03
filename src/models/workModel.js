@@ -4,20 +4,19 @@ import { message } from 'antd';
 const workModel = {
     namespace: 'workModel',
     state: {
-        // workData: {},
+        workDetailData: {},
         //----
         publishResult: '',
         uploadWorkImageResult: '',
     },
     effects: {
-        // * getWorkDetail({ payload }, { call, put }) {
-        //     let id = payload.id;
-        //     const response = yield call(WorkAPI.getWorkDetail, id);
-        //     yield put({
-        //         type: 'getWorkDetailData',
-        //         payload: response,
-        //     });
-        // },
+        * getWorkDetail({ payload }, { call, put }) {
+            const response = yield call(WorkAPI.getWorkDetail, payload);
+            yield put({
+                type: 'getWorkDetailData',
+                payload: response,
+            });
+        },
 
         * publishWork({ payload }, { call, put }) {
             const response = yield call(WorkAPI.publishWork, payload);
@@ -37,9 +36,10 @@ const workModel = {
 
     },
     reducers: {
-        // getWorkDetailData(state, action) {
-        //     return {...state, workData: action.payload || {} };
-        // },
+        getWorkDetailData(state, action) {
+            return {...state, workDetailData: action.payload.data || {} };
+        },
+
         publishResultData(state, action) {
             if (action.payload.success) {
                 message.success(action.payload.message);
