@@ -16,22 +16,14 @@ class DetailComponent extends React.Component {
         this.state = {
             userInfoData: {},
             data: [],
+            workid: '1',
         };
     }
 
     init() {
-        this.props.dispatch({
-            type: 'mineModel/getMineWork',
-            payload: {
-                uid: '1'
-            }
-        }).then(() => {
-            this.setState({
-                data: this.props.mineWorkData
-            }, () => {
-                console.log(this.state.mineWorkData);
-            })
-        });
+        this.setState({ workid: this.props.location.query.workid })
+
+        
 
         this.props.dispatch({
             type: 'userModel/queryCurrent',
@@ -46,15 +38,7 @@ class DetailComponent extends React.Component {
             })
         });
 
-        this.props.dispatch({
-            type: 'mineModel/getTimelineInfo',
-        }).then(() => {
-            this.setState({
-                timelineInfoData: this.props.timelineInfoData
-            }, () => {
-                console.log(this.state.timelineInfoData);
-            })
-        });
+
     }
 
     componentDidMount() {
@@ -63,115 +47,6 @@ class DetailComponent extends React.Component {
 
 
     render() {
-        const columns = [
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>文章标题</span>),
-                dataIndex: 'title',
-                width: '10%',
-                key: 'title',
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>分类</span>),
-                dataIndex: 'type',
-                width: '10%',
-                key: 'type',
-                render: (text, record, index) => {
-                    let mapInfo = [
-                        {
-                            key: 'excerpt',
-                            value: '摘录',
-                        },
-                        {
-                            key: 'original',
-                            value: '原创',
-                        },
-                        {
-                            key: 'notes',
-                            value: '随记',
-                        },
-                        {
-                            key: 'album',
-                            value: '相册',
-                        },
-                        {
-                            key: 'video',
-                            value: '视频',
-                        },
-                        {
-                            key: 'music',
-                            value: '音乐',
-                        },
-                        {
-                            key: 'draw',
-                            value: '绘画',
-                        },
-                        {
-                            key: 'program',
-                            value: '编程',
-                        },
-                        {
-                            key: 'game',
-                            value: '游戏',
-                        },
-                        {
-                            key: 'top',
-                            value: 'ΛTop',
-                        },
-                    ];
-                    for (let i in mapInfo) {
-                        if (mapInfo[i].key === text) {
-                            return (<span>{mapInfo[i].value}</span>)
-                        }
-                    }
-                    return (<span></span>)
-                }
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>二级分类</span>),
-                width: '10%',
-                dataIndex: 'subtype',
-                key: 'subtype',
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>标签</span>),
-                width: '10%',
-                dataIndex: 'tags',
-                key: 'tags',
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>创建时间</span>),
-                width: '15%',
-                dataIndex: 'createtime',
-                key: 'createtime',
-                render: (text, record, index) => (
-                    <span>{formatUTC(text)}</span>
-                )
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>更新时间</span>),
-                width: '15%',
-                dataIndex: 'updatetime',
-                key: 'updatetime',
-                render: (text, record, index) => (
-                    <span>{formatUTC(text)}</span>
-                )
-            },
-            {
-                title: () => (<span style={{ color: 'lightblue' }}>操作</span>),
-                width: '20%',
-                dataIndex: 'op',
-                key: 'op',
-                render: (text, record) => (
-                    <span>
-                        <span style={{ color: 'lightblue' }}>查看</span>
-                        <Divider type="vertical" />
-                        <span style={{ color: 'pink' }}>编辑</span>
-                        <Divider type="vertical" />
-                        <span style={{ color: 'lightblue' }}>删除</span>
-                    </span>
-                )
-            },
-        ]
 
         return (
             <Layout theme='light'>

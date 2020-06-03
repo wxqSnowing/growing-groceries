@@ -187,8 +187,7 @@ class MineComponent extends React.Component {
                     <span>
                         <Button style={{ color: 'lightblue', border: '0 solid white' }} onClick={(e) => {
                             e.preventDefault();
-                            this.props.history.push('/detail')
-                            console.log('--查看-----');
+                            this.props.history.push(`/detail?workid=${record.workid}`)
                         }}>查看</Button>
                         <Divider type="vertical" />
                         <Button style={{ color: 'lightpink', border: '0 solid white' }} onClick={(e) => {
