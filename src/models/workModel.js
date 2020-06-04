@@ -8,8 +8,17 @@ const workModel = {
         //----
         publishResult: '',
         uploadWorkImageResult: '',
+        delWorkResult: '',
     },
     effects: {
+        * delteWorkById({ payload }, { call, put }) {
+            const response = yield call(WorkAPI.delteWorkById, payload);
+            yield put({
+                type: 'delteWorkByIdResult',
+                payload: response,
+            });
+        },
+
         * getWorkDetail({ payload }, { call, put }) {
             const response = yield call(WorkAPI.getWorkDetail, payload);
             yield put({
@@ -36,6 +45,13 @@ const workModel = {
 
     },
     reducers: {
+        delteWorkByIdResult(state, action) {
+            if (action.payload.success) {
+                message.success(action.payload.message);
+            }
+            return {...state, delWorkResult: action.payload.data || {} };
+        },
+
         getWorkDetailData(state, action) {
             return {...state, workDetailData: action.payload.data || {} };
         },

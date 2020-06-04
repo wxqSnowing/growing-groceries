@@ -15,7 +15,10 @@ export async function getWorkDetail(params) {
 
 
 //删除
+export async function delteWorkById(params) {
 
+    return request(`/api/delte_work_by_id?workid=${params.workid}`);
+}
 
 
 

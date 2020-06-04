@@ -16,6 +16,7 @@ class MineComponent extends React.Component {
         this.state = {
             userInfoData: {},
             data: [],
+            delWorkResult: '',
         };
     }
 
@@ -198,8 +199,31 @@ class MineComponent extends React.Component {
                         <Divider type="vertical" />
                         <Button style={{ color: 'lightblue', border: '0 solid white' }} onClick={(e) => {
                             e.preventDefault();
-                            alert('删除');
-                            console.log('--删除-----')
+                            console.log('--删除-----');
+                            this.props.dispatch({
+                                type: 'workModel/delteWorkById',
+                                payload: {
+                                    workid: record.workid
+                                }
+                            })
+                            .then(() => {
+                                this.setState({
+                                    delWorkResult: this.props.delWorkResult,
+                                });
+                                
+                                this.props.dispatch({
+                                    type: 'mineModel/getMineWork',
+                                    payload: {
+                                        uid: '1'
+                                    }
+                                }).then(() => {
+                                    this.setState({
+                                        data: this.props.mineWorkData
+                                    }, () => {
+                                        console.log(this.state.mineWorkData);
+                                    })
+                                });
+                            })
                         }}>删除</Button>
                     </span>
                 )
@@ -320,9 +344,10 @@ class MineComponent extends React.Component {
     }
 }
 
-export default connect(({ mineModel, userModel }) => ({
+export default connect(({ mineModel, userModel, workModel }) => ({
     timelineInfoData: mineModel.timelineInfoData,
     mineWorkData: mineModel.mineWorkData,
     userInfoData: userModel.userInfoData,
+    delWorkResult: workModel.delWorkResult,
 
 }))(MineComponent);
