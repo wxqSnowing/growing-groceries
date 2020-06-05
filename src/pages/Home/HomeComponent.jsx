@@ -406,7 +406,6 @@ class HomeComponent extends React.Component {
                         </Carousel>
 
                         <div id='excerpt' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
                             <div className={styles.card}>
                                 <Card
                                     title={<Row type="flex">
