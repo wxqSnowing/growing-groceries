@@ -350,7 +350,7 @@ class HomeComponent extends React.Component {
                 >   
                     <Anchor className={styles.menu}>
                         {menuList.map(({ key, value, pathName }) =>
-                            (<Link key={key} className={styles.item} href={`#${pathName}`} style={{display: 'block', backgroundColor: 'lightblue'}} title={value}></Link>)
+                            (<Link key={key} className={styles.item} href={`#${pathName}`} title={value}></Link>)
                         )}
                     </Anchor>
 

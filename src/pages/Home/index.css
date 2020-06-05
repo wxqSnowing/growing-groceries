@@ -34,24 +34,16 @@
     color: lightcoral;
     margin: 0px 0px;
     padding: 0px 0px;
-    font-size: 5px;
+    padding-right: 2px;
     text-align: center;
     z-index: 0;
     border-radius: 10px;
     background-color: white;
     margin-top: 10px;
-    /* width: 80px; */
     line-height: 5vh;
     height: 5vh;
+    font-size: 10px;
 }
-
-
-/* .menu .item:hover {
-    font-size: 5px;
-    text-align: left;
-    border-radius: 10px;
-    background-color: lightblue;
-} */
 
 .content {
     background: #fff;
@@ -124,11 +116,6 @@
     color: pink;
     font-size: 20px;
 }
-
-
-/* .card {
-    box-shadow: 1px 1px 1px #a9e0f3;
-} */
 
 .search_menu {
     margin-top: -35px;
