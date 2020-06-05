@@ -30,6 +30,11 @@ yarn start
 ```bash
 yarn add react-cookies
 ```
+### 图片
+![avatar](./src/assets/pre/1.jpg)
+![avatar](./src/assets/pre/2.jpg)
+![avatar](./src/assets/pre/3.jpg)
+![avatar](./src/assets/pre/4.jpg)
 
 ## 联系方式
 GitHub:  https://github.com/wxqSnowing
