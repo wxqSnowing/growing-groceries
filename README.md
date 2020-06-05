@@ -35,6 +35,7 @@ yarn add react-cookies
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg)
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg)
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg)
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg)
 
 ## 联系方式
 GitHub:  https://github.com/wxqSnowing
