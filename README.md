@@ -31,10 +31,14 @@ yarn start
 yarn add react-cookies
 ```
 ### 图片
-![avatar](./src/assets/pre/1.jpg)
-![avatar](./src/assets/pre/2.jpg)
-![avatar](./src/assets/pre/3.jpg)
-![avatar](./src/assets/pre/4.jpg)
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg
 
 ## 联系方式
 GitHub:  https://github.com/wxqSnowing
