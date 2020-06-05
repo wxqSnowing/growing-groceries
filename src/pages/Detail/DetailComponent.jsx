@@ -71,20 +71,21 @@ class DetailComponent extends React.Component {
                 comment: this.state.comment
             }
         }).then(
-            this.props.dispatch({
-                type: 'commentModel/queryCommentByWorkId',
-                payload: {
-                    workid: this.state.workid
-                }
-            }).then(() => {
-                this.setState({
-                    commentData: this.props.commentData
-                }, () => {
-                    console.log(this.state.commentData);
+            setTimeout(()=>{
+                this.props.dispatch({
+                    type: 'commentModel/queryCommentByWorkId',
+                    payload: {
+                        workid: this.state.workid
+                    }
+                }).then(() => {
+                    this.setState({
+                        commentData: this.props.commentData
+                    }, () => {
+                        console.log(this.state.commentData);
+                    })
                 })
-            })
+            }, 1000)
         )
-
     }
 
 
