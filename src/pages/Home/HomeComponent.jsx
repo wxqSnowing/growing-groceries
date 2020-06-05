@@ -440,7 +440,12 @@ class HomeComponent extends React.Component {
                                             loading={this.state.excerptRankData.length > 0 ? false : true}
                                             dataSource={this.state.excerptRankData}
                                             renderItem={item => (
-                                                <List.Item>
+                                                <List.Item
+                                                    onClick={(e)=>{
+                                                        e.preventDefault();
+                                                        this.props.history.push(`/detail?workid=${item.workid}`)
+                                                    }}
+                                                >
                                                     <List.Item.Meta
                                                         title={item.title}
                                                         avatar={<Avatar src={item.image} />}
