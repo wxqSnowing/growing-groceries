@@ -7,7 +7,7 @@ import { connect } from 'dva';
 
 const { Header, Content, Footer } = Layout;
 
-class LoginComponent extends React.Component {
+class RegisterComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -37,13 +37,13 @@ class LoginComponent extends React.Component {
                             justify='start'
                         >
                             <Col span={3} offset={3}><span className={styles.span} onClick={() => { this.props.history.push('/home') }}>首页</span></Col>
-                            <Col span={3}><span className={styles.span} onClick={() => { this.props.history.push('/register') }}>注册</span></Col>
+                            {/* <Col span={3}><span className={styles.span}>注册</span></Col> */}
                         </Row>
                     </Header>
 
                     <Content className={styles.content}>
                         {/* <div className={styles.banner}></div> */}
-                        <div className={styles.title}>登录</div>
+                        <div className={styles.title}>注册</div>
                         <Row gutter={24}
                             type="flex"
                         >
@@ -69,4 +69,4 @@ export default connect(({ mineModel, userModel, workModel }) => ({
     userInfoData: userModel.userInfoData,
     delWorkResult: workModel.delWorkResult,
 
-}))(LoginComponent);
+}))(RegisterComponent);
