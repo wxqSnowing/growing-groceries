@@ -27,9 +27,9 @@ class PicUploader extends React.Component {
         const fileList = [];
         const client = self => {
             return new OSS({
-                region: 'xxx',
-                accessKeyId: 'xxx',
-                accessKeySecret: 'xxx',
+                region: 'oss-cn-beijing',
+                accessKeyId: 'LTAI4G9Z5w4dSo4LTWJTnsNX',
+                accessKeySecret: 'jowuUUURmisYjdn3ZFKelQZtpCatXj',
                 bucket: 'image-bucket-6',
             });
         };
