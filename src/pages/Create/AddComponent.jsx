@@ -1,6 +1,7 @@
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar } from 'antd';
+
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';

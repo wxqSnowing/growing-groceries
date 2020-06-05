@@ -2,7 +2,7 @@
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import './global.css';
-import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar } from 'antd';
+import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar, Anchor } from 'antd';
 import ExcerptIcon from './Icon/ExcerptIcon';
 import OriginalIcon from './Icon/OriginalIcon';
 import NotesIcon from './Icon/NotesIcon';
@@ -12,17 +12,16 @@ import MusicIcon from './Icon/MusicIcon';
 import DrawIcon from './Icon/DrawIcon';
 import ProgramIcon from './Icon/ProgramIcon';
 import GameIcon from './Icon/GameIcon';
-
 import React from 'react';
 import { connect } from 'dva';
-// import cookie from 'react-cookies'
-import { Link } from 'umi';
+import cookie from 'react-cookies'
 
 import formatUTC from '../utils/util'
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
 const { TabPane } = Tabs;
+const { Link } = Anchor;
 
 const menuList = [
     {
@@ -82,12 +81,6 @@ class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfoData: {},
-            timelineInfoData: [],
-            contentsInfoData: {},
-            summaryInfoData: [],
-            title: '',
-
             //数据初始化-----------------------------------
             searchString: '四月',
             searchResult: [],
@@ -113,11 +106,23 @@ class HomeComponent extends React.Component {
             recommendWorkData: [],
             excerptFollowData: [],
             // --------------------------------------------
-
+            isLogin: false,
+            currentUser: {},
         };
     }
 
     init() {
+         // cookie.save("collapsedStatus", this.state.collapsed);
+        //从cookie中查询当前是否登录
+        let isLoginFlag = cookie.load("isLogin");
+        if (typeof (isLoginFlag) !== 'undefined'){
+            if(isLoginFlag==='false'){
+                this.setState({isLogin: false})
+            }else{
+                this.setState({isLogin: true})
+            }
+        }
+
         //获取siderImage信息
         this.props.dispatch({
             type: 'homeModel/getSiderInfo',
@@ -342,18 +347,13 @@ class HomeComponent extends React.Component {
                 <Sider
                     width={65}
                     className={styles.sider}
-                >
-                    <Menu
-                        theme="light"
-                        mode="inline"
-                        defaultSelectedKeys={['home']}
-                        className={styles.menu}
-                        inlineIndent={0}
-                    >
+                >   
+                    <Anchor className={styles.menu}>
                         {menuList.map(({ key, value, pathName }) =>
-                            (<Menu.Item key={key} className={styles.item}><a href={`#${pathName}`}>{value}</a></Menu.Item>)
+                            (<Link key={key} className={styles.item} href={`#${pathName}`} style={{display: 'block', backgroundColor: 'lightblue'}} title={value}></Link>)
                         )}
-                    </Menu>
+                    </Anchor>
+
                 </Sider>
 
                 <Layout>
@@ -389,7 +389,9 @@ class HomeComponent extends React.Component {
                             </Col>
                             {/* <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><span>历史</span></Col> */}
-                            <Col style={{ marginLeft: 200 }}><Link to={`/mine`} className={styles.link}>我的</Link></Col>
+                            {this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/mine') }}>我的</Button></Col>}
+                            {!this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
+                           
                             <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
                         </Row>
                     </Header>
@@ -421,7 +423,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
                                 </Card>
                             </div>
@@ -492,7 +494,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -566,7 +568,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -641,7 +643,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -716,7 +718,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -792,7 +794,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -868,7 +870,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
                                 </Card>
                             </div>
@@ -943,7 +945,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
 
                                 </Card>
@@ -1019,7 +1021,7 @@ class HomeComponent extends React.Component {
                                         <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180"></img>{item.title}</Card.Grid>
+                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
                                     ))}
                                 </Card>
                             </div>

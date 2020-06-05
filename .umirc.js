@@ -11,6 +11,7 @@ export default {
             { path: '/create', component: '../pages/Create/AddComponent' },
             { path: '/mine', component: '../pages/Mine/MineComponent' },
             { path: '/detail', component: '../pages/Detail/DetailComponent' },
+            { path: '/login', component: '../pages/Login/LoginComponent' },
         ]
     }, ],
     proxy: {

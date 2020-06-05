@@ -7,12 +7,12 @@ function formatUTC(utc_datetime) {
     var new_datetime = year_month_day + " " + hour_minute_second; // 2017-03-31 08:02:06
 
     // 处理成为时间戳
-    timestamp = new Date(Date.parse(new_datetime));
+    var timestamp = new Date(Date.parse(new_datetime));
     timestamp = timestamp.getTime();
     timestamp = timestamp / 1000;
 
     // 增加8个小时，北京时间比utc时间多八个时区
-    var timestamp = timestamp + 8 * 60 * 60;
+    timestamp = timestamp + 8 * 60 * 60;
 
     // 时间戳转为时间
     var beijing_datetime = new Date(parseInt(timestamp) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
