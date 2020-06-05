@@ -10,6 +10,10 @@
     box-shadow: 0px 0px 0px 0px white;
 }
 
+:global .ant-anchor-link-title {
+    /* color: #a9e0f3; */
+}
+
 :global .ant-anchor-link-active>.ant-anchor-link-title {
     color: #a9e0f3;
     font-size: 20px;

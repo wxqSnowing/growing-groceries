@@ -419,10 +419,16 @@ class HomeComponent extends React.Component {
                                     loading={this.state.excerptWorkData.length > 0 ? false : true}
                                 >
                                     {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
-                                            e.preventDefault();
-                                            this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
+                                        <Card.Grid 
+                                            key={item.workid} 
+                                            className={styles.card_gird} 
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                this.props.history.push(`/detail?workid=${item.workid}`)}}
+                                        >
+                                            <img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>
+                                            {item.title}
+                                        </Card.Grid>
                                     ))}
                                 </Card>
                             </div>

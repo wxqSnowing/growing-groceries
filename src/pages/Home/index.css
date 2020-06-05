@@ -22,9 +22,9 @@
 }
 
 .sider .menu {
-    border-radius: 10px;
+    /* border-radius: 10px; */
     z-index: 2;
-    background-color: lightblue;
+    background-color: #f0f2f5;
     height: 66vh;
     /* margin: 0px 0px;
     padding: 0px 0px; */

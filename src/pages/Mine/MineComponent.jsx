@@ -57,27 +57,6 @@ class MineComponent extends React.Component {
             })
         });
 
-        // this.props.dispatch({
-        //     type: 'mineModel/contentsInfo',
-        // }).then(() => {
-        //     this.setState({
-        //         contentsInfoData: this.props.contentsInfoData,
-        //         title: this.props.contentsInfoData.collect.notes[0].title,
-        //     }, () => {
-        //         console.log(this.state.contentsInfoData);
-        //     })
-        // });
-
-        // this.props.dispatch({
-        //     type: 'mineModel/getSummaryInfo',
-        // }).then(() => {
-        //     this.setState({
-        //         summaryInfoData: this.props.summaryInfoData,
-        //     }, () => {
-        //         console.log(this.state.summaryInfoData);
-        //     })
-        // });
-
     }
 
     componentDidMount() {
