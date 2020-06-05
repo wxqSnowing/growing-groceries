@@ -72,7 +72,7 @@ const menuList = [
     {
         key: 'top',
         value: 'ΛTop',
-        pathName: 'excerpt'
+        pathName: 'top'
     },
 ];
 
@@ -397,7 +397,7 @@ class HomeComponent extends React.Component {
                     </Header>
 
                     <Content className={styles.content}>
-                        <Carousel autoplay className={styles.carousel}>
+                        <Carousel autoplay className={styles.carousel}  id='top'>
                             {this.state.imagesData.map((item) => (
                                 <div key={item}>
                                     <img className={styles.img} src={require(`../../assets/imgs/${item.id}.jpeg`)} alt={item.alt} title={item.title} />
