@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
 import formatUTC from '../utils/util'
+import cookie from 'react-cookies'
 
 const { Header, Content, Footer } = Layout;
 
@@ -17,46 +18,51 @@ class MineComponent extends React.Component {
             userInfoData: {},
             data: [],
             delWorkResult: '',
+            timelineInfoData: [],
+            uid: 1,
         };
     }
 
     init() {
-        this.props.dispatch({
-            type: 'mineModel/getMineWork',
-            payload: {
-                uid: '1'
-            }
-        }).then(() => {
-            this.setState({
-                data: this.props.mineWorkData
-            }, () => {
-                console.log(this.state.mineWorkData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'userModel/queryCurrent',
-            payload: {
-                uid: '1'
-            }
-        }).then(() => {
-            this.setState({
-                userInfoData: this.props.userInfoData
-            }, () => {
-                console.log(this.state.userInfoData);
-            })
-        });
-
-        this.props.dispatch({
-            type: 'mineModel/getTimelineInfo',
-        }).then(() => {
-            this.setState({
-                timelineInfoData: this.props.timelineInfoData
-            }, () => {
-                console.log(this.state.timelineInfoData);
-            })
-        });
-
+        this.setState({
+            uid: parseInt(this.props.location.query.uid),
+        },()=>{
+            this.props.dispatch({
+                type: 'mineModel/getMineWork',
+                payload: {
+                    uid: this.state.uid
+                }
+            }).then(() => {
+                this.setState({
+                    data: this.props.mineWorkData
+                }, () => {
+                    // console.log(this.state.mineWorkData);
+                })
+            });
+    
+            this.props.dispatch({
+                type: 'userModel/queryCurrent',
+                payload: {
+                    uid: this.state.uid
+                }
+            }).then(() => {
+                this.setState({
+                    userInfoData: this.props.userInfoData
+                }, () => {
+                    // console.log(this.state.userInfoData);
+                })
+            });
+    
+            this.props.dispatch({
+                type: 'mineModel/getTimelineInfo',
+            }).then(() => {
+                this.setState({
+                    timelineInfoData: this.props.timelineInfoData
+                }, () => {
+                    // console.log(this.state.timelineInfoData);
+                })
+            });
+        })
     }
 
     componentDidMount() {
@@ -193,7 +199,7 @@ class MineComponent extends React.Component {
                                 this.props.dispatch({
                                     type: 'mineModel/getMineWork',
                                     payload: {
-                                        uid: '1'
+                                        uid: this.state.uid
                                     }
                                 }).then(() => {
                                     this.setState({
@@ -303,7 +309,7 @@ class MineComponent extends React.Component {
                                     )}
                                 /> */}
                                 <Table
-                                    loading={this.state.data.length > 0 ? false : true}
+                                    // loading={(this.state.data.length) > 0 ? false : true}
                                     rowKey="workid"
                                     columns={columns}
                                     dataSource={this.state.data}

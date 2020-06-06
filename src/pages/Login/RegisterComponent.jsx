@@ -7,14 +7,12 @@ import { connect } from 'dva';
 
 const { Header, Content, Footer } = Layout;
 
-class RegisterComponent extends React.Component {
+class LoginComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            userInfoData: {},
-            data: [],
-            delWorkResult: '',
+            loginResult: '',
         };
     }
 
@@ -37,17 +35,17 @@ class RegisterComponent extends React.Component {
                             justify='start'
                         >
                             <Col span={3} offset={3}><span className={styles.span} onClick={() => { this.props.history.push('/home') }}>首页</span></Col>
-                            {/* <Col span={3}><span className={styles.span}>注册</span></Col> */}
+                            <Col span={3}><span className={styles.span} onClick={() => { this.props.history.push('/login') }}>登录</span></Col>
                         </Row>
                     </Header>
 
                     <Content className={styles.content}>
                         {/* <div className={styles.banner}></div> */}
-                        <div className={styles.title}>注册</div>
+                        {/* <div className={styles.title}>注册</div> */}
                         <Row gutter={24}
                             type="flex"
                         >
-                            <Col span={12} className={styles.left}>
+                            <Col span={12} className={styles.left1}>
                                 左边
                             </Col>
                             <Col span={12} className={styles.right}>
@@ -63,10 +61,7 @@ class RegisterComponent extends React.Component {
     }
 }
 
-export default connect(({ mineModel, userModel, workModel }) => ({
-    timelineInfoData: mineModel.timelineInfoData,
-    mineWorkData: mineModel.mineWorkData,
-    userInfoData: userModel.userInfoData,
-    delWorkResult: workModel.delWorkResult,
+export default connect(({userModel}) => ({
+    loginResult: userModel.loginResult,
 
-}))(RegisterComponent);
+}))(LoginComponent);

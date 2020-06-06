@@ -17,9 +17,9 @@
 .logo {
     height: 64px;
     /* background: #aad6b3; */
-    background: url(../../assets/logo-big.png) no-repeat;
-    background-position: center center;
-    background-size: cover;
+    /* background: url(../../assets/logo-big.png) no-repeat; */
+    /* background-position: center center; */
+    /* background-size: cover; */
 }
 
 .home {

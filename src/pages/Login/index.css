@@ -28,23 +28,28 @@
 }
 
 .content .title {
-    width: 90vw;
+    /* width: 20vw; */
     min-height: 5vh;
-    margin-left: 5vw;
-    line-height: 5vh;
-    text-align: center;
+    /* margin-left: 5vw; */
+    /* line-height: 5vh; */
+    /* text-align: center; */
     color: gray;
     font-size: 5vh;
 }
 
 .content .left {
     /* background-color: salmon; */
-    padding-left: 5%;
+    background: url(../../assets/register.png) no-repeat;
+    margin-left: 6%;
+    margin-top: 4%;
+    background-position: center center;
+    background-size: cover;
 }
 
 .content .right {
     min-height: 70vh;
     padding-left: 5%;
+    padding-top: 4%;
     /* background-color: #9c7beb; */
 }
 
@@ -52,4 +57,17 @@
     background-color: white;
     font-size: 5px;
     text-align: center;
+}
+
+.login_form {
+    max-width: 300px;
+    margin-top: 3%;
+}
+
+.login_form_forgot {
+    float: right;
+}
+
+.login_form_button {
+    width: 100%;
 }
