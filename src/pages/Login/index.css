@@ -71,4 +71,13 @@
 
 .login_form_button {
     width: 100%;
+    background-color: lightblue;
+    color: white;
+    border: none;
+}
+
+.login_form_button:hover {
+    width: 100%;
+    background-color: lightblue;
+    color: gray;
 }
