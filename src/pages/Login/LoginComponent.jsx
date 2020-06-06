@@ -122,7 +122,7 @@ class Login extends React.Component {
                             </Col>
                         </Row>
                     </Content>
-
+                    
                     <Footer className={styles.footer}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>
