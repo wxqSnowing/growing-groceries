@@ -19,12 +19,13 @@ class MineComponent extends React.Component {
             data: [],
             delWorkResult: '',
             timelineInfoData: [],
-            uid: 1,
+            uid: parseInt(cookie.load('uid')) || 0,
             day: 1,
         };
     }
 
     init() {
+        console.log(cookie.load('uid'), '~~~~~~~', cookie.load('username'), '--------', cookie.load('password'));
         this.setState({
             uid: parseInt(this.props.location.query.uid),
         },()=>{
@@ -51,7 +52,7 @@ class MineComponent extends React.Component {
                     userInfoData: this.props.userInfoData,
                     day: this.props.userInfoData.regdate
                 }, () => {
-                    console.log(this.state.userInfoData);
+                    // console.log(this.state.userInfoData);
                 })
             });
     

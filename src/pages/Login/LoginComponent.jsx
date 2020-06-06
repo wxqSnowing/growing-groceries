@@ -40,9 +40,9 @@ class Login extends React.Component {
                     this.setState({loginResult: this.props.loginResult},()=>{
                         if (this.state.loginResult.success) {
                             let uid = this.state.loginResult.data[0].uid;
-                            if(values.remenber){
+                            if(values.remember){
                                 cookie.save("isLogin", true);
-                                cookie.save("username", values.username);
+                                cookie.save('username', values.username);
                                 cookie.save("password", values.password);
                                 cookie.save("uid", uid);
                             }

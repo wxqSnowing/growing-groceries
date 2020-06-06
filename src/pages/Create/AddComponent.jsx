@@ -5,6 +5,7 @@ import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, Lis
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
+import cookie from 'react-cookies';
 import MyEditComponent from './MyEditComponent';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -22,12 +23,15 @@ class AddComponent extends React.Component {
             tags: 'moon',
             content: 'moon today',
             image: '1.jpeg',
-            uid: '1',
+            uid: 0,
             publishResult: '',
         };
     }
 
     init() {
+        this.setState({
+            uid: parseInt(cookie.load('uid')) || 0,
+        })
     }
 
     componentDidMount() {
@@ -48,7 +52,7 @@ class AddComponent extends React.Component {
                             {/* <Col offset={14}><span className={styles.link}>头像</span></Col> */}
                             <Col offset={15}><span className={styles.link}>加入我们的第3天</span></Col>
                             {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
-                            <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col>
+                            <Col><Link to={`/mine?uid=${this.state.uid}`} className={styles.link}>我的</Link></Col>
                         </Row>
                     </Header>
 

@@ -127,7 +127,7 @@ class MyEditComponent extends React.Component {
                             if (this.state.publishResult) {
                                 setTimeout(() => {
                                     let w = window.open('about:blank');
-                                    w.location.href = '/mine';
+                                    w.location.href = `/mine?uid=${this.state.uid}`;
                                     // window.open("/mine", "_self");
                                 }, 1000)
                             }

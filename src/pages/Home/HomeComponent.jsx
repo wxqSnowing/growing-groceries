@@ -389,7 +389,7 @@ class HomeComponent extends React.Component {
                             </Col>
                             {/* <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><span>历史</span></Col> */}
-                            {this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/mine') }}>我的</Button></Col>}
+                            {this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push(`/mine?uid=${parseInt(cookie.load('uid'))}`) }}>我的</Button></Col>}
                             {!this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
                            
                             <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
