@@ -28,7 +28,7 @@ class MineComponent extends React.Component {
         console.log(cookie.load('uid'), '~~~~~~~', cookie.load('username'), '--------', cookie.load('password'));
         this.setState({
             uid: parseInt(this.props.location.query.uid),
-        },()=>{
+        }, () => {
             this.props.dispatch({
                 type: 'mineModel/getMineWork',
                 payload: {
@@ -41,7 +41,7 @@ class MineComponent extends React.Component {
                     // console.log(this.state.mineWorkData);
                 })
             });
-    
+
             this.props.dispatch({
                 type: 'userModel/queryCurrent',
                 payload: {
@@ -55,7 +55,7 @@ class MineComponent extends React.Component {
                     // console.log(this.state.userInfoData);
                 })
             });
-    
+
             this.props.dispatch({
                 type: 'mineModel/getTimelineInfo',
             }).then(() => {
@@ -194,24 +194,24 @@ class MineComponent extends React.Component {
                                     workid: record.workid
                                 }
                             })
-                            .then(() => {
-                                this.setState({
-                                    delWorkResult: this.props.delWorkResult,
-                                });
-                                
-                                this.props.dispatch({
-                                    type: 'mineModel/getMineWork',
-                                    payload: {
-                                        uid: this.state.uid
-                                    }
-                                }).then(() => {
+                                .then(() => {
                                     this.setState({
-                                        data: this.props.mineWorkData
-                                    }, () => {
-                                        console.log(this.state.mineWorkData);
-                                    })
-                                });
-                            })
+                                        delWorkResult: this.props.delWorkResult,
+                                    });
+
+                                    this.props.dispatch({
+                                        type: 'mineModel/getMineWork',
+                                        payload: {
+                                            uid: this.state.uid
+                                        }
+                                    }).then(() => {
+                                        this.setState({
+                                            data: this.props.mineWorkData
+                                        }, () => {
+                                            console.log(this.state.mineWorkData);
+                                        })
+                                    });
+                                })
                         }}>删除</Button>
                     </span>
                 )
@@ -228,9 +228,18 @@ class MineComponent extends React.Component {
                         >
                             <Col span={4} offset={1}><Link to={`/home`} className={styles.link}>首页</Link></Col>
                             {/* <Col offset={14}><span style={{color: 'white'}}>头像</span></Col> */}
-        <Col offset={15}><span style={{ color: 'red' }}>加入生活杂货铺{Math.floor(((new Date().getTime())-(new Date(this.state.day).getTime()))/(24*1000*3600))}天{}</span></Col>
+                            <Col offset={14}><span style={{ color: 'red' }}>加入生活杂货铺{Math.floor(((new Date().getTime()) - (new Date(this.state.day).getTime())) / (24 * 1000 * 3600))}天{}</span></Col>
                             {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
-                            {/* <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col> */}
+                            {/* <Col><Link to={`/mine`} className={styles.link}>退出</Link></Col> */}
+                            <Col><Button className={styles.loginout_btn} onClick={(e) => {
+                                e.preventDefault();
+                                console.log(cookie.load('uid'), '~~~~~~~', cookie.load('username'), '--------', cookie.load('password'));
+                                cookie.remove('uid');
+                                cookie.remove('password');
+                                cookie.remove('username');
+                                cookie.remove('isLogin');
+                                this.props.history.push(`/home`);
+                            }}>退出</Button></Col>
                         </Row>
                     </Header>
 

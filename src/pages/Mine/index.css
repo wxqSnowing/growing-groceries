@@ -88,3 +88,13 @@
 .link:hover {
     color: pink;
 }
+
+.loginout_btn {
+    color: lightblue;
+    background-color: lightgoldenrodyellow;
+}
+
+.loginout_btn:hover {
+    color: pink;
+    border: none;
+}

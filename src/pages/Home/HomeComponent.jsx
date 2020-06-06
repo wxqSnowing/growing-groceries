@@ -2,7 +2,7 @@
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import './global.css';
-import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar, Anchor } from 'antd';
+import { Layout, Menu, Card, Carousel, Row, Col, Button, Badge, Input, Tabs, List, Avatar, Anchor, message } from 'antd';
 import ExcerptIcon from './Icon/ExcerptIcon';
 import OriginalIcon from './Icon/OriginalIcon';
 import NotesIcon from './Icon/NotesIcon';
@@ -392,7 +392,14 @@ class HomeComponent extends React.Component {
                             {this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push(`/mine?uid=${parseInt(cookie.load('uid'))}`) }}>我的</Button></Col>}
                             {!this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
                            
-                            <Col><Button className={styles.create_btn} onClick={() => { this.props.history.push('/create') }}>去创作</Button></Col>
+                            <Col><Button className={styles.create_btn} onClick={(e) => {
+                                e.preventDefault();
+                                if(this.state.isLogin){
+                                    this.props.history.push('/create');
+                                }else{
+                                    message.info('请先登录');
+                                }
+                            }}>去创作</Button></Col>
                         </Row>
                     </Header>
 
