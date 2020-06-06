@@ -20,6 +20,7 @@ class MineComponent extends React.Component {
             delWorkResult: '',
             timelineInfoData: [],
             uid: 1,
+            day: 1,
         };
     }
 
@@ -47,9 +48,10 @@ class MineComponent extends React.Component {
                 }
             }).then(() => {
                 this.setState({
-                    userInfoData: this.props.userInfoData
+                    userInfoData: this.props.userInfoData,
+                    day: this.props.userInfoData.regdate
                 }, () => {
-                    // console.log(this.state.userInfoData);
+                    console.log(this.state.userInfoData);
                 })
             });
     
@@ -225,7 +227,7 @@ class MineComponent extends React.Component {
                         >
                             <Col span={4} offset={1}><Link to={`/home`} className={styles.link}>首页</Link></Col>
                             {/* <Col offset={14}><span style={{color: 'white'}}>头像</span></Col> */}
-                            <Col offset={15}><span style={{ color: 'white' }}>加入生活杂货铺的第3天</span></Col>
+        <Col offset={15}><span style={{ color: 'red' }}>加入生活杂货铺{Math.floor(((new Date().getTime())-(new Date(this.state.day).getTime()))/(24*1000*3600))}天{}</span></Col>
                             {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><Link to={`/mine`} className={styles.link}>我的</Link></Col> */}
                         </Row>
