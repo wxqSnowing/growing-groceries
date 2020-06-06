@@ -1,11 +1,12 @@
 
 import 'antd/dist/antd.css';
 import styles from './index.css';
-import { Layout, Input, Icon, Row, Col, List, Avatar, Button, Switch} from 'antd';
+import { Layout, Input, Icon, Row, Col, List, Avatar, Button, Switch, message} from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
-import formatUTC from '../utils/util'
+import formatUTC from '../utils/util';
+import cookie from 'react-cookies'
 
 const { Header, Content, Footer } = Layout;
 const { TextArea } = Input;
@@ -63,29 +64,34 @@ class DetailComponent extends React.Component {
     }
 
     publishCommentClick = () => {
-        this.props.dispatch({
-            type: 'commentModel/publishCommentByWorkId',
-            payload: {
-                workid: this.state.workid,
-                uid: this.state.isAnonymous?0: this.state.uid,
-                comment: this.state.comment
-            }
-        }).then(
-            setTimeout(()=>{
-                this.props.dispatch({
-                    type: 'commentModel/queryCommentByWorkId',
-                    payload: {
-                        workid: this.state.workid
-                    }
-                }).then(() => {
-                    this.setState({
-                        commentData: this.props.commentData
-                    }, () => {
-                        console.log(this.state.commentData);
+        if((typeof(cookie.load('isLogin'))!='undefined' && cookie.load('isLogin'))||this.state.isAnonymous){
+            this.props.dispatch({
+                type: 'commentModel/publishCommentByWorkId',
+                payload: {
+                    workid: this.state.workid,
+                    uid: this.state.isAnonymous?0: this.state.uid,
+                    comment: this.state.comment
+                }
+            }).then(
+                setTimeout(()=>{
+                    this.props.dispatch({
+                        type: 'commentModel/queryCommentByWorkId',
+                        payload: {
+                            workid: this.state.workid
+                        }
+                    }).then(() => {
+                        this.setState({
+                            commentData: this.props.commentData
+                        }, () => {
+                            console.log(this.state.commentData);
+                        })
                     })
-                })
-            }, 1000)
-        )
+                }, 1000)
+            )
+        }else{
+            message.info('请先登录');
+        }
+        
     }
 
 

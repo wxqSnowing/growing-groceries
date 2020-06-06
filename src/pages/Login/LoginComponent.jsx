@@ -4,7 +4,7 @@ import styles from './index.css';
 import { Layout, Row, Col, Form, Icon, Input, Button, Checkbox } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
-import cookie from 'react-cookies'
+import cookie from 'react-cookies';
 
 const { Header, Content, Footer } = Layout;
 
