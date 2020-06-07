@@ -31,18 +31,34 @@ yarn start
 yarn add react-cookies
 ```
 ### 图片
+#### 首页
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg)
 http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg
+
+#### 登录
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/6.jpg)
 http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/6.jpg
+
+#### 注册
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/7.png)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/7.png
+
+#### 我的
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg
+
+#### 创作页
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg
+
+#### 详情页
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg
+
+#### 评论
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg
+
 
 ## 联系方式
 GitHub:  https://github.com/wxqSnowing

@@ -63,7 +63,8 @@ class DetailComponent extends React.Component {
         this.init()
     }
 
-    publishCommentClick = () => {
+    publishCommentClick = (e) => {
+        e.preventDefault();
         if((typeof(cookie.load('isLogin'))!='undefined' && cookie.load('isLogin'))||this.state.isAnonymous){
             this.props.dispatch({
                 type: 'commentModel/publishCommentByWorkId',

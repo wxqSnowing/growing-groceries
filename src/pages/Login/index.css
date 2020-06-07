@@ -24,8 +24,15 @@
 }
 
 .content {
-    background-color: white;
-    min-height: 80vh;
+    /* background-color: white; */
+    min-height: 76vh;
+    /* background: url(../../assets/register_bg.jpg) no-repeat;
+    background-size: cover; */
+}
+
+.bg {
+    background: url(../../assets/register_bg.jpg) no-repeat;
+    background-size: cover;
 }
 
 .content .title {
@@ -40,7 +47,7 @@
 
 .content .left {
     /* background-color: salmon; */
-    background: url(../../assets/register.png) no-repeat;
+    background: url(../../assets/login_left.png) no-repeat;
     margin-left: 6%;
     margin-top: 4%;
     background-position: center center;
@@ -55,10 +62,15 @@
 }
 
 .footer {
-    background-color: white;
+    background-color: transparent;
     font-size: 5px;
     text-align: center;
 }
+
+
+/* 
+    登录样式
+*/
 
 .login_form {
     max-width: 300px;
@@ -80,4 +92,13 @@
     width: 100%;
     background-color: lightblue;
     color: gray;
+}
+
+
+/* 
+    注册样式
+*/
+
+.register_form {
+    max-width: 500px;
 }

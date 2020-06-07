@@ -47,6 +47,7 @@ const UserModel = {
         },
 
         getRegisterResult(state, action) {
+            message.info(action.payload.message);
             return {...state, registerResult: action.payload.data || {} };
         }
     },

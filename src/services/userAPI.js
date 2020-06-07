@@ -9,6 +9,7 @@ export async function login(params) {
 }
 
 export async function register(params) {
+    console.log('API------', params);
     return request('/api/add_user', {
         method: 'POST',
         data: params,

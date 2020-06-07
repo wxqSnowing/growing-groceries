@@ -109,9 +109,9 @@ class Login extends React.Component {
                                             valuePropName: 'checked',
                                             initialValue: true,
                                         })(<Checkbox>记住密码</Checkbox>)}
-                                        <a className={styles.login_form_forgot} href="">
+                                        {/* <a className={styles.login_form_forgot} href="">
                                             忘记密码
-                                        </a>
+                                        </a> */}
                                         <Button type="primary" htmlType="submit" className={styles.login_form_button}>
                                             登录
                                         </Button>
@@ -130,7 +130,7 @@ class Login extends React.Component {
     }
 }
 
-const LoginComponent = Form.create({ name: 'register' })(Login);
+const LoginComponent = Form.create({ name: 'login' })(Login);
 
 export default connect(({ userModel }) => ({
     loginResult: userModel.loginResult,
