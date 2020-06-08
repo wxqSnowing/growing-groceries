@@ -5,6 +5,7 @@ import { Form, Input, Button, Row, Col, Select, Upload, message, Icon } from 'an
 import styles from './index.css';
 import { connect } from 'dva';
 import PicUploader from './PicUploader';
+import cookie from 'react-cookies'
 
 const { Option } = Select;
 
@@ -88,7 +89,7 @@ class MyEditComponent extends React.Component {
             tags: 'moon',
             content: 'moon today',
             image: '1.jpeg',
-            uid: '1',
+            uid: parseInt(cookie.load('uid')),
             publishResult: '',
         }
     }
