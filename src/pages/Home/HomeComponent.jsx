@@ -278,6 +278,7 @@ class HomeComponent extends React.Component {
 
     searchItemClick = ({ key }) => {
         console.log('选择的workid是', key);
+        this.props.history.push(`/detail?workid=${key}`);
         this.setState({
             searchResult: []
         })
