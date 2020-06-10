@@ -1,8 +1,11 @@
-/* :global .ant-input-affix-wrapper .ant-input:focus {
-    border: none;
-    border-bottom: 1px solid white !important;
-    box-shadow: none;
-} */
+:global .ant-card-head {
+    padding: 0 0px;
+    text-align: center;
+}
+
+:global .ant-card-head-title {
+    padding: 10px 0;
+}
 
 :global .ant-card-grid {
     padding: 0px;
@@ -10,8 +13,25 @@
     box-shadow: 0px 0px 0px 0px white;
 }
 
-:global .ant-anchor-link-title {
-    /* color: #a9e0f3; */
+:global .ant-tabs-nav .ant-tabs-tab:hover {
+    color: #a9e0f3;
+}
+
+:global .ant-tabs-ink-bar {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 0;
+    height: 2px;
+    background-color: #a9e0f3;
+    transform-origin: 0 0;
+}
+
+:global .ant-tabs-nav .ant-tabs-tab-active {
+    color: #a9e0f3;
+    font-weight: 500;
 }
 
 :global .ant-anchor-link-active>.ant-anchor-link-title {

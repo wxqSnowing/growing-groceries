@@ -102,8 +102,9 @@ class HomeComponent extends React.Component {
             // --------------------------------------------
             rankWorkData: [],
             excerptRankData: [],
-            excerptRecommendWorkData: [],
             recommendWorkData: [],
+            excerptRecommendWorkData: [],
+
             excerptFollowData: [],
             // --------------------------------------------
             isLogin: false,
@@ -112,14 +113,14 @@ class HomeComponent extends React.Component {
     }
 
     init() {
-         // cookie.save("collapsedStatus", this.state.collapsed);
+        // cookie.save("collapsedStatus", this.state.collapsed);
         //从cookie中查询当前是否登录
         let isLoginFlag = cookie.load("isLogin");
-        if (typeof (isLoginFlag) !== 'undefined'){
-            if(isLoginFlag==='false'){
-                this.setState({isLogin: false})
-            }else{
-                this.setState({isLogin: true})
+        if (typeof (isLoginFlag) !== 'undefined') {
+            if (isLoginFlag === 'false') {
+                this.setState({ isLogin: false })
+            } else {
+                this.setState({ isLogin: true })
             }
         }
 
@@ -285,6 +286,7 @@ class HomeComponent extends React.Component {
     }
 
     changeContentClick = (e) => {
+        e.preventDefault();
         let newType = e.target.id.split('_')[0]
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
@@ -344,11 +346,11 @@ class HomeComponent extends React.Component {
     render() {
 
         return (
-            <Layout theme='light' style={{ minWidth: 1000 }}>
+            <Layout theme='light' >
                 <Sider
                     width={65}
                     className={styles.sider}
-                >   
+                >
                     <Anchor className={styles.menu}>
                         {menuList.map(({ key, value, pathName }) =>
                             (<Link key={key} className={styles.item} href={`#${pathName}`} title={value}></Link>)
@@ -363,7 +365,7 @@ class HomeComponent extends React.Component {
                             gutter={24}
                             type="flex"
                         >
-                            <Col 
+                            <Col
                                 span={6}
                                 offset={6}
                             >
@@ -392,11 +394,11 @@ class HomeComponent extends React.Component {
                             </Col>
                             {this.state.isLogin && <Col span={2} offset={7}><Button className={styles.create_btn} onClick={() => { this.props.history.push(`/mine?uid=${parseInt(cookie.load('uid'))}`) }}>我的</Button></Col>}
                             {!this.state.isLogin && <Col span={2} offset={7}><Button className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
-                            <Col  span={2} offset={1}><Button className={styles.create_btn} onClick={(e) => {
+                            <Col span={2} offset={1}><Button className={styles.create_btn} onClick={(e) => {
                                 e.preventDefault();
-                                if(this.state.isLogin){
+                                if (this.state.isLogin) {
                                     this.props.history.push('/create');
-                                }else{
+                                } else {
                                     message.info('请先登录');
                                 }
                             }}>去创作</Button></Col>
@@ -404,7 +406,7 @@ class HomeComponent extends React.Component {
                     </Header>
 
                     <Content className={styles.content}>
-                        <Carousel autoplay className={styles.carousel}  id='top'>
+                        <Carousel autoplay className={styles.carousel} id='top'>
                             {this.state.imagesData.map((item) => (
                                 <div key={item}>
                                     <img className={styles.img} src={require(`../../assets/imgs/${item.id}.jpeg`)} alt={item.alt} title={item.title} />
@@ -412,145 +414,71 @@ class HomeComponent extends React.Component {
                             ))}
                         </Carousel>
 
-                        <div id='excerpt' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><ExcerptIcon /></Col>
-                                        <Col className={styles.card_title}>摘录</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='excerpt_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                    loading={this.state.excerptWorkData.length > 0 ? false : true}
-                                >
-                                    {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
-                                        <Card.Grid 
-                                            key={item.workid} 
-                                            className={styles.card_gird} 
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                this.props.history.push(`/detail?workid=${item.workid}`)}}
-                                        >
-                                            <img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>
-                                            {item.title}
-                                        </Card.Grid>
-                                    ))}
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item
-                                                    onClick={(e)=>{
-                                                        e.preventDefault();
-                                                        this.props.history.push(`/detail?workid=${item.workid}`)
-                                                    }}
-                                                >
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item >
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
-                                        <List
-                                            itemLayout="horizontal"
-                                            dataSource={this.state.workData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane> */}
-                                </Tabs>
-                            </div>
-                        </div>
-
-                        <div id='original' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><OriginalIcon /></Col>
-                                        <Col className={styles.card_title}>原创</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='original_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-                                    {this.state.originalWorkData.length > 0 && this.state.originalWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        <div id='excerpt' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex" align="bottom">
+                                    <Col span={2} style={{textAlign: 'center'}}><ExcerptIcon />摘录</Col>
+                                    <Col span={3} offset={19}><Button onClick={this.changeContentClick} id='excerpt_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.excerptWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.excerptWorkData.length > 0 && this.state.excerptWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
 
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -563,68 +491,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
 
-                        <div id='notes' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><NotesIcon /></Col>
-                                        <Col className={styles.card_title}>随记</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='notes_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.notesWorkData.length > 0 && this.state.notesWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        <div id='original' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><OriginalIcon /></Col>
+                                    <Col className={styles.card_title}>原创</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='original_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.originalWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.originalWorkData.length > 0 && this.state.originalWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -637,69 +571,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
 
-                        <div id='album' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><AlbumIcon /></Col>
-                                        <Col className={styles.card_title}>相册</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='album_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.albumWorkData.length > 0 && this.state.albumWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        <div id='notes' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><NotesIcon /></Col>
+                                    <Col className={styles.card_title}>随记</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='notes_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.notesWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.notesWorkData.length > 0 && this.state.notesWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -712,69 +651,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
-
-                        <div id='video' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><VideoIcon /></Col>
-                                        <Col className={styles.card_title}>视频</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='video_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.videoWorkData.length > 0 && this.state.videoWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        
+                        <div id='album' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><AlbumIcon /></Col>
+                                    <Col className={styles.card_title}>相册</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='album_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.albumWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.albumWorkData.length > 0 && this.state.albumWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -787,70 +731,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
 
-
-                        <div id='music' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><MusicIcon /></Col>
-                                        <Col className={styles.card_title}>音乐</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='music_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.musicWorkData.length > 0 && this.state.musicWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        <div id='video' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><VideoIcon /></Col>
+                                    <Col className={styles.card_title}>视频</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='video_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.videoWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.videoWorkData.length > 0 && this.state.videoWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -863,69 +811,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
-
-
-                        <div id='draw' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><DrawIcon /></Col>
-                                        <Col className={styles.card_title}>绘画</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='draw_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.drawWorkData.length > 0 && this.state.drawWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                       
+                        <div id='music' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><MusicIcon /></Col>
+                                    <Col className={styles.card_title}>音乐</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='music_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.musicWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.musicWorkData.length > 0 && this.state.musicWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -938,70 +891,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
-
-
-                        <div id='program' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><ProgramIcon /></Col>
-                                        <Col className={styles.card_title}>编程</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='program_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.programWorkData.length > 0 && this.state.programWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        
+                        <div id='draw' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><DrawIcon /></Col>
+                                    <Col className={styles.card_title}>绘画</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='draw_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.drawWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.drawWorkData.length > 0 && this.state.drawWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -1014,69 +971,74 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
 
-
-                        <div id='game' style={{ display: 'flex', marginTop: 10, marginLeft: 10 }}>
-
-                            <div className={styles.card}>
-                                <Card
-                                    title={<Row type="flex">
-                                        <Col><GameIcon /></Col>
-                                        <Col className={styles.card_title}>游戏</Col>
-                                        <Col offset={19}><Button onClick={this.changeContentClick} id='game_change'>换一换</Button></Col>
-                                        {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
-                                    </Row>}
-                                    bordered={false}
-                                    style={{ width: 800, height: 480 }}
-                                >
-
-                                    {this.state.gameWorkData.length > 0 && this.state.gameWorkData.map((item) => (
-                                        <Card.Grid key={item.workid} className={styles.card_gird} onClick={(e) => {
+                        <div id='program' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><ProgramIcon /></Col>
+                                    <Col className={styles.card_title}>编程</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='program_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.programWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.programWorkData.length > 0 && this.state.programWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             this.props.history.push(`/detail?workid=${item.workid}`)
-                                        }}><img src={item.image} width="200" height="180" title={item.title} alt={item.title}></img>{item.title}</Card.Grid>
-                                    ))}
-                                </Card>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <Tabs defaultActiveKey="1" style={{ width: 270 }}>
-                                    <TabPane tab="排行" key="1">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRankData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRankData}
-                                            renderItem={item => (
-                                                <List.Item >
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    <TabPane tab="推荐" key="2">
-                                        <List
-                                            itemLayout="horizontal"
-                                            loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
-                                            dataSource={this.state.excerptRecommendWorkData}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        title={item.title}
-                                                        avatar={<Avatar src={item.image} />}
-                                                        description={formatUTC(item.createtime)}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </TabPane>
-                                    {/* <TabPane tab="关注" key="3">
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={this.state.workData}
@@ -1089,12 +1051,89 @@ class HomeComponent extends React.Component {
                                             )}
                                         />
                                     </TabPane> */}
-                                </Tabs>
-
-                            </div>
+                            </Tabs>
                         </div>
-
-
+                        
+                        <div id='game' style={{ display: 'flex'}}>
+                            <Card
+                                title={<Row type="flex">
+                                    <Col><GameIcon /></Col>
+                                    <Col className={styles.card_title}>游戏</Col>
+                                    <Col offset={19}><Button onClick={this.changeContentClick} id='game_change' className={styles.change_btn}>换一换</Button></Col>
+                                    {/* <Col style={{ marginLeft: 5 }}><Button>更多></Button></Col> */}
+                                </Row>}
+                                bordered={false}
+                                loading={this.state.gameWorkData.length > 0 ? false : true}
+                                className={styles.card}
+                            >
+                                {this.state.gameWorkData.length > 0 && this.state.gameWorkData.map((item) => (
+                                    <Card.Grid
+                                        key={item.workid}
+                                        className={styles.card_gird}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            this.props.history.push(`/detail?workid=${item.workid}`)
+                                        }}
+                                    >
+                                        <img src={item.image} className={styles.card_image} title={item.title} alt={item.title}></img>
+                                        {item.title}
+                                    </Card.Grid>
+                                ))}
+                            </Card>
+                            <Tabs defaultActiveKey="1" className={styles.tabs}>
+                                <TabPane tab="排行" key="1">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRankData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRankData}
+                                        renderItem={item => (
+                                            <List.Item
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.history.push(`/detail?workid=${item.workid}`)
+                                                }}
+                                            >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                <TabPane tab="推荐" key="2">
+                                    <List
+                                        itemLayout="horizontal"
+                                        loading={this.state.excerptRecommendWorkData.length > 0 ? false : true}
+                                        dataSource={this.state.excerptRecommendWorkData}
+                                        renderItem={item => (
+                                            <List.Item >
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                    avatar={<Avatar src={item.image} />}
+                                                    description={formatUTC(item.createtime)}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </TabPane>
+                                {/* <TabPane tab="关注" key="3">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.workData}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        title={item.title}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </TabPane> */}
+                            </Tabs>
+                        </div>
+ 
                     </Content>
                     <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>

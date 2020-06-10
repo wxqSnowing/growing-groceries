@@ -1,11 +1,10 @@
 .header {
     position: fixed;
-    width: 100vw;
+    width: 100%;
     height: 100px;
     line-height: 100px;
     z-index: 999;
     background-color: lightblue;
-    padding: 0 10px;
 }
 
 .search {
@@ -15,9 +14,12 @@
 }
 
 .create_btn {
+    display: inline-block;
     background: #a9e0f3;
     color: #fff;
     border: none;
+    width: calc(100vw / 24 * 2);
+    font-size: calc(100vw / 24 * 2 / 30);
     align-self: flex-end;
 }
 
@@ -31,25 +33,25 @@
     height: 66vh;
     position: fixed;
     left: 0;
-    margin-top: 150px;
-    z-index: 1;
+    margin-top: calc(100px + 5%);
+    z-index: 999;
     margin-left: 10px;
     border-radius: 10px;
+    width: calc(20% - 10px);
+    background-color: transparent;
 }
 
 .sider .menu {
     z-index: 2;
-    background-color: #f0f2f5;
+    background-color: transparent;
     height: 66vh;
 }
 
 .menu .item {
-    color: lightcoral;
     margin: 0px 0px;
     padding: 0px 0px;
     padding-right: 2px;
     text-align: center;
-    z-index: 0;
     border-radius: 10px;
     background-color: white;
     margin-top: 10px;
@@ -62,8 +64,8 @@
     background: #fff;
     min-height: 530px;
     margin-top: 100px;
-    margin-left: 90px;
-    width: 1100px;
+    margin-left: calc(6% + 5px);
+    width: calc(100% - 2 * (6% + 5px));
 }
 
 .home {
@@ -82,49 +84,19 @@
     min-height: 200px;
 }
 
-.intro {
-    position: relative;
-    width: 500px;
-    height: 280px;
-    /* background-color: #aad6b3; */
-}
-
-.timeinfo {
-    position: relative;
-    /* padding-top: 180px; */
-    margin-top: 5px;
-    padding: 8px;
-    width: 500px;
-    height: 200px;
-    /* background-color: royalblue; */
-}
-
 .carousel {
     height: 400px;
-    /* background-color: #aad6b3; */
 }
 
 .img {
-    width: 1100px;
     height: 400px;
-}
-
-.link {
-    color: gray;
-}
-
-.link:hover {
-    color: pink;
-    font-size: 20px;
 }
 
 .search_menu {
     margin-top: -35px;
-    /* background-color: lightseagreen; */
 }
 
 .search_menu_item {
-    /* background-color: lightpink; */
     padding: 0px 0px;
     margin: 0px 0px;
     height: 30px;
@@ -132,20 +104,42 @@
 }
 
 .search_menu_item:hover {
-    /* background-color: rebeccapurple; */
     height: 30px;
     line-height: 30px;
-    /* margin: 0px 0px; */
-    /* padding: 0px 0px; */
+}
+
+.card {
+    width: 78%;
+    margin-left: 1%;
+}
+
+.tabs {
+    width: 18%;
+    margin-left: 2%;
 }
 
 .card_title {
     line-height: 35px;
-    /* color: lightblue; */
 }
 
 .card_gird {
     width: 25%;
-    height: 200px;
+    height: 215px;
     text-align: center;
+}
+
+.card_image {
+    width: 100%;
+    height: 90%;
+}
+
+.change_btn {
+    background-color: #a9e0f3;
+    color: white;
+    border: none;
+}
+
+.change_btn:hover {
+    background-color: #a9e0f3;
+    color: lightsalmon;
 }
