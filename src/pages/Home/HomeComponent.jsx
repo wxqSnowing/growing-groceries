@@ -361,12 +361,14 @@ class HomeComponent extends React.Component {
                     <Header className={styles.header}>
                         <Row
                             gutter={24}
-                            style={{ marginLeft: '30%' }}
                             type="flex"
                         >
-                            <Col style={{ margin: 'auto' }}>
+                            <Col 
+                                span={6}
+                                offset={6}
+                            >
                                 <Search
-                                    style={{ width: 220, outline: 'none' }}
+                                    className={styles.search}
                                     placeholder="四月"
                                     onSearch={this.search}
                                     onPressEnter={this.search}
@@ -388,12 +390,9 @@ class HomeComponent extends React.Component {
                                 }
 
                             </Col>
-                            {/* <Col style={{ marginLeft: 200 }}><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
-                            {/* <Col><span>历史</span></Col> */}
-                            {this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push(`/mine?uid=${parseInt(cookie.load('uid'))}`) }}>我的</Button></Col>}
-                            {!this.state.isLogin && <Col><Button style={{ marginLeft: 200 }} className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
-                           
-                            <Col><Button className={styles.create_btn} onClick={(e) => {
+                            {this.state.isLogin && <Col span={2} offset={7}><Button className={styles.create_btn} onClick={() => { this.props.history.push(`/mine?uid=${parseInt(cookie.load('uid'))}`) }}>我的</Button></Col>}
+                            {!this.state.isLogin && <Col span={2} offset={7}><Button className={styles.create_btn} onClick={() => { this.props.history.push('/login') }}>登录</Button></Col>}
+                            <Col  span={2} offset={1}><Button className={styles.create_btn} onClick={(e) => {
                                 e.preventDefault();
                                 if(this.state.isLogin){
                                     this.props.history.push('/create');
