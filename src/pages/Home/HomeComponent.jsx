@@ -351,7 +351,7 @@ class HomeComponent extends React.Component {
                     width={65}
                     className={styles.sider}
                 >
-                    <Anchor className={styles.menu}>
+                    <Anchor className={styles.menu} targetOffset={window.innerHeight / 2}>
                         {menuList.map(({ key, value, pathName }) =>
                             (<Link key={key} className={styles.item} href={`#${pathName}`} title={value}></Link>)
                         )}
