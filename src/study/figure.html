@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用纯CSS画不同的形状</title>
+    <style>
+        body {
+            margin: 50px;
+            /* display: flex; */
+        }
+        
+        .square {
+            width: 50px;
+            height: 50px;
+            background-color: pink;
+        }
+        
+        .rectangle {
+            width: 100px;
+            height: 50px;
+            background-color: lightblue;
+        }
+        
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: lightsalmon;
+        }
+        
+        .up-semicircle {
+            width: 50px;
+            border-radius: 25px 25px 0px 0px;
+            height: 25px;
+            background-color: lightgreen;
+        }
+        
+        .left-semicircle {
+            width: 25px;
+            border-radius: 25px 0px 0px 25px;
+            height: 50px;
+            background-color: lightgreen;
+        }
+        
+        .arc1 {
+            margin-left: 50px;
+            background-color: lightskyblue;
+            width: 50px;
+            height: 50px;
+            border-radius: 0px 50px 0px 0px;
+        }
+        
+        .arc2 {
+            background-color: lightpink;
+            width: 50px;
+            height: 50px;
+            border-radius: 0px 0px 0px 50px;
+        }
+        
+        .up-triangle {
+            width: 0px;
+            height: 0px;
+            border-top: 45px solid transparent;
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 45px solid pink;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>正方形</h2>
+    <div class="square">
+    </div>
+    <h2>长方形</h2>
+    <div class="rectangle"></div>
+    <h2>圆</h2>
+    <div class="circle"></div>
+    <h2>上半圆</h2>
+    <div class="up-semicircle"></div>
+    <h2>左半圆</h2>
+    <div class="left-semicircle"></div>
+    <h2>圆弧/四分之一圆</h2>
+    <div class="arc1"></div>
+    <div class="arc2"></div>
+    <h2>三角形</h2>
+    <div class="up-triangle"></div>
+    <h2>平行四边形</h2>
+    <h2>五角星</h2>
+    <h2>八角形</h2>
+    <h2>爱心</h2>
+    <h2>提示对话框</h2>
+</body>
+
+</html>
