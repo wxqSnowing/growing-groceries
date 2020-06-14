@@ -4,11 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>瀑布流的实现</title>
+    <title>瀑布流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+        
+        .item {
+            position: absolute;
+        }
+        
+        img {
+            width: 300px;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="box">
+        <div class="item"><img src="./waterFullImages/1.jpeg" alt="1"></div>
+        <div class="item"><img src="./waterFullImages/2.jpeg" alt="2"></div>
+        <div class="item"><img src="./waterFullImages/3.jpeg" alt="3"></div>
+        <div class="item"><img src="./waterFullImages/4.jpeg" alt="4"></div>
+        <div class="item"><img src="./waterFullImages/5.jpeg" alt="5"></div>
+        <div class="item"><img src="./waterFullImages/6.jpeg" alt="6"></div>
+        <div class="item"><img src="./waterFullImages/7.jpeg" alt="7"></div>
+        <div class="item"><img src="./waterFullImages/8.jpeg" alt="8"></div>
+        <div class="item"><img src="./waterFullImages/9.jpeg" alt="9"></div>
+        <div class="item"><img src="./waterFullImages/10.jpeg" alt="10"></div>
+        <div class="item"><img src="./waterFullImages/11.jpeg" alt="11"></div>
+        <div class="item"><img src="./waterFullImages/12.jpeg" alt="12"></div>
+        <div class="item"><img src="./waterFullImages/13.jpeg" alt="13"></div>
+        <div class="item"><img src="./waterFullImages/14.jpeg" alt="14"></div>
+        <div class="item"><img src="./waterFullImages/15.jpeg" alt="15"></div>
+        <div class="item"><img src="./waterFullImages/16.jpeg" alt="16"></div>
+        <div class="item"><img src="./waterFullImages/17.jpeg" alt="17"></div>
+        <div class="item"><img src="./waterFullImages/18.jpeg" alt="18"></div>
+        <div class="item"><img src="./waterFullImages/19.jpeg" alt="19"></div>
+        <div class="item"><img src="./waterFullImages/20.jpeg" alt="20"></div>
+        <div class="item"><img src="./waterFullImages/21.jpeg" alt="21"></div>
+        <div class="item"><img src="./waterFullImages/22.jpeg" alt="22"></div>
+        <div class="item"><img src="./waterFullImages/23.jpeg" alt="23"></div>
+        <div class="item"><img src="./waterFullImages/24.jpeg" alt="24"></div>
+        <div class="item"><img src="./waterFullImages/25.jpeg" alt="25"></div>
+        <div class="item"><img src="./waterFullImages/26.jpeg" alt="26"></div>
+        <div class="item"><img src="./waterFullImages/27.jpeg" alt="27"></div>
+        <div class="item"><img src="./waterFullImages/28.jpeg" alt="28"></div>
+        <div class="item"><img src="./waterFullImages/29.jpeg" alt="29"></div>
+        <div class="item"><img src="./waterFullImages/30.jpeg" alt="30"></div>
+    </div>
+    <script>
+        var box = document.getElementById('box');
+        var items = box.children;
+        var gap = 10; //定义每一列的间隙为10
+        window.onload = function() {
+            console.log('onload');
+            waterFull();
+        };
 
+        window.onresize = function() {
+            console.log('onresize');
+            waterFull();
+        };
+
+        window.onscroll = function() {
+            console.log('onscroll');
+            if (getClient().height + getScrollTop() >= items[items.length - 1].offsetTop) {
+                var datas = [];
+                for (let i = 1; i <= 30; i++) {
+                    datas.push("./waterFullImages/" + i + ".jpeg")
+                }
+                for (var i = 0; i < datas.length; i++) {
+                    var div = document.createElement("div");
+                    div.className = "item";
+                    div.innerHTML = '<img src="' + datas[i] + '" alt="">';
+                    box.appendChild(div);
+                }
+                waterFull();
+            }
+
+        };
+
+        function waterFull() {
+            var pageWidth = getClient().width;
+            var itemWidth = items[0].offsetWidth;
+            var columns = parseInt(pageWidth / (itemWidth + gap));
+            var arr = [];
+            for (var i = 0; i < items.length; i++) {
+                if (i < columns) {
+                    // 2- 确定第一行
+                    items[i].style.top = 0;
+                    items[i].style.left = (itemWidth + gap) * i + 'px';
+                    arr.push(items[i].offsetHeight);
+
+                } else {
+                    // 其他行
+                    // 3- 找到数组中最小高度  和 它的索引
+                    var minHeight = arr[0];
+                    var index = 0;
+                    for (var j = 0; j < arr.length; j++) {
+                        if (minHeight > arr[j]) {
+                            minHeight = arr[j];
+                            index = j;
+                        }
+                    }
+                    // 4- 设置下一行的第一个盒子位置
+                    // top值就是最小列的高度 + gap
+                    items[i].style.top = arr[index] + gap + 'px';
+                    // left值就是最小列距离左边的距离
+                    items[i].style.left = items[index].offsetLeft + 'px';
+
+                    // 5- 修改最小列的高度
+                    // 最小列的高度 = 当前自己的高度 + 拼接过来的高度 + 间隙的高度
+                    arr[index] = arr[index] + items[i].offsetHeight + gap;
+                }
+            }
+        }
+
+        function getClient() {
+            return {
+                width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+            }
+        }
+
+        function getScrollTop() {
+            return window.pageYOffset || document.documentElement.scrollTop;
+        }
+    </script>
 </body>
 
 </html>
