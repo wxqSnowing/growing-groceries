@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图的实现</title>
+    <style>
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .box {
+            width: 500px;
+            height: 300px;
+            margin: 10px auto;
+            display: flex;
+        }
+        
+        .left {
+            width: 300px;
+            position: relative;
+        }
+        
+        .right {
+            width: 200px;
+            padding-left: 100px;
+        }
+        
+        .left ul li {
+            position: absolute;
+        }
+        
+        img {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .ushow {
+            display: none;
+        }
+        
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="left">
+            <ul id="images">
+                <li class="show"><img src="./waterFullImages/1.jpeg" alt="1"></li>
+                <li class="ushow"><img src="./waterFullImages/2.jpeg" alt="1"></li>
+                <li class="ushow"><img src="./waterFullImages/3.jpeg" alt="1"></li>
+                <li class="ushow"><img src="./waterFullImages/4.jpeg" alt="1"></li>
+                <li class="ushow"><img src="./waterFullImages/5.jpeg" alt="1"></li>
+                <li class="ushow"><img src="./waterFullImages/6.jpeg" alt="1"></li>
+            </ul>
+        </div>
+        <div class="right">
+            <ul>
+                <li onclick="choose(this)">1</li>
+                <li onclick="choose(this)">2</li>
+                <li onclick="choose(this)">3</li>
+                <li onclick="choose(this)">4</li>
+                <li onclick="choose(this)">5</li>
+                <li onclick="choose(this)">6</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function choose(e) {
+            var nodes = document.getElementById('images');
+            var childrenNode = nodes.children;
+            var index = e.innerText;
+            for (let i = 1; i <= childrenNode.length; i++) {
+                if (i === parseInt(index)) {
+                    childrenNode[i - 1].style.display = 'block';
+                } else {
+                    childrenNode[i - 1].style.display = 'none';
+                }
+            }
+        }
+
+        window.onload = function() {
+            var nodes = document.getElementById('images');
+            var childrenNode = nodes.children;
+            var index = 0;
+            setInterval(() => {
+                for (let i = 0; i < 6; i++) {
+                    if (i === index) {
+                        childrenNode[i].style.display = 'block';
+                    } else {
+                        childrenNode[i].style.display = 'none';
+                    }
+                }
+
+                if (index === 5) {
+                    index = 0;
+                } else {
+                    index = index + 1;
+                }
+            }, 5000)
+        }
+    </script>
+
+</body>
+
+</html>
