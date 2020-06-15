@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用纯CSS画不同的形状</title>
+    <title>style</title>
     <style>
         body {
             margin: 50px;
@@ -67,10 +67,163 @@
             border-right: 45px solid transparent;
             border-bottom: 45px solid pink;
         }
+        
+        .parallelogram {
+            width: 50px;
+            height: 50px;
+            transform: skew(30deg) scale(1.5) rotate(180deg) translate(-10px, -1px);
+            background-color: wheat;
+        }
+        
+        .dailog {
+            width: 120px;
+            height: 80px;
+            background: lightblue;
+            border-radius: 10px;
+        }
+        
+        .dailog::before {
+            content: "";
+            display: block;
+            position: relative;
+            left: -20px;
+            top: 30px;
+            width: 0px;
+            height: 0px;
+            border-top: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid pink;
+            border-bottom: 10px solid transparent;
+            /* transform: rotate(-90deg); */
+        }
+        /*         
+        a::after {
+            content: "→";
+        } */
+        
+        a::before {
+            content: "♥";
+        }
+        
+        a::after {
+            content: "<- 奥利给!";
+            color: green;
+        }
+        
+        input::placeholder {
+            color: lightblue;
+            font-size: 1.5em;
+        }
+        
+        p ::selection {
+            background-color: cyan;
+        }
+        
+        p ::first-line {
+            color: lightgrey;
+            font-size: 1em;
+        }
+        
+        a:active {
+            color: pink;
+        }
+        
+        a:visited {
+            color: sandybrown;
+        }
+        
+        a:link {
+            color: red;
+        }
+        
+        a:hover {
+            color: skyblue;
+        }
+        
+        p::first-letter {
+            font-size: 130%;
+            color: lightcoral;
+        }
+        
+        ul li:first-child {
+            color: pink;
+        }
+        
+        ul li:last-child {
+            color: salmon;
+        }
+        
+        input:in-range {
+            background-color: rgba(0, 255, 0, 0.25);
+        }
+        
+        input:out-of-range {
+            background-color: rgba(255, 0, 0, 0.25);
+            border: 2px solid red;
+        }
+        
+        div :not(p) {
+            background-color: slategray;
+        }
+        
+        ul li:nth-child(odd) {
+            color: springgreen;
+        }
+        
+        ul li:nth-child(even) {
+            color: pink;
+        }
+        
+        ul li:nth-child(1) {
+            color: yellowgreen;
+        }
+        
+        ul li:nth-last-child(1) {
+            color: lightsalmon;
+        }
+        
+        .star-five {
+            margin: 50px 0;
+            width: 0px;
+            height: 0px;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid pink;
+            border-left: 100px solid transparent;
+            transform: rotate(35deg);
+        }
+        
+        .star-five::before {
+            position: absolute;
+            display: block;
+            height: 0;
+            width: 0;
+            top: -45px;
+            left: -65px;
+            content: '';
+            border-bottom: 80px solid pink;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            transform: rotate(-35deg);
+        }
+        
+        .star-five::after {
+            position: absolute;
+            display: block;
+            top: 3px;
+            left: -105px;
+            width: 0px;
+            height: 0px;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid pink;
+            border-left: 100px solid transparent;
+            content: '';
+            transform: rotate(-70deg);
+        }
     </style>
 </head>
 
 <body>
+
     <h2>正方形</h2>
     <div class="square">
     </div>
@@ -88,10 +241,34 @@
     <h2>三角形</h2>
     <div class="up-triangle"></div>
     <h2>平行四边形</h2>
-    <h2>五角星</h2>
-    <h2>八角形</h2>
-    <h2>爱心</h2>
+    <div class="parallelogram"></div>
     <h2>提示对话框</h2>
+    伪元素的display默认为inline
+    <div class="dailog"></div>
+    <h2>五角星</h2>
+    <div class="star-five"></div>
+    <h2>钻石</h2>
+    <h2>爱心</h2>
+
+    <div>
+        <p>123</p>
+        <div>123333</div>
+    </div>
+    <input type="number" max="10" min="1" value="12">
+    <ul>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+    </ul>
+
+    <p>nihao</p>
+    <input type="text" placeholder="nihao">
+    <a href="http://www.baidu.com">BD</a>
 </body>
 
 </html>
