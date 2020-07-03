@@ -129,7 +129,6 @@ class MyEditComponent extends React.Component {
                                 setTimeout(() => {
                                     let w = window.open('about:blank');
                                     w.location.href = `/mine?uid=${this.state.uid}`;
-                                    // window.open("/mine", "_self");
                                 }, 1000)
                             }
                         })
@@ -174,7 +173,7 @@ class MyEditComponent extends React.Component {
 
         const { getFieldDecorator } = this.props.form;
 
-        const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator', 'media']
+        const controls = ['bold', 'italic', 'underline', 'text-color']
         const itemLayout = {
             labelCol: { span: 1 },
             wrapperCol: { span: 22 },

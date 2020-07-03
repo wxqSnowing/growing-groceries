@@ -175,7 +175,7 @@ class DetailComponent extends React.Component {
                             }
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
+                    <Footer className={styles.footer}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>
         );
