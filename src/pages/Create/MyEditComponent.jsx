@@ -7,76 +7,10 @@ import { connect } from 'dva';
 import PicUploader from './PicUploader';
 import cookie from 'react-cookies'
 
+import {typeData, subtypeData, tagsData} from './myconf';
+
 const { Option } = Select;
 
-const typeData = [
-    {
-        key: 'excerpt',
-        value: '摘录',
-    },
-    {
-        key: 'original',
-        value: '原创',
-    },
-    {
-        key: 'notes',
-        value: '随记',
-    },
-    {
-        key: 'album',
-        value: '相册',
-    },
-    {
-        key: 'video',
-        value: '视频',
-    },
-    {
-        key: 'music',
-        value: '音乐',
-    },
-    {
-        key: 'draw',
-        value: '绘画',
-    },
-    {
-        key: 'program',
-        value: '编程',
-    },
-    {
-        key: 'game',
-        value: '游戏',
-    },
-];
-
-const subtypeData = [
-    {
-        key: 'life',
-        value: '生活',
-    },
-    {
-        key: 'famous',
-        value: '名家',
-    },
-    {
-        key: 'c',
-        value: 'C语言',
-    },
-    {
-        key: 'c_plus',
-        value: 'C++',
-    },
-    {
-        key: 'Arena_Of_Valor',
-        value: '王者荣耀',
-    },
-];
-
-const tagsData = [
-    {
-        key: '2D',
-        value: '二次元',
-    },
-];
 
 class MyEditComponent extends React.Component {
 
@@ -91,14 +25,25 @@ class MyEditComponent extends React.Component {
             image: '1.jpeg',
             uid: parseInt(cookie.load('uid')),
             publishResult: '',
+            btnType: '发布',
+            description: '',
         }
     }
+
+    // static getDerivedStateFromProps(props, state){
+
+    // }
 
     componentDidMount() {
 
     }
 
+    // shouldComponentUpdate(nextProps, nextState){
+
+    // }
+
     handleSubmit = (event) => {
+        console.log('begin publish');
         event.preventDefault()
         this.props.form.validateFields((error, values) => {
             if (!error) {
@@ -110,6 +55,7 @@ class MyEditComponent extends React.Component {
                     image: this.state.image,
                     content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
                 }, () => {
+                    console.log(this.state.description,'wuxueqin-----');
                     this.props.dispatch({
                         type: 'workModel/publishWork',
                         payload: {
@@ -120,6 +66,7 @@ class MyEditComponent extends React.Component {
                             content: this.state.content,
                             image: this.state.image,
                             uid: this.state.uid,
+                            description: this.state.description,
                         }
                     }).then(() => {
                         this.setState({
@@ -173,7 +120,7 @@ class MyEditComponent extends React.Component {
 
         const { getFieldDecorator } = this.props.form;
 
-        const controls = ['bold', 'italic', 'underline', 'text-color']
+        const controls = ['bold', 'italic', 'underline', 'text-color'];
         const itemLayout = {
             labelCol: { span: 1 },
             wrapperCol: { span: 22 },
@@ -286,7 +233,7 @@ class MyEditComponent extends React.Component {
                                     if (value.isEmpty()) {
                                         callback('请输入正文内容')
                                     } else {
-                                        callback()
+                                        this.setState({description:value.toText().replace(/[\r\n]/g,"")},()=>{callback()})
                                     }
                                 }
                             }],
@@ -299,7 +246,7 @@ class MyEditComponent extends React.Component {
                             />
                         )}
                     </Form.Item>
-                    <Button size="large" type="primary" htmlType="submit" className={styles.sub_btn}>发布</Button>
+                        <Button size="large" type="primary" htmlType="submit" className={styles.sub_btn}>{this.state.btnType}</Button>
                 </Form>
             </div>
         )

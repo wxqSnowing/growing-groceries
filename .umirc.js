@@ -9,6 +9,7 @@ export default {
 
             { path: '/home', component: '../pages/Home/HomeComponent' },
             { path: '/create', component: '../pages/Create/AddComponent' },
+            { path: '/edit', component: '../pages/Create/EditComponent' },
             { path: '/mine', component: '../pages/Mine/MineComponent' },
             { path: '/detail', component: '../pages/Detail/DetailComponent' },
             { path: '/login', component: '../pages/Login/LoginComponent' },

@@ -1,0 +1,14 @@
+:global .ant-card-head {
+    padding: 0 0px;
+    text-align: center;
+}
+
+:global .ant-card-head-title {
+    padding: 10px 0;
+}
+
+:global .ant-card-grid {
+    padding: 0px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 0px 0px white;
+}

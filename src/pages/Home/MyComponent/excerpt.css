@@ -1,0 +1,77 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.excerpt_icon {
+    text-align: center
+}
+
+.excerpt_more_btn {
+    outline: none;
+    background-color: lightgray;
+    color: white;
+    border: none;
+    transition: all .2s ease-out;
+}
+
+.excerpt_more_btn:hover {
+    background-color: lightblue;
+    color: white;
+}
+
+.excerpt_card {
+    width: 100%;
+}
+
+.excerpt_card_gird {
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 1%;
+    margin-top: 10px;
+    width: 24%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.excerpt_care_div {
+    height: 120px;
+    padding-left: 10px;
+    position: relative;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+.excerpt_care_div h5 {
+    width: 100%;
+    text-align: left;
+}
+
+.excerpt_care_div span {
+    margin-top: 10px;
+    display: inline-block;
+    width: 50%;
+    color: gray;
+    text-align: left;
+    font-size: 0.5em;
+}
+
+.excerpt_card_girdt label {
+    margin-left: 5px;
+    color: lightgray;
+    font-size: 0.1em;
+}
+
+.excerpt_card_gird label+label {
+    margin-left: 20px;
+    color: lightgray;
+    font-size: 0.1em;
+}
+
+.excerpt_care_img {
+    float: left;
+    top: 10%;
+    border-radius: 10px;
+    width: 60%;
+    height: 80%;
+}

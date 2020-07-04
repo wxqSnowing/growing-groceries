@@ -25,7 +25,6 @@ class MineComponent extends React.Component {
     }
 
     init() {
-        console.log(cookie.load('uid'), '~~~~~~~', cookie.load('username'), '--------', cookie.load('password'));
         this.setState({
             uid: parseInt(this.props.location.query.uid),
         }, () => {
@@ -181,7 +180,7 @@ class MineComponent extends React.Component {
                         <Divider type="vertical" />
                         <Button style={{ color: 'lightpink', border: '0 solid white' }} onClick={(e) => {
                             e.preventDefault();
-                            // this.props.history.push('/edit')
+                            this.props.history.push(`/edit?workid=${record.workid}`)
                             console.log('--编辑-----')
                         }}>编辑</Button>
                         <Divider type="vertical" />
@@ -227,8 +226,9 @@ class MineComponent extends React.Component {
                             type="flex"
                         >
                             <Col span={4} offset={1}><Link to={`/home`} className={styles.link}>首页</Link></Col>
+                            <Col span={4} offset={1}><Link to={`/create`} className={styles.link}>去创作</Link></Col>
                             {/* <Col offset={14}><span style={{color: 'white'}}>头像</span></Col> */}
-                            <Col offset={14}><span style={{ color: 'red' }}>加入生活杂货铺{Math.floor(((new Date().getTime()) - (new Date(this.state.day).getTime())) / (24 * 1000 * 3600))}天{}</span></Col>
+                            <Col offset={8}><span style={{ color: 'red' }}>加入生活杂货铺{Math.floor(((new Date().getTime()) - (new Date(this.state.day).getTime())) / (24 * 1000 * 3600))}天{}</span></Col>
                             {/* <Col ><span><Badge count={5} style={{ marginTop: -8 }}>消息</Badge></span></Col> */}
                             {/* <Col><Link to={`/mine`} className={styles.link}>退出</Link></Col> */}
                             <Col><Button className={styles.loginout_btn} onClick={(e) => {

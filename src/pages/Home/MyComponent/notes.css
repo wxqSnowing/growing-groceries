@@ -1,0 +1,59 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.notes_icon {
+    text-align: center
+}
+
+.notes_more_btn {
+    outline: none;
+    color: gray;
+    border: none;
+    transition: all .1s ease-out;
+}
+
+.notes_more_btn:hover {
+    color: lightblue;
+}
+
+.notes_card {
+    position: relative;
+    width: 100%;
+    height: 540px;
+    overflow: hidden;
+}
+
+.notes_card_gird {
+    position: relative;
+    border-radius: 10px;
+    margin-left: 1%;
+    margin-top: 10px;
+    width: 98%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.item_head {
+    position: relative;
+    padding-top: 10px;
+    padding-right: 18px;
+}
+
+.item_head span {
+    float: right;
+}
+
+.item_head span label {
+    font-size: 0.5em;
+    color: lightslategrey;
+}
+
+.description {
+    padding: 6px;
+    width: 100%;
+    height: 110px;
+    font-size: 0.5em;
+    overflow: hidden;
+}
