@@ -96,7 +96,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'excerpt'
+                type: 'excerpt',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -107,7 +108,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'original'
+                type: 'original',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -118,7 +120,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'notes'
+                type: 'notes',
+                querycount: 3
             }
         }).then(() => {
             this.setState({
@@ -129,7 +132,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'album'
+                type: 'album',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -140,7 +144,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'video'
+                type: 'video',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -151,7 +156,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'music'
+                type: 'music',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -162,7 +168,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'draw'
+                type: 'draw',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -173,7 +180,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'program'
+                type: 'program',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -184,7 +192,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfo',
             payload: {
-                type: 'game'
+                type: 'game',
+                querycount: 8
             }
         }).then(() => {
             this.setState({
@@ -196,7 +205,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfoByRank',
             payload: {
-                type: 'excerpt'
+                type: 'excerpt',
+                querycount: 5
             }
         }).then(() => {
             this.setState({
@@ -208,7 +218,8 @@ class HomeComponent extends PureComponent {
         this.props.dispatch({
             type: 'homeModel/getWorkInfoByRecommend',
             payload: {
-                type: 'excerpt'
+                type: 'excerpt',
+                querycount: 5
             }
         }).then(() => {
             this.setState({
@@ -369,7 +380,7 @@ class HomeComponent extends PureComponent {
                         </Carousel>
 
                         <div id='excerpt'>
-                            <ExcerptComponent data={this.state.excerptWorkData} {...props}></ExcerptComponent>
+                            <ExcerptComponent data={this.state.excerptWorkData} type={'excerpt'} {...props}></ExcerptComponent>
                         </div>
                         
                         <div id='original' style={{display:'flex'}}>

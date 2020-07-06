@@ -32,10 +32,10 @@ class ExcerptComponent extends PureComponent {
     render() {
         const { props, state } = this;
         const { title, more } = state;
-        const { data } = props;
+        const { data, type} = props;
 
-        const onClickMore = () => {
-            console.log('more');
+        const onClickMore = (type) => {
+            console.log('enter', type);
         }
 
         const onClickCard = (item, e) => {
@@ -46,7 +46,7 @@ class ExcerptComponent extends PureComponent {
             <Card
                 title={<Row type="flex" align="bottom">
                     <Col span={2} className={styles.excerpt_icon}><ExcerptIcon />{title}</Col>
-                    <Col span={3} offset={19}><Button onClick={onClickMore} className={styles.excerpt_more_btn}>{more}</Button></Col>
+                    <Col span={3} offset={19}><Button onClick={()=>{onClickMore(type)}} className={styles.excerpt_more_btn}>{more}</Button></Col>
                 </Row>}
                 loading={data.length > 0 ? false : true}
                 className={styles.excerpt_card}

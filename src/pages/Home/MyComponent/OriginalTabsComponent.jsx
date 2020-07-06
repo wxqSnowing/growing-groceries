@@ -25,7 +25,7 @@ class OriginalTabsComponent extends PureComponent {
 
     }
     render() {
-        const { props, state } = this;
+        const { props } = this;
         const { rankWorkData,recommendWorkData } = props;
 
         return (

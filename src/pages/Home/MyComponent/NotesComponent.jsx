@@ -56,13 +56,9 @@ class NotesComponent extends PureComponent {
                         onClick={(e) => {
                             onClickCard(item, e);
                         }}
-                    >        
-                        {/* <img className={styles.original_care_img} title={item.title} alt={item.title} src={item.image}></img> */}
+                    >
                         <div className={styles.item_head}><label>《{item.title}》</label><span><label>浏览数{item.viewnums}</label></span></div>
                         <div className={styles.description}>{item.description}</div>
-                        {/* <div>
-                           
-                        </div> */}
                     </Card.Grid>
                 ))}
             </Card>

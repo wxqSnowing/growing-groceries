@@ -14,17 +14,20 @@ export async function getSiderInfo() {
 //查询作品create
 export async function getWorkInfo(params) {
     let type = params.type;
-    return request(`/api/get_work_info?type=${type}`);
+    let querycount = params.querycount;
+    return request(`/api/get_work_info?type=${type}&querycount=${querycount}`);
 }
 
 //查询作品rank
 export async function getWorkInfoByRank(params) {
     let type = params.type;
-    return request(`/api/get_work_info_by_rank?type=${type}`);
+    let querycount = params.querycount;
+    return request(`/api/get_work_info_by_rank?type=${type}&querycount=${querycount}`);
 }
 
 //查询作品recommand
 export async function getWorkInfoByRecommend(params) {
     let type = params.type;
-    return request(`/api/get_work_info_by_recommend?type=${type}`);
+    let querycount = params.querycount;
+    return request(`/api/get_work_info_by_recommend?type=${type}&querycount=${querycount}`);
 }

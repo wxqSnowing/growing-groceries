@@ -32,7 +32,7 @@ class OriginalComponent extends PureComponent {
         const { data } = props;
 
         const onClickChange = () => {
-            console.log('more');
+            console.log('换一换');
         }
 
         const onClickCard = (item, e) => {
