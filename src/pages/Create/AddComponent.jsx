@@ -8,8 +8,7 @@ import { Link } from 'umi';
 import cookie from 'react-cookies';
 import MyEditComponent from './MyEditComponent';
 
-const { Header, Content, Footer, Sider } = Layout;
-const { TextArea } = Input;
+const { Header, Content, Footer } = Layout;
 
 class AddComponent extends React.Component {
 

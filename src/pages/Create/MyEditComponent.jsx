@@ -22,7 +22,7 @@ class MyEditComponent extends React.Component {
             subtype: [],
             tags: [],
             content: '',
-            image: '1.jpeg',
+            image: 'http://image-bucket-6.oss-cn-beijing.aliyuncs.com/images/my_jyzhp_default.jpeg',
             uid: parseInt(cookie.load('uid')),
             publishResult: '',
             btnType: '发布',

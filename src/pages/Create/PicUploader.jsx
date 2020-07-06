@@ -11,7 +11,7 @@ class PicUploader extends React.Component {
             show: false,
             changeShow: false,
             fileName: 'default.jpeg',
-            fileUrl: 'http://image-bucket-6.oss-cn-beijing.aliyuncs.com/images/3-rc-upload-1593846778184-2.jpeg',
+            fileUrl: 'http://image-bucket-6.oss-cn-beijing.aliyuncs.com/images/my_jyzhp_default.jpeg',
         }
     }
 

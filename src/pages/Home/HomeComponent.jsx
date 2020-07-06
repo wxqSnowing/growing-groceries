@@ -3,18 +3,10 @@ import React, { PureComponent } from 'react';
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import './global.css';
-import { Layout, Menu, Card, Carousel, Row, Col, Button, Input, Tabs, List, Avatar, Anchor, message } from 'antd';
+import { Layout, Menu, Carousel, Row, Col, Button, Input, Anchor, message } from 'antd';
 import { connect } from 'dva';
 import cookie from 'react-cookies'
 import * as MyConf from './global';
-import formatUTC from '../utils/util'
-
-import AlbumIcon from './Icon/AlbumIcon';
-import VideoIcon from './Icon/VideoIcon';
-import MusicIcon from './Icon/MusicIcon';
-import DrawIcon from './Icon/DrawIcon';
-import ProgramIcon from './Icon/ProgramIcon';
-import GameIcon from './Icon/GameIcon';
 
 import ExcerptComponent from './MyComponent/ExcerptComponent';
 import OriginalComponent from './MyComponent/OriginalComponent';
@@ -25,7 +17,6 @@ import AlbumComponent from './MyComponent/AlbumComponent';
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
-const { TabPane } = Tabs;
 const { Link } = Anchor;
 
 const { menuList, debounce } = MyConf;
