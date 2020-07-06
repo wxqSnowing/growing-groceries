@@ -9,8 +9,14 @@ export async function login(params) {
 }
 
 export async function register(params) {
-    console.log('API------', params);
     return request('/api/add_user', {
+        method: 'POST',
+        data: params,
+    });
+}
+
+export async function updateBasciInfo(params) {
+    return request('/api/update_user_basic_info', {
         method: 'POST',
         data: params,
     });

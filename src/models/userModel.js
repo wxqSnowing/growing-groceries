@@ -7,6 +7,7 @@ const UserModel = {
         userInfoData: {},
         registerResult: '',
         loginResult: '',
+        updateBasciInfoResult: ''
     },
     effects: {
         * queryCurrent({ payload }, { call, put }) {
@@ -32,6 +33,14 @@ const UserModel = {
                 payload: response,
             });
         },
+
+        * updateBasciInfo({ payload }, { call, put }) {
+            const response = yield call(userAPI.updateBasciInfo, payload);
+            yield put({
+                type: 'updateBasciInfoResult',
+                payload: response,
+            });
+        },
     },
     reducers: {
         getCurrentUser(state, action) {
@@ -49,6 +58,11 @@ const UserModel = {
         getRegisterResult(state, action) {
             message.info(action.payload.message);
             return {...state, registerResult: action.payload.data || {} };
+        },
+
+        updateBasciInfoResult(state, action) {
+            message.info(action.payload.message);
+            return {...state, updateBasciInfoResult: action.payload.data || {} };
         }
     },
 };

@@ -38,6 +38,10 @@ class Register extends React.Component {
                         email: values.email,
                         mobile: values.mobile
                     }
+                }).then(()=>{
+                    setTimeout(()=>{
+                        this.props.history.push('/login')
+                    },2000)
                 })
             }
         });

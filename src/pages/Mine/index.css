@@ -1,16 +1,12 @@
 .header {
-    position: fixed;
     width: 100%;
     height: 100px;
     line-height: 100px;
-    z-index: 999;
     background-color: lightblue;
-    padding: 0 10px;
-    /* box-shadow: 2px 2px 5px lightpink; */
+    padding: 10 10px;
 }
 
 .content {
-    margin-top: 100px;
     background-color: white;
     min-height: 78vh;
 }
@@ -54,6 +50,13 @@
     align-items: center;
 }
 
+.info_right .row .edit_btn {
+    margin-right: 10px;
+    border-radius: 10%;
+    outline: none;
+    background-color: #a9e0f3;
+}
+
 .create_btn {
     margin-left: 650px;
     background: #a9e0f3;
@@ -83,4 +86,15 @@
 .loginout_btn:hover {
     color: pink;
     border: none;
+}
+
+.basci_info_edit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background-color: #fff;
+    text-align: right
 }
