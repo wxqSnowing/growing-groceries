@@ -301,7 +301,7 @@ class MineComponent extends React.Component {
                         </div>
                         <div className={styles.wrok_table}>
                             <Table
-                                loading={(this.state.data.length) > 0 ? false : true}
+                                // loading={(this.state.data.length) > 0 ? false : true}
                                 rowKey="workid"
                                 columns={columns}
                                 dataSource={this.state.data}
