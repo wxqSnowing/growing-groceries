@@ -20,6 +20,13 @@ export async function delteWorkById(params) {
     return request(`/api/delte_work_by_id?workid=${params.workid}`);
 }
 
+//修改作品
+export async function updateWork(params) {
+    return request('/api/update_work', {
+        method: 'POST',
+        data: params,
+    });
+}
 
 
 // //上传封面图

@@ -10,9 +10,15 @@ class PicUploader extends React.Component {
         this.state = {
             show: false,
             changeShow: false,
-            fileName: '',
-            fileUrl: '',
+            fileName: 'default.jpeg',
+            fileUrl: 'http://image-bucket-6.oss-cn-beijing.aliyuncs.com/images/3-rc-upload-1593846778184-2.jpeg',
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            fileName: this.props.fileName
+        })
     }
     delClick = () => {
         this.setState({ changeShow: false, show: false })

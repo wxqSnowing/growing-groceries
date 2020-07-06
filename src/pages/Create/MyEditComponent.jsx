@@ -1,13 +1,13 @@
 import 'braft-editor/dist/index.css'
 import React from 'react'
 import BraftEditor from 'braft-editor'
-import { Form, Input, Button, Row, Col, Select, Upload, message, Icon } from 'antd'
+import { Form, Input, Button, Row, Col, Select} from 'antd'
 import styles from './index.css';
 import { connect } from 'dva';
 import PicUploader from './PicUploader';
 import cookie from 'react-cookies'
 
-import {typeData, subtypeData, tagsData} from './myconf';
+import { typeData, subtypeData, tagsData } from './myconf';
 
 const { Option } = Select;
 
@@ -17,33 +17,52 @@ class MyEditComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: 'moon',
-            type: 'excerpt',
-            subtype: 'life',
-            tags: 'moon',
-            content: 'moon today',
+            title: '',
+            type: '',
+            subtype: [],
+            tags: [],
+            content: '',
             image: '1.jpeg',
             uid: parseInt(cookie.load('uid')),
             publishResult: '',
             btnType: '发布',
             description: '',
+            publishtype: 'create',
+            workid: ''
         }
     }
 
-    // static getDerivedStateFromProps(props, state){
-
-    // }
-
     componentDidMount() {
-
+        if(this.props.location&&Object.keys(this.props.location.query).indexOf('workid')!==-1){
+            this.props.dispatch({
+                type: 'workModel/getWorkDetail',
+                payload: {
+                    workid: this.props.location.query.workid,
+                }
+            }).then(()=>{
+                let work = this.props.workDetailData[0];
+                this.setState({
+                    workid: this.props.location.query.workid,
+                    publishtype: 'edit',
+                    title: work.title,
+                    type: work.type,
+                    subtype: work.subtype.split('#'),
+                    tags: work.tags.split('#'),
+                    content: work.content,
+                    image: work.image,
+                    description: work.description,
+                },()=>{
+                    setTimeout(() => {
+                        this.props.form.setFieldsValue({
+                          content: BraftEditor.createEditorState(this.state.content)
+                        })
+                    }, 1000)
+                })
+            })
+        }
     }
 
-    // shouldComponentUpdate(nextProps, nextState){
-
-    // }
-
     handleSubmit = (event) => {
-        console.log('begin publish');
         event.preventDefault()
         this.props.form.validateFields((error, values) => {
             if (!error) {
@@ -55,31 +74,59 @@ class MyEditComponent extends React.Component {
                     image: this.state.image,
                     content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
                 }, () => {
-                    console.log(this.state.description,'wuxueqin-----');
-                    this.props.dispatch({
-                        type: 'workModel/publishWork',
-                        payload: {
-                            title: this.state.title,
-                            type: this.state.type,
-                            subtype: this.state.subtype,
-                            tags: this.state.tags,
-                            content: this.state.content,
-                            image: this.state.image,
-                            uid: this.state.uid,
-                            description: this.state.description,
-                        }
-                    }).then(() => {
-                        this.setState({
-                            publishResult: this.props.publishResult,
-                        }, () => {
-                            if (this.state.publishResult) {
-                                setTimeout(() => {
-                                    let w = window.open('about:blank');
-                                    w.location.href = `/mine?uid=${this.state.uid}`;
-                                }, 1000)
+                    if(this.state.publishtype==='create'){
+                        this.props.dispatch({
+                            type: 'workModel/publishWork',
+                            payload: {
+                                title: this.state.title,
+                                type: this.state.type,
+                                subtype: this.state.subtype,
+                                tags: this.state.tags,
+                                content: this.state.content,
+                                image: this.state.image,
+                                uid: this.state.uid,
+                                description: this.state.description,
                             }
+                        }).then(() => {
+                            this.setState({
+                                publishResult: this.props.publishResult,
+                            }, () => {
+                                if (this.state.publishResult) {
+                                    setTimeout(() => {
+                                        let w = window.open('about:blank');
+                                        w.location.href = `/mine?uid=${this.state.uid}`;
+                                    }, 1000)
+                                }
+                            })
                         })
-                    })
+                    }else{
+                        //编辑的方法
+                        this.props.dispatch({
+                            type: 'workModel/editWork',
+                            payload: {
+                                title: this.state.title,
+                                type: this.state.type,
+                                subtype: this.state.subtype,
+                                tags: this.state.tags,
+                                content: this.state.content,
+                                image: this.state.image,
+                                uid: this.state.uid,
+                                description: this.state.description,
+                                workid: this.state.workid
+                            }
+                        }).then(() => {
+                            this.setState({
+                                publishResult: this.props.publishResult,
+                            }, () => {
+                                if (this.state.publishResult) {
+                                    setTimeout(() => {
+                                        let w = window.open('about:blank');
+                                        w.location.href = `/mine?uid=${this.state.uid}`;
+                                    }, 1000)
+                                }
+                            })
+                        })
+                    }
                 })
             }
         })
@@ -142,13 +189,20 @@ class MyEditComponent extends React.Component {
 
         return (
             <div className={styles.container}>
-                <Form onSubmit={this.handleSubmit} labelAlign="left">
-                    <Form.Item label="标题" {...itemLayout}>
+                <Form 
+                    onSubmit={this.handleSubmit} 
+                    labelAlign="left"
+                    initialvalues={{'title':this.state.title}}
+                >
+                    <Form.Item 
+                        label="标题" {...itemLayout}
+                    >
                         {getFieldDecorator('title', {
                             rules: [{
                                 required: true,
                                 message: '请输入标题',
                             }],
+                            initialValue: this.state.title
                         })(
                             <Input size="large" placeholder="请填写文章标题" style={{ border: '1px solid lightblue' }} />
                         )}
@@ -161,11 +215,11 @@ class MyEditComponent extends React.Component {
                                         required: true,
                                         message: '请输入类别',
                                     }],
+                                    initialValue: this.state.type
                                 })(
                                     <Select
                                         showSearch
                                         placeholder="请选择类别"
-                                        // style={{ width: '70%' }}
                                         optionFilterProp="children"
                                         onChange={this.onChange}
                                         onFocus={this.onFocus}
@@ -187,6 +241,7 @@ class MyEditComponent extends React.Component {
                                         required: true,
                                         message: '请输入二级类别',
                                     }],
+                                    initialValue: this.state.subtype
                                 })(
                                     <Select mode="tags" placeholder="请选择二级类别" onChange={this.subtypeHandleChange}>
                                         {subtypeData.length > 0 && subtypeData.map((item) => (<Option value={item.key} key={item.key}>{item.value}</Option>))}
@@ -201,8 +256,9 @@ class MyEditComponent extends React.Component {
                                         required: true,
                                         message: '请输入标签',
                                     }],
+                                    initialValue: this.state.tags
                                 })(
-                                    <Select mode="tags" placeholder="请选择二级类别" onChange={this.tagsHandleChange}>
+                                    <Select mode="tags" placeholder="请输入标签" onChange={this.tagsHandleChange}>
                                         {tagsData.length > 0 && tagsData.map((item) => (<Option value={item.key} key={item.key}>{item.value}</Option>))}
                                     </Select>
                                 )}
@@ -217,8 +273,9 @@ class MyEditComponent extends React.Component {
                                         required: false,
                                         message: '请选择封面图',
                                     }],
+                                    initialValue: this.state.image
                                 })(
-                                    <PicUploader imageHandleChange={this.imageHandleChange.bind(this)}></PicUploader>
+                                    <PicUploader fileName={this.state.image} imageHandleChange={this.imageHandleChange.bind(this)}></PicUploader>
                                 )}
                             </Form.Item>
                         </Col>
@@ -233,10 +290,11 @@ class MyEditComponent extends React.Component {
                                     if (value.isEmpty()) {
                                         callback('请输入正文内容')
                                     } else {
-                                        this.setState({description:value.toText().replace(/[\r\n]/g,"")},()=>{callback()})
+                                        this.setState({ description: value.toText().replace(/[\r\n]/g, "") }, () => { callback() })
                                     }
                                 }
                             }],
+                            initialValue: BraftEditor.createEditorState(this.state.content)||''
                         })(
                             <BraftEditor
                                 className={styles.my_editor}
@@ -246,7 +304,7 @@ class MyEditComponent extends React.Component {
                             />
                         )}
                     </Form.Item>
-                        <Button size="large" type="primary" htmlType="submit" className={styles.sub_btn}>{this.state.btnType}</Button>
+                    <Button size="large" type="primary" htmlType="submit" className={styles.sub_btn}>{this.state.btnType}</Button>
                 </Form>
             </div>
         )

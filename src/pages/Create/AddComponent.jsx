@@ -56,10 +56,10 @@ class AddComponent extends React.Component {
                         </Row>
                     </Header>
 
-                    <Content style={{ width: '100%', marginTop: 5 }}>
+                    <Content style={{ width: '100%', marginTop: 30 }}>
                         <MyEditComponent></MyEditComponent>
                     </Content>
-                    {/* <Footer style={{ textAlign: 'center', fontSize: 5, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer> */}
+                    <Footer style={{ textAlign: 'center', fontSize: 5, marginTop:30, marginLeft: -(this.state.collapsed ? 80 : 200) }}>Snow Blog ©2020 Created by Shirly</Footer>
                 </Layout>
             </Layout>
         );
