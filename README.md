@@ -68,8 +68,8 @@ http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/7.jpg
 http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/8.jpg
 
 #### 评论
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/9.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/9.jpg
 
 ## 网站地址
 http://39.97.232.218:8000/home
