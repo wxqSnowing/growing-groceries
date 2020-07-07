@@ -1,6 +1,11 @@
 # growing-groceries
-基于umi+dva+antd 创建的生活杂货铺（growing-groceries）
-用于一个随时记录和分享的笔记使用
+> 基于umi+dva+antd 创建的生活杂货铺（growing-groceries）
+> 记录与分享的内容平台
+在这里你可以：
+1. 在首页查看各式各样的为你准备的内容，包括摘录、随记、原创、图片等等各式各样的内容
+2. 注册自己的账号，完善个人信息，发布一篇文章，让大家认识你
+3. 管理文章，编辑删除内容
+4. 找到一篇自己感兴趣的文章并留下自己的脚印
 
 ## 创建项目
 ### 使用umi快速搭建一个脚手架
@@ -30,35 +35,44 @@ yarn start
 ```bash
 yarn add react-cookies
 ```
-### 图片
-#### 首页
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/1.jpg
 
-#### 登录
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/6.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/6.jpg
+## 图片预览
+#### 首页
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/1.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/1.jpg
+
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/2.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/2.jpg
 
 #### 注册
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/7.png)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/7.png
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/3.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/3.jpg
+
+#### 登录
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/4.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/4.jpg
 
 #### 我的
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/2.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/5.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/5.jpg
+
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/6.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/6.jpg
 
 #### 创作页
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/3.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/7.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/7.jpg
 
 #### 详情页
-![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg)
-http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/4.jpg
+![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/8.jpg)
+http://image-bucket-6.oss-cn-beijing.aliyuncs.com/intro/8.jpg
 
 #### 评论
 ![avatar](http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg)
 http://image-bucket-6.oss-cn-beijing.aliyuncs.com/preview/5.jpg
 
+## 网站地址
+http://39.97.232.218:8000/home
 
 ## 联系方式
 GitHub:  https://github.com/wxqSnowing
