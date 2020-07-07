@@ -1,7 +1,9 @@
 import 'braft-editor/dist/index.css'
 import React from 'react'
 import BraftEditor from 'braft-editor'
-import { Form, Input, Button, Row, Col, Select} from 'antd'
+import { ContentUtils } from 'braft-utils'
+import OSS from 'ali-oss';
+import { Form, Input, Button, Row, Col, Select, Upload, Icon } from 'antd'
 import styles from './index.css';
 import { connect } from 'dva';
 import PicUploader from './PicUploader';
@@ -33,13 +35,13 @@ class MyEditComponent extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.location&&Object.keys(this.props.location.query).indexOf('workid')!==-1){
+        if (this.props.location && Object.keys(this.props.location.query).indexOf('workid') !== -1) {
             this.props.dispatch({
                 type: 'workModel/getWorkDetail',
                 payload: {
                     workid: this.props.location.query.workid,
                 }
-            }).then(()=>{
+            }).then(() => {
                 let work = this.props.workDetailData[0];
                 this.setState({
                     workid: this.props.location.query.workid,
@@ -51,10 +53,10 @@ class MyEditComponent extends React.Component {
                     content: work.content,
                     image: work.image,
                     description: work.description,
-                },()=>{
+                }, () => {
                     setTimeout(() => {
                         this.props.form.setFieldsValue({
-                          content: BraftEditor.createEditorState(this.state.content)
+                            content: BraftEditor.createEditorState(this.state.content)
                         })
                     }, 1000)
                 })
@@ -63,7 +65,7 @@ class MyEditComponent extends React.Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault()
+        event.preventDefault();
         this.props.form.validateFields((error, values) => {
             if (!error) {
                 this.setState({
@@ -74,7 +76,7 @@ class MyEditComponent extends React.Component {
                     image: this.state.image,
                     content: values.content.toHTML() // values.content.toHTML() or values.content.toRAW()
                 }, () => {
-                    if(this.state.publishtype==='create'){
+                    if (this.state.publishtype === 'create') {
                         this.props.dispatch({
                             type: 'workModel/publishWork',
                             payload: {
@@ -99,7 +101,7 @@ class MyEditComponent extends React.Component {
                                 }
                             })
                         })
-                    }else{
+                    } else {
                         //编辑的方法
                         this.props.dispatch({
                             type: 'workModel/editWork',
@@ -167,7 +169,91 @@ class MyEditComponent extends React.Component {
 
         const { getFieldDecorator } = this.props.form;
 
-        const controls = ['bold', 'italic', 'underline', 'text-color'];
+
+        const controls = [
+            'undo', 'redo', 'separator',
+            'font-size', 'line-height', 'letter-spacing', 'separator',
+            'text-color', 'bold', 'italic', 'underline', 'strike-through', 'separator',
+            'superscript', 'subscript', 'remove-styles', 'emoji', 'separator', 'text-indent', 'text-align', 'separator',
+            'headings', 'list-ul', 'list-ol', 'blockquote', 'code', 'separator',
+            'link', 'separator', 'hr', 'separator',
+            // 'media',
+            'separator',
+            'clear'
+        ];
+
+        const beforeUpload = file => {
+            console.log('-----------');
+            const floder = 'images';
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                UploadToOss(this, floder, file)
+                    .then(data => {
+                        return data;
+                    })
+                    .then(data => {
+                        console.log('--88889999----', data.res.requestUrls[0]);
+                        this.props.form.setFieldsValue({
+                            content: ContentUtils.insertMedias(this.props.form.getFieldValue('content'), [{
+                                type: 'IMAGE',
+                                url: data.res.requestUrls[0], // imgUrl 为上传成功后 后台返回的url地址
+                            }])
+                        })
+                    });
+            };
+            return false;
+        }
+
+        const extendControls = [
+            {
+                key: 'antd-uploader',
+                type: 'component',
+                component: (
+                    <Upload
+                        accept="image/*"
+                        showUploadList={false}
+                        beforeUpload={beforeUpload}
+                    >
+                        {/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+                        <Button type="button" className="control-item button upload-button" data-title="插入图片">
+                            <Icon type="picture" theme="filled" />
+                        </Button>
+                    </Upload>
+                )
+            }
+        ];
+
+        const client = self => {
+            return new OSS({
+                region: 'oss-cn-beijing',
+                accessKeyId: 'LTAI4G9Z5w4dSo4LTWJTnsNX',
+                accessKeySecret: 'jowuUUURmisYjdn3ZFKelQZtpCatXj',
+                bucket: 'image-bucket-6',
+            });
+        };
+
+        const uploadPath = (path, file) => {
+            return `${path}/${file.name.split('.')[0]}-${file.uid}.${file.type.split('/')[1]}`;
+        };
+
+        const UploadToOss = (self, path, file) => {
+            const url = uploadPath(path, file);
+            const headers = {
+                "Content-Type": "image/jpg"
+            };
+            return new Promise((resolve, reject) => {
+                client(self)
+                    .multipartUpload(url, file, { headers })
+                    .then(data => {
+                        resolve(data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        };
+
         const itemLayout = {
             labelCol: { span: 1 },
             wrapperCol: { span: 22 },
@@ -189,12 +275,12 @@ class MyEditComponent extends React.Component {
 
         return (
             <div className={styles.container}>
-                <Form 
-                    onSubmit={this.handleSubmit} 
+                <Form
+                    onSubmit={this.handleSubmit}
                     labelAlign="left"
-                    initialvalues={{'title':this.state.title}}
+                    initialvalues={{ 'title': this.state.title }}
                 >
-                    <Form.Item 
+                    <Form.Item
                         label="标题" {...itemLayout}
                     >
                         {getFieldDecorator('title', {
@@ -294,11 +380,12 @@ class MyEditComponent extends React.Component {
                                     }
                                 }
                             }],
-                            initialValue: BraftEditor.createEditorState(this.state.content)||''
+                            initialValue: BraftEditor.createEditorState(this.state.content) || ''
                         })(
                             <BraftEditor
                                 className={styles.my_editor}
                                 controls={controls}
+                                extendControls={extendControls}
                                 placeholder="请输入正文内容"
                                 contentStyle={{ height: 400 }}
                             />
