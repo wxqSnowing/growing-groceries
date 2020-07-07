@@ -1,4 +1,4 @@
-# growing-groceries
+# 生活杂货铺（growing-groceries）
 > 基于umi+dva+antd 创建的生活杂货铺（growing-groceries）
 > 记录与分享的内容平台
 在这里你可以：
