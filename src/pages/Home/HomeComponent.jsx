@@ -172,7 +172,7 @@ class HomeComponent extends PureComponent {
             type: 'homeModel/getWorkInfo',
             payload: {
                 type: 'program',
-                querycount: 8
+                querycount: 5
             }
         }).then(() => {
             this.setState({
@@ -380,7 +380,7 @@ class HomeComponent extends PureComponent {
                         </div>
 
                         <div id='notes'>
-                            <NotesComponent data={this.state.notesWorkData} {...props}></NotesComponent>
+                            <NotesComponent data={this.state.notesWorkData} title="随记" {...props}></NotesComponent>
                         </div>
                         <div id='album'>
                             <AlbumComponent data={this.state.albumWorkData} title="图片" {...props} ></AlbumComponent>
@@ -397,7 +397,7 @@ class HomeComponent extends PureComponent {
                         </div>
 
                         <div id='program' >
-                            <AlbumComponent data={this.state.programWorkData} title="编程" {...props} ></AlbumComponent>
+                            <NotesComponent data={this.state.programWorkData} title="编程" {...props}></NotesComponent>
                         </div>
 
                         <div id='game' >

@@ -8,7 +8,6 @@ class NotesComponent extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            title: '随记',
             change: '更多',
             data: [],
         }
@@ -28,8 +27,8 @@ class NotesComponent extends PureComponent {
     }
     render() {
         const { props, state } = this;
-        const { title, change } = state;
-        const { data } = props;
+        const { change } = state;
+        const { data, title} = props;
 
         const onClickChange = () => {
             console.log('more');
