@@ -1,0 +1,1 @@
+nohup yarn start > web.log 2>&1 &
