@@ -12,11 +12,11 @@ const typeData = [{
     },
     {
         key: 'album',
-        value: '相册',
+        value: '图片',
     },
     {
-        key: 'video',
-        value: '视频',
+        key: 'life',
+        value: '生活',
     },
     {
         key: 'music',

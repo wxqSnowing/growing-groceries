@@ -15,13 +15,13 @@ const menuList = [{
     },
     {
         key: 'album',
-        value: '相册',
+        value: '图片',
         pathName: 'album'
     },
     {
-        key: 'video',
-        value: '视频',
-        pathName: 'video'
+        key: 'life',
+        value: '生活',
+        pathName: 'life'
     },
     {
         key: 'music',

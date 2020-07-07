@@ -383,10 +383,10 @@ class HomeComponent extends PureComponent {
                             <NotesComponent data={this.state.notesWorkData} {...props}></NotesComponent>
                         </div>
                         <div id='album'>
-                            <AlbumComponent data={this.state.albumWorkData} title="相册" {...props} ></AlbumComponent>
+                            <AlbumComponent data={this.state.albumWorkData} title="图片" {...props} ></AlbumComponent>
                         </div>
-                        <div id='video'>
-                            <AlbumComponent data={this.state.videoWorkData} title="视频" {...props} ></AlbumComponent>
+                        <div id='life'>
+                            <AlbumComponent data={this.state.videoWorkData} title="生活" {...props} ></AlbumComponent>
                         </div>
                         <div id='music' >
                             <AlbumComponent data={this.state.musicWorkData} title="音乐" {...props} ></AlbumComponent>
