@@ -227,8 +227,8 @@ class MyEditComponent extends React.Component {
         const client = self => {
             return new OSS({
                 region: 'oss-cn-beijing',
-                accessKeyId: 'LTAI4G9Z5w4dSo4LTWJTnsNX',
-                accessKeySecret: 'jowuUUURmisYjdn3ZFKelQZtpCatXj',
+                accessKeyId: 'xxx',
+                accessKeySecret: 'xxx',
                 bucket: 'image-bucket-6',
             });
         };
